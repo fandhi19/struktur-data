@@ -1,0 +1,856 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Struktur Data Kurikulum Merdeka • Portal Belajar Informatika Fase E</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Styling -->
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brandBlue: {
+                DEFAULT: "#0f3ba8",
+                dark: "#0a2569",
+                light: "#2563eb",
+              },
+              brandOrange: {
+                DEFAULT: "#ff7700",
+                hover: "#ea580c",
+                light: "#fff7ed",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-mesh min-h-screen text-slate-800 antialiased selection:bg-orange-500 selection:text-white pb-16 sm:pb-0">
+    <!-- ================= TOPBAR NAVIGATION ================= -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all shadow-xs">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+        <!-- Logo Branding (NovTeach / Struktur Data Style) -->
+        <div class="flex items-center gap-3 cursor-pointer shrink-0" onclick="switchTab('beranda')">
+          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brandBlue-dark via-brandBlue to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-900/20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+              />
+            </svg>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-black text-xl tracking-tight text-slate-900">STRUKTUR<span class="text-brandOrange">DATA</span></span>
+              <span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Fase E</span>
+            </div>
+            <p class="text-[11px] text-slate-500 font-medium hidden sm:block">Informatika SMA • Kurikulum Merdeka</p>
+          </div>
+        </div>
+
+        <!-- Desktop Nav Menu (Centered, Whitespace-Nowrap, Never Breaks Lines) -->
+        <nav class="hidden xl:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-2xl border border-slate-200/80 text-xs font-bold whitespace-nowrap">
+          <button data-tab-target="beranda" class="px-4 py-2 rounded-xl transition bg-blue-600 text-white shadow-xs whitespace-nowrap">Beranda</button>
+          <button data-tab-target="pretest" class="px-4 py-2 rounded-xl transition text-slate-700 hover:bg-blue-50 whitespace-nowrap">Pre-Test</button>
+          <button data-tab-target="materi" class="px-4 py-2 rounded-xl transition text-slate-700 hover:bg-blue-50 whitespace-nowrap">Materi Baca</button>
+          <button data-tab-target="simulasi" class="px-4 py-2 rounded-xl transition text-slate-700 hover:bg-blue-50 whitespace-nowrap">Simulasi</button>
+          <button data-tab-target="video" class="px-4 py-2 rounded-xl transition text-slate-700 hover:bg-blue-50 whitespace-nowrap">Video</button>
+          <button data-tab-target="posttest" class="px-4 py-2 rounded-xl transition text-slate-700 hover:bg-blue-50 whitespace-nowrap">Post-Test</button>
+          <button data-tab-target="glosarium" class="px-4 py-2 rounded-xl transition text-slate-700 hover:bg-blue-50 whitespace-nowrap">Glosarium</button>
+        </nav>
+
+        <!-- Right Action Items -->
+        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+          <!-- Sound Toggle -->
+          <button id="soundToggleBtn" class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 shadow-xs whitespace-nowrap">
+            <span class="text-emerald-600">🔊 Suara: ON</span>
+          </button>
+
+          <!-- User Profile Pill (Tablet & Desktop) -->
+          <div class="hidden md:flex items-center gap-2 bg-blue-50 text-blue-900 border border-blue-200/70 px-3 py-2 rounded-xl text-xs font-bold shadow-xs whitespace-nowrap">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+            <span id="userProfilePill">Siswa Kelas X (Fase E)</span>
+          </div>
+
+          <!-- CTA Button -->
+          <button
+            onclick="switchTab('simulasi')"
+            class="hidden sm:inline-flex items-center px-4 py-2 rounded-xl bg-brandOrange hover:bg-brandOrange-hover text-white text-xs font-extrabold transition shadow-md shadow-orange-500/25 whitespace-nowrap"
+          >
+            Mulai Praktik ➔
+          </button>
+
+          <!-- Mobile & Tablet Hamburger Button -->
+          <button id="mobileMenuBtn" class="xl:hidden p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 touch-target" aria-label="Toggle Menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile & Tablet Dropdown Drawer Menu -->
+      <div id="mobileDrawer" class="hidden xl:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg transition-all animate-fadeIn">
+        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+          <button data-tab-target="beranda" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-blue-600 text-white">🏠 Beranda</button>
+          <button data-tab-target="pretest" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">📝 Pre-Test</button>
+          <button data-tab-target="materi" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">📖 Materi Baca</button>
+          <button data-tab-target="simulasi" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">🎮 Simulasi</button>
+          <button data-tab-target="video" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">🎥 Video</button>
+          <button data-tab-target="posttest" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">🏆 Post-Test</button>
+          <button data-tab-target="glosarium" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50 col-span-2">📚 Glosarium Kamus TIK</button>
+        </div>
+        <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">Kurikulum Merdeka • Kelas X</span>
+          <button onclick="switchTab('simulasi')" class="px-3.5 py-1.5 rounded-lg bg-brandOrange text-white font-bold">Coba Simulasi ➔</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ================= SECTION: BERANDA (HOME) ================= -->
+    <main id="section-beranda" class="py-6 sm:py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
+        <!-- HERO BANNER (TWO CARDS SIDE-BY-SIDE MATCHING REFERENCE IMAGE) -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <!-- Left Hero Container (Royal Blue Card) -->
+          <div class="lg:col-span-7 hero-blue-card rounded-theme text-white p-6 sm:p-8 lg:p-10 flex flex-col justify-between soft-card-shadow">
+            <div>
+              <!-- Badge -->
+              <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-blue-200 border border-white/20 mb-5"><span>🚀</span> Portal Belajar Informatika Mandiri Fase E</div>
+
+              <!-- Headline -->
+              <h1 class="text-2xl sm:text-3xl lg:text-[40px] font-black leading-[1.2] tracking-tight mb-4">
+                Di Portal Belajar Struktur Data, kamu akan <span class="text-amber-400">kuasai logika pemrograman</span> dan taklukkan algoritma dengan mudah.
+              </h1>
+
+              <!-- Paragraph -->
+              <p class="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-xl mb-6 sm:mb-8">
+                Panduan interaktif terlengkap Kurikulum Merdeka. Pahami anatomi memori RAM, List, Stack (LIFO), dan Queue (FIFO) lewat simulasi visual real-time dan studi kasus nyata.
+              </p>
+            </div>
+
+            <!-- White Embedded Form Card (Like NovTeach Reference Image) -->
+            <div class="bg-white rounded-2xl p-5 sm:p-6 text-slate-900 shadow-xl border border-white/40 max-w-md w-full">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-extrabold text-sm sm:text-base text-slate-900">Mulai Petualangan Belajar</h3>
+                <span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">Gratis & Lengkap</span>
+              </div>
+              <form class="space-y-3" onsubmit="event.preventDefault()">
+                <div>
+                  <label for="heroStudentName" class="block text-[11px] font-bold text-slate-600 mb-1">Nama Lengkap Siswa:</label>
+                  <input type="text" id="heroStudentName" placeholder="Ketik nama lengkapmu..." class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-hidden font-medium" />
+                </div>
+                <div>
+                  <label for="heroStudentClass" class="block text-[11px] font-bold text-slate-600 mb-1">Rombel / Kelas Fase E:</label>
+                  <select id="heroStudentClass" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-hidden bg-white text-slate-700 font-medium">
+                    <option value="Fase E - X-1">Kelas X-1 (Fase E SMA)</option>
+                    <option value="Fase E - X-2">Kelas X-2 (Fase E SMA)</option>
+                    <option value="Fase E - X-3">Kelas X-3 (Fase E SMA)</option>
+                    <option value="Fase E - X-4">Kelas X-4 (Fase E SMA)</option>
+                    <option value="Fase E - X-5">Kelas X-5 (Fase E SMA)</option>
+                  </select>
+                </div>
+                <button id="btnStartLearning" class="w-full py-3 rounded-xl bg-brandOrange hover:bg-brandOrange-hover text-white font-extrabold text-xs uppercase tracking-wider transition shadow-lg shadow-orange-500/30 touch-target">
+                  MULAI PRE-TEST SEKARANG ➔
+                </button>
+                <p class="text-[10px] text-center text-slate-400 italic">*Data digunakan untuk menerbitkan Sertifikat Kelulusan Resmi UKIN.</p>
+              </form>
+            </div>
+          </div>
+
+          <!-- Right Hero Container (Vibrant Orange Card Matching Reference Image) -->
+          <div class="lg:col-span-5 hero-orange-card rounded-theme text-white p-6 sm:p-8 lg:p-10 flex flex-col justify-between soft-card-shadow">
+            <!-- Top 3 High-Contrast Checklist Cards -->
+            <div class="space-y-3 mb-6">
+              <!-- Item 1 -->
+              <div class="flex items-center gap-3.5 bg-white text-slate-900 p-3.5 sm:p-4 rounded-2xl shadow-md border border-white/40">
+                <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">✓</div>
+                <p class="text-xs sm:text-sm font-bold leading-snug">Materi terstandar Kurikulum Merdeka Fase E terpadu (5 Bab Lengkap).</p>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="flex items-center gap-3.5 bg-white text-slate-900 p-3.5 sm:p-4 rounded-2xl shadow-md border border-white/40">
+                <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">✓</div>
+                <p class="text-xs sm:text-sm font-bold leading-snug">Simulasi visual interaktif List, Stack (LIFO), dan Queue (FIFO).</p>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="flex items-center gap-3.5 bg-white text-slate-900 p-3.5 sm:p-4 rounded-2xl shadow-md border border-white/40">
+                <div class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center font-black text-xs shrink-0 shadow-xs">✓</div>
+                <p class="text-xs sm:text-sm font-bold leading-snug">Asesmen diagnostik & formatif HOTS lengkap dengan sertifikat kelulusan.</p>
+              </div>
+            </div>
+
+            <!-- Rich 3D Student Coder Illustration (Filling the bottom area like Reference Image) -->
+            <div class="relative w-full bg-white/10 backdrop-blur-md rounded-3xl p-5 border border-white/25 flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
+              <!-- Vector Illustration of Student & Book -->
+              <div class="flex items-center gap-4">
+                <!-- Avatar Graphic -->
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-tr from-blue-900 via-blue-700 to-indigo-600 border-2 border-white/40 shadow-xl flex items-center justify-center relative shrink-0">
+                  <!-- 3D Student Icon Face -->
+                  <svg class="w-14 h-14 text-amber-200" viewBox="0 0 64 64" fill="none">
+                    <!-- Hair -->
+                    <path d="M18 22C18 14 24 10 32 10C40 10 46 14 46 22V24H18V22Z" fill="#1e293b" />
+                    <!-- Head -->
+                    <circle cx="32" cy="28" r="14" fill="#fde68a" />
+                    <!-- Glasses -->
+                    <circle cx="26" cy="27" r="4.5" stroke="#1e293b" stroke-width="2" fill="white" fill-opacity="0.3" />
+                    <circle cx="38" cy="27" r="4.5" stroke="#1e293b" stroke-width="2" fill="white" fill-opacity="0.3" />
+                    <path d="M30.5 27H33.5" stroke="#1e293b" stroke-width="2" />
+                    <!-- Eyes -->
+                    <circle cx="26" cy="27" r="1.5" fill="#1e293b" />
+                    <circle cx="38" cy="27" r="1.5" fill="#1e293b" />
+                    <!-- Smile -->
+                    <path d="M28 34C29.5 36 34.5 36 36 34" stroke="#d97706" stroke-width="2" stroke-linecap="round" />
+                    <!-- Blue Hoodie Collar -->
+                    <path d="M20 42C20 38 25 36 32 36C39 36 44 38 44 42L48 58H16L20 42Z" fill="#1d4ed8" />
+                    <path d="M28 36L32 44L36 36" fill="#f97316" />
+                  </svg>
+                  <!-- Floating Mini Cap Badge -->
+                  <span class="absolute -top-2 -right-2 bg-yellow-400 text-slate-900 text-[10px] font-black px-1.5 py-0.5 rounded-full shadow-md">🎓 X</span>
+                </div>
+
+                <!-- Textbook & Learning Details -->
+                <div>
+                  <div class="flex items-center gap-1.5 mb-1">
+                    <span class="bg-yellow-400 text-slate-900 font-extrabold text-[10px] px-2 py-0.5 rounded-md">Buku Saku</span>
+                    <span class="text-white/80 text-[11px] font-medium">Ilyas Fandhi Anggara, S.Kom</span>
+                  </div>
+                  <h4 class="font-extrabold text-sm sm:text-base text-white">Modul Struktur Data</h4>
+                  <p class="text-[11px] text-blue-100/90 leading-tight">SMA Negeri 4 Yogyakarta • PPG UNY</p>
+                </div>
+              </div>
+
+              <!-- Floating Code Badges -->
+              <div class="flex flex-row sm:flex-col gap-1.5 shrink-0">
+                <span class="bg-white/20 backdrop-blur-md text-white font-mono text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20"> Top: Push() </span>
+                <span class="bg-white/20 backdrop-blur-md text-white font-mono text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20"> FIFO: Enqueue() </span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STAT COUNTERS (5000+ STYLE FROM REFERENCE IMAGE) -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+          <div class="bg-white rounded-2xl p-6 soft-card-shadow border border-slate-100 text-center">
+            <div class="text-4xl sm:text-5xl font-black text-brandOrange mb-1">5+ Bab</div>
+            <h4 class="font-bold text-slate-800 text-sm">Modul Terstruktur Lengkap</h4>
+            <p class="text-xs text-slate-500 mt-1">Disesuaikan persis dengan Kurikulum Merdeka Fase E & Buku Saku Informatika.</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 soft-card-shadow border border-slate-100 text-center">
+            <div class="text-4xl sm:text-5xl font-black text-brandBlue mb-1">3 Model</div>
+            <h4 class="font-bold text-slate-800 text-sm">Simulasi Interaktif Visual</h4>
+            <p class="text-xs text-slate-500 mt-1">Animasi real-time manipulasi List, tabung Stack (LIFO), & pipa Queue (FIFO).</p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 soft-card-shadow border border-slate-100 text-center">
+            <div class="text-4xl sm:text-5xl font-black text-emerald-600 mb-1">85+ KKTP</div>
+            <h4 class="font-bold text-slate-800 text-sm">Capaian Asesmen Mandiri HOTS</h4>
+            <p class="text-xs text-slate-500 mt-1">Peningkatan pemahaman konsep terukur dari Pre-Test hingga Post-Test.</p>
+          </div>
+        </section>
+
+        <!-- 6 PROBLEMS FACED BY STUDENTS (MATCHING REFERENCE IMAGE GRID) -->
+        <section class="space-y-8">
+          <div class="text-center max-w-2xl mx-auto px-4">
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 mb-3">Tantangan yang Sering Dihadapi Siswa <span class="text-brandOrange">Saat Belajar Struktur Data:</span></h2>
+            <p class="text-slate-600 text-xs sm:text-sm">Apakah kamu pernah mengalami kebingungan pada konsep-konsep pemrograman di bawah ini?</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            <!-- Card 1 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl soft-card-shadow soft-card-shadow-hover border border-slate-100 flex flex-col justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl mb-4">🎯</div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1.5">Bingung Misteri Indeks Nol (0)</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Sulit membayangkan mengapa indeks selalu diawali dari 0 dan bagaimana komputer menghitung jarak offset memori RAM.</p>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl soft-card-shadow soft-card-shadow-hover border border-slate-100 flex flex-col justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl mb-4">📚</div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1.5">Tertukar Prinsip LIFO dan FIFO</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Sering keliru membedakan mana yang Last In First Out (Stack) dan mana yang First In First Out (Queue).</p>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl soft-card-shadow soft-card-shadow-hover border border-slate-100 flex flex-col justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl mb-4">🔄</div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1.5">Ragu Operasi Push, Pop, Enqueue, Dequeue</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Bingung dari ujung mana data masuk (Top/Rear) dan dari ujung mana data keluar (Top/Front).</p>
+              </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl soft-card-shadow soft-card-shadow-hover border border-slate-100 flex flex-col justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl mb-4">⚖️</div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1.5">Sulit Memilih Wadah Data yang Tepat</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Ragu kapan harus menggunakan List, kapan wajib menggunakan Stack, dan kapan harus menggunakan Queue.</p>
+              </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl soft-card-shadow soft-card-shadow-hover border border-slate-100 flex flex-col justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4">💡</div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1.5">Penyelesaian Kasus Nyata & HOTS</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Kesulitan menganalisis alur tombol Undo, riwayat Back browser, antrean pesanan burger, atau kurung matematika.</p>
+              </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl soft-card-shadow soft-card-shadow-hover border border-slate-100 flex flex-col justify-between">
+              <div class="w-12 h-12 rounded-2xl bg-cyan-100 text-cyan-600 flex items-center justify-center text-2xl mb-4">❓</div>
+              <div>
+                <h3 class="font-bold text-slate-900 text-sm mb-1.5">Butuh Praktik Visual Nyata</h3>
+                <p class="text-xs text-slate-500 leading-relaxed">Teori teks di buku terasa abstrak tanpa adanya media laboratorium interaktif yang bisa dimanipulasi langsung.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- MOTIVATIONAL TRANSITION HEADLINE -->
+        <section class="bg-gradient-to-r from-blue-900 via-brandBlue to-blue-950 text-white rounded-3xl p-6 sm:p-10 lg:p-12 text-center soft-card-shadow relative overflow-hidden">
+          <div class="max-w-3xl mx-auto relative z-10">
+            <span class="inline-block bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider mb-4">Kurikulum Merdeka</span>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4 leading-snug">Tujuan Pembelajaran — <span class="text-amber-400">Menumbuhkan Nalar Kritis</span> dan mencapai keunggulan komputasional siswa Fase E</h2>
+            <p class="text-blue-100 text-xs sm:text-sm sm:text-base leading-relaxed mb-6 max-w-2xl mx-auto">Membangun fondasi logika berpikir yang kokoh untuk persiapan dunia kecerdasan buatan, sains data, dan pemrograman modern.</p>
+            <div class="flex flex-wrap justify-center gap-3">
+              <button onclick="switchTab('materi')" class="px-5 sm:px-6 py-3 rounded-xl bg-white text-blue-900 font-extrabold text-xs shadow-md hover:bg-blue-50 transition touch-target">Baca Materi Lengkap ➔</button>
+              <button onclick="switchTab('simulasi')" class="px-5 sm:px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs shadow-md transition touch-target">Uji Coba Simulator 🎮</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 STEPS TO MASTERY (01, 02, 03 CARDS - MATCHING REFERENCE IMAGE) -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <!-- Left Side: Circular Illustration Frame -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="relative w-56 h-56 sm:w-72 sm:h-72 rounded-full border-8 border-orange-400/40 p-2 bg-gradient-to-tr from-orange-500 to-amber-400 shadow-2xl flex items-center justify-center text-white">
+              <div class="w-full h-full rounded-full bg-slate-900 flex flex-col items-center justify-center p-6 text-center">
+                <span class="text-4xl sm:text-5xl mb-2">💻</span>
+                <h3 class="font-extrabold text-base sm:text-lg text-white">Praktik Mandiri</h3>
+                <p class="text-[11px] sm:text-xs text-slate-300 mt-1 max-w-[190px]">Kombinasi teori buku saku, animasi interaktif, dan asesmen HOTS.</p>
+                <span class="mt-3 bg-blue-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase">Fase E SMA</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Side: 01, 02, 03 Cards with Big Watermark Numbers -->
+          <div class="lg:col-span-7 space-y-4">
+            <!-- Step 01 -->
+            <div class="bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
+              <div class="flex-1">
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Tahap 1</span>
+                <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">Eksplorasi Konsep & Memori RAM</h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Pelajari 4 pilar komputasional, arsitektur lemari penyimpanan memori, formula offset alamat heksadesimal, dan karakteristik List.</p>
+              </div>
+              <div class="step-number-watermark text-slate-200">01</div>
+            </div>
+
+            <!-- Step 02 -->
+            <div class="bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
+              <div class="flex-1">
+                <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Tahap 2</span>
+                <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">Simulasi Visual Interaktif Real-Time</h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Eksperimen langsung dengan menumpuk data ke tabung Stack (Push/Pop), mengantrekan data ke pipa Queue (FIFO), dan menguji rumus kurung.</p>
+              </div>
+              <div class="step-number-watermark text-slate-200">02</div>
+            </div>
+
+            <!-- Step 03 -->
+            <div class="bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
+              <div class="flex-1">
+                <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Tahap 3</span>
+                <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">Evaluasi Asesmen HOTS & Sertifikasi</h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Uji pemahaman komparatif lewat studi kasus nyata restoran dan e-commerce, selesaikan Post-Test, dan klaim sertifikat kelulusan resmi.</p>
+              </div>
+              <div class="step-number-watermark text-slate-200">03</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ================= SECTION: PRE-TEST (TES AWAL) ================= -->
+    <section id="section-pretest" class="hidden py-6 sm:py-8 max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b pb-4 mb-6">
+          <div>
+            <span class="bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full text-xs">Asesmen Diagnostik Awal</span>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-2">Pre-Test: Struktur Data Fase E</h2>
+            <p class="text-xs text-slate-500 mt-1">Uji intuisi dan pengetahuan awalmu sebelum memasuki materi bacaan.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-400 block">Total Soal</span>
+            <span class="text-lg sm:text-xl font-black text-blue-600">10 Butir</span>
+          </div>
+        </div>
+
+        <!-- Pre-Test Questions Container -->
+        <div id="preTestQuestionsContainer" class="space-y-4">
+          <!-- Rendered via JS -->
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+          <button id="btnSubmitPreTest" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs shadow-md transition touch-target">Kirim Jawaban Pre-Test ➔</button>
+          <span class="text-xs text-slate-400">Setiap soal bernilai 10 poin (Skor maksimal: 100)</span>
+        </div>
+
+        <!-- Pre-Test Result Card (Hidden until submitted) -->
+        <div id="preTestResultSummary" class="hidden mt-8 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="text-3xl">🎉</span>
+            <div>
+              <h3 class="font-extrabold text-base text-blue-900">Pre-Test Berhasil Diselesaikan!</h3>
+              <p class="text-xs text-blue-700">Skor diagnostik awal kamu telah tersimpan untuk evaluasi perbandingan nanti.</p>
+            </div>
+          </div>
+          <div class="text-3xl font-black text-blue-900 my-3" id="preTestScoreDisplay">0 / 100</div>
+          <p class="text-xs text-slate-600 mb-4">Sekarang, mari lanjutkan ke materi baca untuk memperdalam konsep dan menaikkan pemahamanmu!</p>
+          <button onclick="switchTab('materi')" class="px-5 py-2.5 rounded-xl bg-brandOrange hover:bg-brandOrange-hover text-white font-bold text-xs transition shadow-md touch-target">Lanjut ke Materi Baca ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION: MATERI BACA ================= -->
+    <section id="section-materi" class="hidden py-6 sm:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <!-- Sidebar Navigation for Chapters (With Horizontal Scroll on Mobile/Tablet) -->
+        <aside class="lg:col-span-4 space-y-4">
+          <div class="bg-white rounded-3xl p-5 soft-card-shadow border border-slate-200">
+            <div class="flex items-center justify-between mb-3 pb-2 border-b">
+              <h3 class="font-black text-sm text-slate-900">Daftar Bab Pembelajaran</h3>
+              <span class="text-[10px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded">Buku Saku</span>
+            </div>
+            <!-- Chapter Nav Pills / Buttons -->
+            <div id="materiSidebarNav" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Interactive Memory Offset Calculator Widget -->
+          <div class="bg-gradient-to-br from-slate-900 to-blue-950 text-white rounded-3xl p-5 shadow-lg border border-slate-800">
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="font-bold text-xs uppercase tracking-wide text-amber-400">Kalkulator Offset Memori RAM</h4>
+              <span class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded font-mono">Formula O(1)</span>
+            </div>
+            <p class="text-[11px] text-slate-300 mb-3">Hitung alamat fisik elemen List: <code>Alamat = Base + (Index × Size)</code></p>
+
+            <div class="space-y-2 text-xs">
+              <div>
+                <label for="calcBaseAddress" class="block text-[10px] text-slate-400">Alamat Dasar (Base Hex):</label>
+                <input type="number" id="calcBaseAddress" value="256" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono text-xs" />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label for="calcElementIndex" class="block text-[10px] text-slate-400">Indeks Elemen [i]:</label>
+                  <input type="number" id="calcElementIndex" value="3" min="0" max="100" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono text-xs" />
+                </div>
+                <div>
+                  <label for="calcElementSize" class="block text-[10px] text-slate-400">Ukuran Tipe (Byte):</label>
+                  <input type="number" id="calcElementSize" value="4" class="w-full bg-slate-800/80 border border-slate-700 rounded-lg px-2.5 py-1.5 text-white font-mono text-xs" />
+                </div>
+              </div>
+              <div class="pt-2 border-t border-slate-800" id="calcResultAddress">
+                <!-- Dynamically updated -->
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Chapter Display Area -->
+        <div class="lg:col-span-8" id="chapterDisplayArea">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION: SIMULASI INTERAKTIF ================= -->
+    <section id="section-simulasi" class="hidden py-6 sm:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+      <!-- Header of Simulators -->
+      <div class="bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="bg-amber-100 text-amber-800 font-bold px-3 py-1 rounded-full text-xs">Laboratorium Virtual</span>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 mt-2">Simulasi Visual Interaktif Struktur Data</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Eksperimen langsung dengan menambahkan, menghapus, dan memeriksa alur data secara visual dan real-time.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1. SIMULATOR: LIST / ARRAY (With Responsive Contiguous Strip) -->
+      <div class="bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-4 mb-4">
+          <div>
+            <span class="bg-blue-100 text-blue-800 font-bold px-2.5 py-0.5 rounded-md text-xs">Model 1</span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">List (Array Dinamis Berindeks)</h3>
+            <p class="text-xs text-slate-500">Mendukung akses bebas acak (Random Access) via nomor indeks.</p>
+          </div>
+          <div class="text-xs font-mono text-slate-400">Base RAM: 0x100 | Step: 4 Bytes</div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex flex-wrap gap-2 mb-4 bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 text-xs">
+          <input type="text" id="listInputVal" placeholder="Nilai Elemen (misal: Ceri)" class="px-3 py-2 rounded-xl border border-slate-300 flex-1 min-w-[140px]" />
+          <input type="number" id="listInputIdx" placeholder="Indeks [i]" min="0" max="8" class="px-3 py-2 rounded-xl border border-slate-300 w-24 font-mono" />
+          <button id="listBtnAdd" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition shadow-xs whitespace-nowrap">+ Sisipkan</button>
+          <button id="listBtnRemove" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold transition shadow-xs whitespace-nowrap">- Hapus</button>
+          <button id="listBtnSearch" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold transition shadow-xs whitespace-nowrap">🔍 Cari</button>
+          <button id="listBtnReset" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold transition whitespace-nowrap sm:ml-auto">Reset</button>
+        </div>
+
+        <!-- Visual Contiguous Memory Cells (Smooth Horizontal Scroll on Mobile) -->
+        <div class="array-strip border border-slate-200 rounded-2xl bg-slate-50/50 p-3 my-2" id="listVisualContainer">
+          <!-- Rendered by JS -->
+        </div>
+
+        <!-- Status Indicator -->
+        <div id="listStatusText" class="mt-4 p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900 font-medium">Ketik nilai dan klik tombol aksi di atas untuk melihat respon alur list.</div>
+      </div>
+
+      <!-- 2. SIMULATOR: STACK (LIFO) & PARENTHESES CHECKER -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left: Stack Simulator Tube -->
+        <div class="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b pb-3 mb-4">
+              <div>
+                <span class="bg-amber-100 text-amber-800 font-bold px-2.5 py-0.5 rounded-md text-xs">Model 2</span>
+                <h3 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">Stack (Tumpukan - Disiplin LIFO)</h3>
+                <p class="text-xs text-slate-500">Last In, First Out — Satu-satunya pintu keluar-masuk adalah puncak (Top).</p>
+              </div>
+              <span id="stackTopIndicator" class="text-xs font-mono font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg">Top: NULL</span>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex flex-wrap gap-2 mb-6 bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 text-xs">
+              <input type="text" id="stackInputVal" placeholder="Nama Dokumen/Aksi" class="px-3 py-2 rounded-xl border border-slate-300 flex-1 min-w-[130px]" />
+              <button id="stackBtnPush" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold transition shadow-xs whitespace-nowrap">⬇️ Push()</button>
+              <button id="stackBtnPop" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold transition shadow-xs whitespace-nowrap">⬆️ Pop()</button>
+              <button id="stackBtnPeek" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold transition shadow-xs whitespace-nowrap">👁️ Peek()</button>
+              <button id="stackBtnClear" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold transition whitespace-nowrap">Clear</button>
+            </div>
+
+            <!-- Vertical Cylinder View -->
+            <div class="flex justify-center my-4 sm:my-6">
+              <div id="stackCylinder" class="stack-cylinder">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+          </div>
+
+          <div id="stackStatusText" class="mt-2 p-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-700 font-medium">Status: Siap menumpuk data. Kapasitas maksimum 6 elemen.</div>
+        </div>
+
+        <!-- Right: Parentheses Matching Mini-Simulator (HOTS Case) -->
+        <div class="lg:col-span-5 bg-gradient-to-br from-indigo-900 via-blue-900 to-slate-900 text-white rounded-3xl p-5 sm:p-8 soft-card-shadow flex flex-col justify-between">
+          <div>
+            <div class="inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full text-xs font-bold text-amber-300 mb-3"><span>✨</span> Tantangan HOTS: Parentheses Validator</div>
+            <h3 class="text-lg sm:text-xl font-bold mb-2">Validasi Pasangan Tanda Kurung</h3>
+            <p class="text-xs text-blue-100/80 mb-4 leading-relaxed">Compiler memanfaatkan prinsip Stack LIFO untuk menguji apakah seluruh kurung <code>( )</code>, <code>[ ]</code>, dan <code>{ }</code> memiliki pasangan seimbang.</p>
+
+            <div class="space-y-3 mb-4">
+              <label for="inputFormula" class="block text-xs font-semibold text-slate-200">Ketik Formula Matematika:</label>
+              <input
+                type="text"
+                id="inputFormula"
+                value="{ [ ( 5 + 3 ) * 2 ] - 4 }"
+                class="w-full px-3.5 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-mono text-xs focus:ring-2 focus:ring-amber-400 focus:outline-hidden"
+              />
+              <button id="btnCheckParentheses" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs transition shadow-md touch-target">Validasi dengan Stack ➔</button>
+            </div>
+
+            <div id="parenthesesResult" class="min-h-[90px] text-xs">
+              <div class="p-3 bg-white/5 border border-white/10 rounded-xl text-slate-300">Hasil validasi per karakter akan ditampilkan di sini.</div>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-white/10 text-[11px] text-blue-200">💡 Tips: Coba hapus salah satu kurung tutup dan perhatikan pesan galatnya!</div>
+        </div>
+      </div>
+
+      <!-- 3. SIMULATOR: QUEUE (FIFO) -->
+      <div class="bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-4 mb-4">
+          <div>
+            <span class="bg-teal-100 text-teal-800 font-bold px-2.5 py-0.5 rounded-md text-xs">Model 3</span>
+            <h3 class="text-lg sm:text-xl font-bold text-slate-900 mt-1">Queue (Antrean - Disiplin FIFO)</h3>
+            <p class="text-xs text-slate-500">First In, First Out — Masuk dari ujung REAR (belakang), keluar dari FRONT (depan).</p>
+          </div>
+          <div class="flex items-center gap-2 text-xs font-bold">
+            <span class="text-teal-700 bg-teal-50 px-2 py-1 rounded-md border border-teal-200">FRONT (Keluar)</span>
+            <span>➔➔➔</span>
+            <span class="text-indigo-700 bg-indigo-50 px-2 py-1 rounded-md border border-indigo-200">REAR (Masuk)</span>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex flex-wrap gap-2 mb-4 bg-slate-50 p-3 sm:p-4 rounded-2xl border border-slate-200 text-xs">
+          <input type="text" id="queueInputVal" placeholder="Nama Antrean (misal: Meja 04)" class="px-3 py-2 rounded-xl border border-slate-300 flex-1 min-w-[130px]" />
+          <button id="queueBtnEnqueue" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition shadow-xs whitespace-nowrap">🚪 Enqueue()</button>
+          <button id="queueBtnDequeue" class="px-3.5 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-bold transition shadow-xs whitespace-nowrap">🎟️ Dequeue()</button>
+          <button id="queueBtnPeek" class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold transition shadow-xs whitespace-nowrap">👁️ Front()</button>
+          <button id="queueBtnClear" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold transition whitespace-nowrap">Clear</button>
+        </div>
+
+        <!-- Horizontal Pipe Visualization -->
+        <div class="my-4 overflow-x-auto">
+          <div class="flex items-center justify-between text-[11px] font-mono text-slate-400 px-4 mb-1">
+            <span>⬅️ Arah Keluar (FRONT / Head)</span>
+            <span>Arah Masuk (REAR / Tail) ⬅️</span>
+          </div>
+          <div id="queuePipe" class="queue-pipe rounded-2xl">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <div id="queueStatusText" class="mt-4 p-3 bg-teal-50/60 border border-teal-200 rounded-xl text-xs text-teal-900 font-medium">Status antrean siap. Masukkan data ke antrean untuk mempraktikkan keadilan FIFO.</div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION: VIDEO PENJELASAN ================= -->
+    <section id="section-video" class="hidden py-6 sm:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
+        <!-- Video Player Column -->
+        <div class="lg:col-span-8 bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200">
+          <div class="aspect-video w-full rounded-2xl overflow-hidden bg-slate-900 shadow-md mb-5">
+            <iframe
+              id="mainVideoIframe"
+              class="w-full h-full"
+              src=""
+              title="Video Pembelajaran Struktur Data"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+
+          <h3 id="mainVideoTitle" class="text-lg sm:text-2xl font-black text-slate-900 mb-2">Memuat Video...</h3>
+          <p id="mainVideoDesc" class="text-xs sm:text-sm text-slate-600 leading-relaxed mb-6">Deskripsi materi video.</p>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+            <h4 class="font-extrabold text-xs text-slate-900 uppercase tracking-wide mb-3 flex items-center gap-2"><span>⏱️</span> Poin Kunci & Timecode Pembahasan</h4>
+            <ul id="mainVideoKeypoints" class="space-y-2">
+              <!-- Rendered by JS -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- Playlist Selection Column -->
+        <div class="lg:col-span-4 bg-white rounded-3xl p-5 soft-card-shadow border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between pb-2 border-b">
+            <h3 class="font-black text-sm text-slate-900">Koleksi Video Pembelajaran</h3>
+            <span class="text-[10px] bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded">4 Modul</span>
+          </div>
+          <div id="videoPlaylistContainer" class="space-y-2">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION: POST-TEST & SERTIFIKAT ================= -->
+    <section id="section-posttest" class="hidden py-6 sm:py-8 max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200 mb-6">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b pb-4 mb-6">
+          <div>
+            <span class="bg-orange-100 text-orange-800 font-bold px-3 py-1 rounded-full text-xs">Evaluasi Akhir Mandiri</span>
+            <h2 class="text-xl sm:text-2xl font-black text-slate-900 mt-2">Post-Test: Asesmen HOTS Struktur Data</h2>
+            <p class="text-xs text-slate-500 mt-1">Ukur peningkatan pemahamanmu dan terbitkan Sertifikat Kelulusan Resmi!</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-slate-400 block">KKTP Ketuntasan</span>
+            <span class="text-lg sm:text-xl font-black text-brandOrange">Minimal 75</span>
+          </div>
+        </div>
+
+        <!-- Questions List -->
+        <div id="postTestQuestionsContainer" class="space-y-4">
+          <!-- Rendered by JS -->
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4">
+          <button id="btnSubmitPostTest" class="px-6 py-3 rounded-xl bg-brandOrange hover:bg-brandOrange-hover text-white font-extrabold text-xs shadow-md transition touch-target">Kirim Evaluasi & Terbitkan Sertifikat 🎓</button>
+          <span class="text-xs text-slate-400">Total 10 Soal Analisis HOTS (Skor Maksimal: 100)</span>
+        </div>
+
+        <!-- Post-Test Result & Certificate Area -->
+        <div id="postTestResultSummary" class="hidden mt-8 space-y-6">
+          <div class="p-6 bg-gradient-to-r from-orange-50 via-amber-50 to-emerald-50 border border-orange-200 rounded-3xl text-center">
+            <span class="text-4xl block mb-2">🏆</span>
+            <h3 class="text-lg sm:text-xl font-black text-slate-900">Hasil Evaluasi Formatif Anda:</h3>
+            <div class="text-4xl sm:text-5xl font-black text-brandOrange my-3" id="postTestScoreDisplay">0 / 100</div>
+            <div id="postTestScoreImprovement" class="text-xs text-slate-600 font-medium"></div>
+          </div>
+
+          <!-- Canvas Certificate Container -->
+          <div class="bg-slate-900 rounded-3xl p-5 sm:p-6 text-white text-center shadow-2xl">
+            <h4 class="font-bold text-sm text-amber-400 mb-2">SERTIFIKAT KELULUSAN RESMI ANDA</h4>
+            <p class="text-xs text-slate-300 mb-4">Sertifikat dihasilkan secara otomatis berdasarkan nama dan skor kelulusan Anda.</p>
+
+            <div class="flex justify-center overflow-x-auto p-2">
+              <canvas id="certificateCanvas" width="800" height="520" class="rounded-xl shadow-lg border border-slate-700 bg-white max-w-full h-auto"></canvas>
+            </div>
+
+            <div class="mt-4 flex flex-wrap justify-center gap-3">
+              <button id="btnDownloadCertificate" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-2 shadow-md transition touch-target">
+                <span>📥 Unduh Sertifikat (PNG Resolusi Tinggi)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SECTION: GLOSARIUM ================= -->
+    <section id="section-glosarium" class="hidden py-6 sm:py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div class="bg-white rounded-3xl p-5 sm:p-8 soft-card-shadow border border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full text-xs">Kamus Istilah TIK</span>
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 mt-2">Glosarium Struktur Data</h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1">Daftar istilah teknis dan kosakata informatika Kurikulum Merdeka Fase E.</p>
+          </div>
+          <div class="w-full sm:w-72">
+            <input type="text" id="glossarySearchInput" placeholder="Cari istilah (misal: LIFO)..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-blue-600 focus:outline-hidden" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Glossary Grid -->
+      <div id="glossaryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="bg-slate-900 text-white border-t border-slate-800 py-10 sm:py-12 mt-16 sm:mt-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-slate-800">
+          <div class="md:col-span-5 space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="font-black text-xl text-white">STRUKTUR<span class="text-brandOrange">DATA</span></span>
+              <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-0.5 rounded">UKIN 2026</span>
+            </div>
+            <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+              Website Pembelajaran Interaktif Struktur Data dirancang untuk mendampingi proses belajar mengajar mata pelajaran Informatika Fase E (Kelas X SMA) berbasis Kurikulum Merdeka.
+            </p>
+            <div class="text-[11px] text-slate-400 pt-2">📚 Sumber: <em>Buku Saku Pembelajaran Struktur Data</em> oleh <strong>Ilyas Fandhi Anggara, S.Kom</strong>.</div>
+          </div>
+
+          <div class="md:col-span-4 space-y-2">
+            <h4 class="font-extrabold text-xs uppercase tracking-wider text-amber-400">Pengembang & Afiliasi Akademik</h4>
+            <p class="text-xs font-bold text-white">Ilyas Fandhi Anggara, S.Kom</p>
+            <p class="text-xs text-slate-400">Guru Informatika • SMA Negeri 4 Yogyakarta</p>
+            <p class="text-xs text-slate-400">Mahasiswa PPG Prajabatan • Universitas Negeri Yogyakarta (UNY)</p>
+            <p class="text-xs text-slate-400">Portofolio Uji Kinerja (UKIN) Pembelajaran Mandiri</p>
+          </div>
+
+          <div class="md:col-span-3 space-y-2">
+            <h4 class="font-extrabold text-xs uppercase tracking-wider text-amber-400">Navigasi Singkat</h4>
+            <ul class="text-xs space-y-1.5 text-slate-400">
+              <li>
+                <a
+                  href="#"
+                  onclick="
+                    switchTab('beranda');
+                    return false;
+                  "
+                  class="hover:text-white transition"
+                  >Beranda Utama</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="
+                    switchTab('pretest');
+                    return false;
+                  "
+                  class="hover:text-white transition"
+                  >Pre-Test Diagnostik</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="
+                    switchTab('materi');
+                    return false;
+                  "
+                  class="hover:text-white transition"
+                  >Materi Baca 5 Bab</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="
+                    switchTab('simulasi');
+                    return false;
+                  "
+                  class="hover:text-white transition"
+                  >Laboratorium Simulasi</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  onclick="
+                    switchTab('posttest');
+                    return false;
+                  "
+                  class="hover:text-white transition"
+                  >Post-Test & Sertifikat</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-6 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+          <p>© 2026 Ilyas Fandhi Anggara, S.Kom • PPG Prajabatan UNY • SMA Negeri 4 Yogyakarta.</p>
+          <p class="text-slate-400 font-mono text-[11px]">Kurikulum Merdeka • Informatika Fase E</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ================= FLOATING MOBILE QUICK DOCK (TOUCH FRIENDLY) ================= -->
+    <div class="sm:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1.5 px-3 z-40 flex justify-around items-center shadow-lg">
+      <button onclick="switchTab('beranda')" class="flex flex-col items-center text-[10px] font-bold text-slate-600 hover:text-blue-600 py-1">
+        <span class="text-base">🏠</span>
+        <span>Beranda</span>
+      </button>
+      <button onclick="switchTab('pretest')" class="flex flex-col items-center text-[10px] font-bold text-slate-600 hover:text-blue-600 py-1">
+        <span class="text-base">📝</span>
+        <span>Pre-Test</span>
+      </button>
+      <button onclick="switchTab('materi')" class="flex flex-col items-center text-[10px] font-bold text-slate-600 hover:text-blue-600 py-1">
+        <span class="text-base">📖</span>
+        <span>Materi</span>
+      </button>
+      <button onclick="switchTab('simulasi')" class="flex flex-col items-center text-[10px] font-bold text-brandOrange hover:text-orange-700 py-1">
+        <span class="text-base">🎮</span>
+        <span>Simulasi</span>
+      </button>
+      <button onclick="switchTab('posttest')" class="flex flex-col items-center text-[10px] font-bold text-slate-600 hover:text-blue-600 py-1">
+        <span class="text-base">🏆</span>
+        <span>Post-Test</span>
+      </button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

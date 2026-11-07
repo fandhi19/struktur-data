@@ -1,0 +1,643 @@
+=== PAGE 1 ===
+K U R I K U L U M  M E R D E K A
+I N F O R M AT I K A  K E L A S  X  •  FA S E  E
+B U K U  S A K U  P E M B E L A J A R A N
+STRUKTUR DATA
+LIST • STACK • QUEUE
+Fondasi Berpikir Komputasional: Mengorganisasi, Menyimpan, dan
+Mengolah Data Digital secara Cepat, Tepat, dan Efisien.
+// B e rp i ki r K o m p u t a s i o n a l  B e rb a s i s  A n a l o g i  Nya t a  & Si m u l a s i  Si s t e m
+List (Daftar)
+Akses bebas fleksibel berbasis nomor
+indeks (0, 1, 2, ...).
+Stack (Tumpukan)
+Prinsip LIFO: Data terakhir masuk,
+pertama keluar via Top.
+Queue (Antrean)
+Prinsip FIFO: Masuk dari Rear, dilayani adil
+dari Front.
+Ilyas Fandhi Anggara, S.Kom
+Guru Informatika • SMA Negeri 4 Yogyakarta • PPG Prajabatan UNY
+Fase E SMA
+
+=== PAGE 2 ===
+B U K U  SA K U  I NF O R M AT I K A P R A K A T A  P E N D I D I K
+P E N G A N T A R  P E N D I D I K
+Kata Pengantar
+Membangun fondasi logika dan pemikiran komputasional melalui struktur data.
+Puji syukur ke hadirat Tuhan Yang Maha Esa atas limpahan rahmat-Nya sehingga Buku Saku Pembelajaran
+Informatika Kelas X SMA (Fase E) bertajuk “Fondasi Struktur Data: List, Stack, dan Queue” ini dapat
+diselesaikan dengan baik untuk mendampingi proses belajar mengajar dalam bingkai Kurikulum Merdeka.
+Pernahkah kalian berpikir bagaimana pemutar musik seperti Spotify mampu melompat ke lagu favorit kalian
+dalam sekejap tanpa memutar lagu lain sebelumnya? Mengapa ketika kita menekan kombinasi tombol Ctrl+Z
+pada laptop, tulisan yang baru saja selesai diketik adalah yang pertama kali terhapus? Dan bagaimana mesin
+pencetak (printer) di laboratorium sekolah melayani ratusan dokumen tanpa tertukar urutannya?
+Seluruh keajaiban komputasi di atas berpangkal pada satu pilar fundamental: Struktur Data. Melalui buku saku
+ini, peserta didik diajak mengupas tiga struktur data linier mendasar, yaitu List (Daftar), Stack (Tumpukan), dan
+Queue (Antrean). Pembelajaran disajikan secara kontekstual melalui analogi fisik sehari-hari, visualisasi memori,
+simulasi langkah demi langkah, serta studi kasus teknologi nyata yang relevan.
+Harapan Penyusun
+Semoga buku saku ini tidak hanya menjadi bekal teknis dalam memahami mata pelajaran Informatika, melainkan juga mengasah
+kebiasaan computational thinking peserta didik dalam memecahkan masalah kehidupan sehari-hari secara sistematis, logis,
+dan solutif.
+Yogyakarta, 2026
+Ilyas Fandhi Anggara, S.Kom
+i
+
+=== PAGE 3 ===
+PE T U NJ U K  PE NG G U NA A N PA N D U A N  B E L A J A R
+P E D O M A N  S I S W A
+Petunjuk Belajar
+Empat tahapan terpadu menguasai konsep dan implementasi struktur data.
+1 Eksplorasi Konsep
+Pahami definisi, prinsip kerja dasar, dan terminologi penting
+setiap struktur data melalui analogi konkret.
+2 Visualisasi Diagram
+Amati ilustrasi pergerakan memori (posisi indeks,
+pergerakan pointer Top, pergeseran Front & Rear).
+3 Analisis & Komparasi
+Bandingkan karakteristik LIFO, FIFO, dan akses berindeks
+melalui tabel matriks komparasi dan pohon keputusan.
+4 Asesmen Studi Kasus
+Uji daya nalar kritis kalian melalui skenario teknologi nyata
+dan latihan soal berbasis literasi komputasional.
+C A PA I A N PE M B E LA J A R A N ( C P)  FA SE  E  —  B E R PI K I R  K O M PU TA SI O NA L BSKAP Kemendikbudristek
+Peserta didik mampu menerapkan strategi algoritmik standar untuk menghasilkan beberapa solusi persoalan dengan data
+diskrit bervolume tidak kecil.
+Peserta didik mampu mendisposisikan struktur data linear (List, Stack, Queue) yang tepat untuk memodelkan persoalan
+komputasi sehari-hari.
+Peserta didik mampu menjustifikasi efisiensi pemrosesan data berdasarkan prinsip FIFO dan LIFO.
+T I PS B E LAJ AR  PE NDI DI K
+Jangan menghafal sintaksis kode terlebih dahulu! Fokuslah pada pemahaman cara kerja data: dari mana data masuk, di mana
+data disimpan, dan bagaimana data dikeluarkan.
+1
+
+=== PAGE 4 ===
+ST R U K T U R  B U K U D A F T A R  I S I
+P E T A  N A V I G A S I
+Daftar Isi
+Rangkaian topik pembelajaran terstruktur dari konsep dasar hingga evaluasi.
+Kata Pengantar & Petunjuk Penggunaan
+Prakata pendidik, panduan belajar, dan Capaian Pembelajaran Fase E.
+i – 1
+Bab I: Pengantar Struktur Data & Berpikir Komputasional
+Urgensi penataan data digital, risiko kekacauan data, dan 4 pilar komputasi.
+3 – 5
+Bab II: List (Daftar / Larik Dasar Berindeks)
+Indeks berbasis nol (0), fleksibilitas akses acak, playlist Spotify, dan kontak HP.
+6 – 8
+Bab III: Stack (Tumpukan & Prinsip LIFO)
+Prinsip LIFO, operasi Push & Pop, fenomena Overflow/Underflow, fitur Undo.
+9 – 11
+Bab IV: Queue (Antrean & Prinsip FIFO)
+Prinsip FIFO, operasi Enqueue & Dequeue, antrean kasir, dan antrean cetak printer.
+12 – 14
+Bab V: Matriks Komparasi & Pohon Keputusan
+Tabel perbandingan menyeluruh dan panduan memilih struktur data tepat.
+15 – 17
+Evaluasi Formatif: Studi Kasus & Tantangan Logika
+Asesmen berbasis literasi komputasional, HOTS, dan refleksi mandiri.
+18 – 19
+Glosarium Kosakata & Bibliografi Akademik
+Kamus istilah TIK, rujukan jurnal ilmiah 5 tahun terakhir, dan profil pendidik.
+20 – 21
+2
+
+=== PAGE 5 ===
+FO KU S PEMBAHASAN BAB I
+Hakikat Struktur Data
+Menelaah pengertian, arsitektur penyimpanan, dan akibat
+fatal ketiadaan struktur data pada sistem operasi.
+Pilar Berpikir Komputasional
+Menghubungkan Dekomposisi, Abstraksi, Pola, dan
+Algoritma dalam pengelolaan koleksi data.
+01
+B A B  P E R T A M A
+Pengantar Struktur Data &
+Berpikir Komputasional
+Memahami bagaimana sistem komputer menata miliaran informasi di
+dalam memori agar dapat diakses secepat kilat dan adil.
+
+=== PAGE 6 ===
+B A B  I :  PE NG A NTA R  ST R U K T U R  D ATA F O N D A S I  K O M P U T A S I
+K O N S E P  F U N D A M E N T A L
+Apa Itu Struktur Data?
+Tata kelola data digital di dalam memori kerja komputer (RAM).
+Bayangkan sebuah lemari pakaian yang sangat besar. Jika seluruh pakaian, kaus kaki, jaket, dan topi
+dilemparkan begitu saja ke dalam lemari tanpa sekat atau gantungan, apa yang terjadi saat kalian terburu-buru
+mencari sepasang kaus kaki hitam? Kalian harus mengaduk seluruh isi lemari, membuang banyak waktu, dan
+membuat ruangan berantakan.
+Komputer menghadapi tantangan yang persis sama. Struktur Data adalah cara khusus untuk
+mengorganisasikan, menyimpan, dan mengatur data di dalam sistem komputer (khususnya memori utama/RAM)
+sehingga data tersebut dapat diakses, dimodifikasi, dan diproses secara efisien.
+Dampak Mengerikan Tanpa Struktur Data yang Tepat:
+✖  Kemacetan Sistem (Lag / Freeze)
+Komputer harus memeriksa miliaran data satu per satu tanpa
+acuan arah, memboroskan daya prosesor.
+✖  Ketidakadilan Layanan
+Data pelanggan yang datang lebih awal bisa terlewat atau
+disalip oleh data yang baru masuk.
+✖  Kerusakan Data (Data Corruption)
+Data baru dapat menimpa data penting yang lama karena tidak
+adanya batasan alamat memori yang jelas.
+✖  Pemborosan Memori (Memory Leak)
+Memori teralokasi secara acak dan tidak pernah dibebaskan
+kembali saat proses selesai.
+• Mengapa Siswa Kelas X Perlu Mempelajarinya?
+Di era kecerdasan buatan dan aplikasi modern, programmer hebat bukan sekadar mereka yang mampu mengetik
+kode, melainkan mereka yang mampu memilih wadah data paling efisien untuk memecahkan persoalan dunia
+nyata.
+4
+
+=== PAGE 7 ===
+B A B  I :  PE NG A NTA R  ST R U K T U R  D ATA B E R P I K I R  K O M P U T A S I O N A L
+K E T E R A M P I L A N  A B A D  2 1
+4 Pilar Komputasi dalam Struktur Data
+Pendekatan sistematis memecahkan persoalan pengorganisasian data.
+1. Dekomposisi
+Memecah sekumpulan data kompleks menjadi elemen-
+elemen tunggal yang mandiri (misal: memecah data siswa
+menjadi NIS, Nama, dan Kelas).
+2. Pengenalan Pola
+Menganalisis karakteristik alur data: apakah data
+membutuhkan pemrosesan urutan terbalik (LIFO) atau urutan
+kedatangan asli (FIFO)?
+3. Abstraksi
+Menyembunyikan detail rumit alamat fisik heksadesimal RAM
+dan hanya berfokus pada urutan hubungan logis antarelemen
+data.
+4. Perancangan Algoritma
+Menyusun langkah terurut untuk menyisipkan data baru
+(insert), mencari data (search), atau menghapus data (delete)
+tanpa merusak integritas sistem.
+VI SUALI SASI  ALUR  LO GI K A PE MI LI HAN WADAH DATA
+Data Mentah Masuk
+Identifikas i K ebutuhan
+Aturan Akses?
+Bebas/Urut?
+Akses Acak / Sembarang Posisi →  LIST
+Daftar belanja, playlist, database kontak
+Terakhir Masuk Keluar Dulu →  STACK (LIFO)
+Fitur Undo, History Browser Back, Call Stack
+Pertama Masuk Keluar Dulu →  QUEUE (FIFO)
+Antrean printer, antrean tiket, customer service
+R E F LE K SI  K R I T I S SI SWA
+Komputer tidak memiliki intuisi manusia. Tanpa algoritma dan struktur data yang ditentukan oleh programmer, komputer
+hanyalah perangkat elektronik yang bingung mengelola triliunan byte data.
+5
+
+=== PAGE 8 ===
+KO MPET ENSI YANG  DICAPAI
+Zero-Based Indexing
+Memahami mengapa indeks penomoran elemen di dunia
+pemrograman selalu diawali dari angka nol (0).
+Manipulasi Dinamis
+Menerapkan operasi penambahan, pembaruan,
+penghapusan, dan pencarian elemen pada sembarang
+posisi.
+02
+B A B  K E D U A
+List: Daftar Berurutan &
+Akses Berbasis Indeks
+Struktur data linier paling fleksibel tempat setiap elemen memiliki alamat
+nomor posisi unik yang dapat diakses secara instan.
+
+=== PAGE 9 ===
+B A B  I I :  LI ST  ( D A F TA R  LI NI E R ) A N A T O M I  I N D E K S
+S T R U K T U R  D A T A  D A S A R
+Pengertian & Karakteristik List
+Koleksi data berurutan dengan hak akses acak (random access).
+List (Daftar / Larik Dinamis) adalah struktur data linier di mana sekumpulan data disimpan secara berurutan
+dan setiap elemen memiliki nomor indeks sebagai tanda pengenalnya.
+Karakteristik Utama List:
+Akses Bebas (Random Access): Kita dapat langsung membaca data pada posisi mana pun hanya dengan memanggil
+nomor indeksnya (misal: data[3]).
+Fleksibilitas Tinggi: Kita bebas menyisipkan (insert) data baru di awal, di tengah, atau di akhir daftar.
+Ukuran Dinamis: Pada bahasa pemrograman modern seperti Python, kapasitas list dapat bertambah atau berkurang secara
+otomatis sesuai kebutuhan.
+• Misteri Indeks Dimulai dari 0 (Zero-Based Indexing)
+Banyak pemula bertanya: “Mengapa elemen pertama disebut indeks 0, bukan indeks 1?”. Jawabannya berakar
+pada arsitektur perangkat keras komputer! Indeks sebenarnya adalah jarak perpindahan (offset) dari alamat
+memori awal.
+R E PR E SE NTASI  VI SUAL ALO K ASI  ME MO R I  LI ST
+"Apel"
+Mem: 0x100
+Indeks [0 ]
+"Jeruk"
+Mem: 0x104
+Indeks [1]
+"Mangga"
+Mem: 0x108
+Indeks [2]
+"Pisang"
+Mem: 0x10C
+Indeks [3]
+R UMUS ALAMAT  ME MO R I  K O MPUT E R
+Alamat Elemen = Alamat Awal + (Indeks × Ukuran Data). Jika indeks bernilai 0, maka perpindahan jarak adalah 0, sehingga
+komputer langsung tiba pada elemen paling pertama tanpa jeda komputasi perkalian!
+7
+
+=== PAGE 10 ===
+B A B  I I :  LI ST  ( D A F TA R  LI NI E R ) O P E R A S I  &  I M P L E M E N T A S I
+K E C A K A PA N  P R A K T I S
+Operasi Utama & Penerapan Nyata
+Memanipulasi data daftar dalam kehidupan nyata dan aplikasi digital.
+1. Access & Read (Akses Data)
+Mengambil nilai elemen berdasarkan nomor indeks. Contoh:
+lagu = playlist[4] mengeklik langsung lagu ke-5 tanpa
+memutar lagu 1 sampai 4.
+2. Insertion (Penyisipan Data)
+Menambahkan data baru di posisi mana pun. Bila disisipkan
+di tengah, elemen-elemen setelahnya akan bergeser
+otomatis satu langkah ke kanan.
+3. Deletion (Penghapusan Data)
+Menghapus data tertentu via indeks atau nilainya. Elemen di
+sebelah kanan akan bergeser ke kiri mengisi celah yang
+kosong.
+4. Search & Update (Cari & Ubah)
+Mencari apakah suatu nama ada di dalam list serta
+memperbarui isi nilainya secara instan (misal: kontak[0] =
+"Ayah").
+• Contoh Penerapan di Kehidupan Nyata
+Playlist Lagu Spotify / YouTube Music
+Kalian bebas memutar lagu nomor 10, lalu melompat ke lagu nomor 2, atau menghapus lagu nomor 4 dari daftar putar
+tanpa memengaruhi lagu lain.
+Daftar Kontak di Smartphone & Daftar Belanja
+Daftar belanjaan di aplikasi catatan HP: saat item "Gula" dicoret, item lainnya tetap tersimpan rapi sesuai nomor urut
+masing-masing.
+K E LE MAHAN K O MPUT ASI  LI ST
+Meskipun aksesnya bebas, operasi penyisipan atau penghapusan elemen di awal list berukuran besar membutuhkan proses
+komputasi yang berat karena komputer harus menggeser jutaan elemen di belakangnya.
+8
+
+=== PAGE 11 ===
+TARG ET  PEMAHAMAN BAB III
+Mekanisme Push & Pop
+Menelusuri operasi penambahan elemen ke Top (Push) dan
+pengangkatan elemen dari Top (Pop).
+Fenomena LIFO di Sistem
+Menganalisis cara kerja tombol Undo (Ctrl+Z), tombol Back
+browser, dan evaluasi tanda kurung program.
+03
+B A B  K E T I G A
+Stack: Tumpukan Data &
+Prinsip Kerja LIFO
+Struktur data linier dengan disiplin ketat satu pintu: siapa yang terakhir
+kali diletakkan, dialah yang pertama kali diambil.
+
+=== PAGE 12 ===
+B A B  I I I :  STA C K  ( T U M PU K A N) P R I N S I P  L I F O
+D I S I P L I N  S A T U  P I N T U
+Prinsip Kerja & Anatomi Stack
+Last In, First Out (LIFO) — yang terakhir masuk adalah yang pertama keluar.
+Stack (Tumpukan) adalah struktur data linier yang hanya mengizinkan penambahan dan pengambilan elemen
+melalui satu sisi yang sama, yaitu bagian paling atas yang disebut Top. Sisi dasarnya tertutup rapat dan disebut
+Base.
+ANALO G I  F I SI K :  T UMPUK AN PI R I NG  B E R SI H DI  ME J A MAK AN
+Ketika mencuci piring, piring yang baru dibilas ditaruh di atas tumpukan paling atas. Saat seseorang ingin makan, piring yang
+diambil pertama kali pastilah piring yang ditaruh paling terakhir! Jika nekat menarik piring terbawah, tumpukan piring akan roboh
+dan pecah.
+Push (Operasi Menumpuk)
+Memasukkan data baru ke puncak tumpukan (Top). Posisi Top
+bertambah naik 1 tingkat.
+Pop (Operasi Mengambil)
+Menghapus dan mengambil data dari posisi puncak
+tumpukan. Posisi Top turun 1 tingkat.
+VI SUALI SASI  TAB UNG STAC K : O PE R ASI  PUSH & PO P
+Data A
+Data B
+↓ Push(C)
+1. P ush Masuk
+Data A
+Data B
+Data C ←  TOP
+2. Ko ndisi Terkini
+Data A
+Data B
+↑ Pop() →  C
+3. Data C Keluar
+Operasi Pendukung:Peek() (melihat nilai elemen Top tanpa menghapusnya), IsEmpty() (memeriksa tumpukan kosong), dan
+IsFull() (memeriksa tumpukan penuh).
+10
+
+=== PAGE 13 ===
+B A B  I I I :  STA C K  ( T U M PU K A N) P E N E R A PA N  N Y A T A
+S I S T E M  N Y A T A
+Fenomena & Penerapan Stack
+Dari tombol Undo hingga manajemen memori sistem operasi.
+Stack Overflow (Memori Meluap)
+Terjadi saat program terus memanggil operasi Push pada
+stack yang kapasitas fisiknya sudah penuh. Akibatnya
+program mengalami crash seketika!
+Stack Underflow (Tumpukan Kosong)
+Terjadi saat sistem mencoba mengeksekusi operasi Pop,
+padahal tumpukan sudah kosong melompong (tidak ada
+elemen yang bisa diambil).
+• Penerapan Stack di Kehidupan & Sistem Nyata
+1. Fitur Sakti Ctrl+Z (Undo) pada Aplikasi Word / Desain
+Setiap ketikan kata atau tarikan kuas disimpan ke dalam stack aksi. Ketika kalian menekan Ctrl+Z, aplikasi mengambil
+aksi dari tumpukan paling atas (Top) untuk dibatalkan terlebih dahulu.
+2. Tombol Back pada Browser Internet (Chrome/Edge)
+Setiap link situs yang dikunjungi akan di-push ke stack riwayat. Saat tombol Back diklik, URL situs terakhir di-pop
+sehingga browser meluncur kembali ke laman sebelumnya.
+3. Pengecekan Keseimbangan Tanda Kurung Matematis
+Compiler bahasa pemrograman menggunakan stack untuk memeriksa apakah pasangan kurung buka ( [ { ditutup
+secara tepat oleh kurung tutup } ] ) yang bersesuaian.
+WAWASAN I NF O R MAT I K A:  C ALL ST AC K
+Ketika suatu fungsi dalam program memanggil fungsi lain (rekursi), komputer menyimpan alamat baris kode sebelumnya ke
+dalam Call Stack. Tanpa Stack, komputer tidak akan pernah tahu ke mana harus kembali setelah fungsi selesai dieksekusi!
+11
+
+=== PAGE 14 ===
+TARG ET  PEMAHAMAN BAB IV
+Mekanisme Enqueue & Dequeue
+Memahami pintu masuk belakang (Rear) dan pintu keluar
+depan (Front) dalam menjaga keadilan antrean.
+Buffer & Penjadwalan Komputer
+Mengidentifikasi implementasi antrean pada spooler
+printer, penjadwalan CPU, dan loket pendaftaran.
+04
+B A B  K E E M P A T
+Queue: Antrean Teratur &
+Prinsip Keadilan FIFO
+Struktur data linier dua pintu yang menjamin keadilan pelayanan: data
+yang pertama kali tiba akan menjadi yang pertama kali diproses.
+
+=== PAGE 15 ===
+B A B  I V :  Q U E U E  ( A NT R E A N) P R I N S I P  F I F O
+K E A D I L A N  L AY A N A N
+Prinsip Kerja & Anatomi Queue
+First In, First Out (FIFO) — yang pertama masuk adalah yang pertama dilayani.
+Berbeda dengan Stack yang hanya memiliki satu pintu, Queue (Antrean) memiliki dua pintu gerbang
+terpisah:
+Pintu Belakang (Rear / Tail): Tempat data baru bergabung dan mengantre (Operasi Enqueue).
+Pintu Depan (Front / Head): Tempat data terdepan yang paling lama menunggu dikeluarkan untuk dilayani (Operasi Dequeue).
+ANALO G I  F I SI K :  ANT R E AN K ASI R  MI NI MAR K E T  / T I K E T  B I O SK O P
+Orang yang datang paling awal akan berdiri di garis paling depan dan dilayani kasir terlebih dahulu. Pembeli yang baru tiba harus
+berbaris di belakang. Menyerobot antrean di tengah dilarang keras!
+Enqueue (Masuk Antrean)
+Memasukkan elemen baru ke ujung belakang antrean (Rear).
+Pointer Rear bergeser mundur.
+Dequeue (Keluar Antrean)
+Mengeluarkan dan memproses elemen paling depan (Front).
+Pointer Front bergeser maju.
+VI SUALI SASI  J ALUR  Q UE UE : ALUR  O PE R ASI  E NQ UE UE  & DE Q UE UE
+Data D (Baru)
+Enqueue →
+REAR ↓
+Data CData BData A
+↓ FRONT
+←  Dequeue()
+Data A Dilayani
+Arah Aliran Pemrosesan Data (Kanan ke Kiri)
+Operasi pembantu: Front() untuk memeriksa data yang sedang berada di antrean terdepan, serta IsEmpty() untuk mendeteksi
+apakah antrean sedang kosong.
+13
+
+=== PAGE 16 ===
+B A B  I V :  Q U E U E  ( A NT R E A N) S I S T E M  K O M P U T E R
+I M P L E M E N T A S I  T E K N O L O G I
+Variasi & Penerapan Sistem Queue
+Mulai dari buffer pencetakan hingga penjadwalan prosesor komputer.
+Linear Queue
+Antrean lurus biasa. Kelemahannya: ruang
+kosong di depan bekas dequeue tidak
+bisa langsung dipakai lagi tanpa
+pergeseran data.
+Circular Queue
+Antrean melingkar: ujung belakang
+tersambung kembali ke depan sehingga
+tidak ada ruang memori terbuang sia-sia.
+Priority Queue
+Antrean dengan tingkat urgensi khusus
+(seperti pasien darurat di IGD rumah sakit
+yang didahulukan dari antrean biasa).
+• Penerapan Nyata Queue dalam Dunia Digital
+1. Antrean Cetak Dokumen (Print Spooler)
+Ketika 5 siswa serentak menekan tombol Print ke satu mesin printer bersama di lab sekolah, dokumen siswa pertama
+akan dicetak tuntas terlebih dahulu sebelum dokumen siswa kedua mulai ditarik kertasnya.
+2. Sistem Antrean Pasien / Nasabah Bank
+Nomor tiket A-01 dipanggil ke loket sebelum nomor tiket A-02. Sistem ini menjaga ketertiban, keadilan hak
+pelayanan, dan rasa saling percaya di ruang publik.
+3. Buffer Streaming Video & Paket Jaringan
+Paket data video YouTube yang sampai pertama kali di perangkat kalian disimpan di buffer antrean dan langsung
+diputar agar tampilan video tidak macet (*buffering*).
+MI SK O NSE PSI  SI SWA YANG  HAR US DI HI NDAR I !
+Jangan mengira Queue sama dengan List! Pada Queue murni, kita tidak diperbolehkan mengambil data yang berada di tengah
+antrean secara langsung tanpa men-dequeue data di depannya.
+14
+
+=== PAGE 17 ===
+KET ERAMPIL AN BERNAL AR KRIT IS
+Tabel Komparasi Menyeluruh
+Mengevaluasi perbedaan prinsip kerja, titik masuk-keluar,
+keunggulan, serta batasan teknisnya.
+Pohon Keputusan Desain
+Menentukan wadah data optimal berdasarkan skenario
+aplikasi dan toleransi keadilan akses.
+05
+B A B  K E L I M A
+Matriks Komparasi &
+Analisis Komputasional
+Membekali murid dengan daya nalar kritis untuk membandingkan,
+memilih, dan menjustifikasi struktur data yang paling tepat.
+
+=== PAGE 18 ===
+B A B  V :  M AT R I K S K O M PA R A SI T A B E L  P E R B A N D I N G A N
+R A N G K U M A N  K O M PA R A T I F
+Perbandingan Cepat: List vs Stack vs Queue
+Tabel referensi komprehensif untuk penguasaan konsep murid SMA Kelas X.
+Karakteristik List (Daftar) Stack (Tumpukan) Queue (Antrean)
+Prinsip Kerja Akses bebas berbasis nomor
+indeks (0..N-1)
+LIFO (Last In, First Out) FIFO (First In, First Out)
+Titik Masuk (Input) Bebas di posisi indeks mana
+saja
+Hanya dari bagian atas (Top) via
+Push
+Hanya dari bagian belakang
+(Rear) via Enqueue
+Titik Keluar (Output) Bebas dari posisi indeks mana
+saja
+Hanya dari bagian atas (Top) via
+Pop
+Hanya dari bagian depan (Front)
+via Dequeue
+Akses Elemen Akses acak langsung (Random
+Access)
+Terbatas hanya elemen teratas
+(Top)
+Terbatas hanya elemen
+terdepan (Front)
+Kelebihan Utama Sangat fleksibel; baca data
+instan via indeks
+Mudah membalik urutan data;
+efisien memori
+Menjamin keadilan urutan
+layanan (Fairness)
+Keterbatasan /
+Risiko
+Pergeseran elemen lambat saat
+insert di tengah
+Bahaya Stack Overflow jika
+tumpukan penuh
+Bahaya ruang kosong terbuang
+pada antrean linear
+Analogi Fisik Rak buku terbuka atau daftar
+belanjaan
+Tumpukan piring bersih atau
+tumpukan buku
+Antrean kasir toko atau antrean
+tiket kereta
+Penerapan Digital Playlist musik, buku alamat
+kontak HP
+Fitur Undo (Ctrl+Z), Back
+browser, Call Stack
+Print Spooler printer, CPU
+scheduler, buffer video
+K AI DAH E MAS DE SAI NE R  PE R ANG K AT  LUNAK
+“Tidak ada struktur data yang paling sempurna di segala situasi.” Struktur data terbaik adalah yang paling cocok dengan pola
+perilaku keluar-masuknya data dalam persoalan yang sedang dipecahkan.
+16
+
+=== PAGE 19 ===
+B A B  V :  M AT R I K S K O M PA R A SI P O H O N  K E P U T U S A N
+S T R A T E G I  A L G O R I T M I K
+Panduan Memilih Struktur Data yang Tepat
+Pohon keputusan komputasional untuk menentukan struktur data optimal.
+PO HO N K E PUT USAN B E R PI K I R  K O MPUTASI O NAL
+Perlu Akses Bebas
+ke sembarang data?
+YA → PILIH LIST (Daftar Berindeks)
+Contoh: Daftar nilai siswa, katalog barang toko, playlist lagu
+TIDAK
+Data terakhir harus
+keluar duluan (LIFO)?
+YA →
+PILIH STACK (LIFO)
+Fitur Undo, Riwayat Back, Pengecekan Kurung
+TDK → PILIH QUEUE (FIFO)Antrean printer, reservasi tiket, CPU scheduling
+• Studi Kasus Kesalahan Pemilihan Struktur Data
+Tragedi Kasir Menggunakan Stack (LIFO):
+Bayangkan jika sebuah loket rumah sakit menggunakan struktur data Stack alih-alih Queue. Pasien pertama yang datang pukul
+06.00 pagi ditaruh paling bawah tumpukan. Setiap kali pasien baru datang pukul 08.00, pasien baru itulah yang langsung
+dilayani dokter! Pasien pertama yang datang dari subuh tidak akan pernah dipanggil dan berisiko kehilangan nyawa. Inilah
+mengapa pemilihan struktur data bukan sekadar persoalan kode, melainkan keadilan etika sosial!
+17
+
+=== PAGE 20 ===
+E V A LU A SI  F O R M AT I F S T U D I  K A S U S  H O T S
+A S E S M E N  L I T E R A S I  K O M P U T A S I
+Studi Kasus Pemecahan Masalah
+Menganalisis skenario sistem digital nyata menggunakan penalaran komputasional.
+Studi Kasus 1: Perancangan Fitur Navigasi Aplikasi Mobile
+Raka sedang mengembangkan aplikasi e-commerce sekolah di ponsel pintar. Ketika pengguna membuka Halaman Beranda →
+mengeklik Menu Produk →  memilih Baju Batik →  membuka Halaman Keranjang Belanja. Saat pengguna menekan tombol fisik
+“Back” (Kembali) di ponselnya, sistem harus menampilkan kembali halaman Baju Batik, bukan langsung kembali ke Beranda.
+Pertanyaan Pemantik:
+a. Struktur data linier manakah yang paling ideal untuk memodelkan riwayat navigasi tersebut? Jelaskan alasannya berdasarkan
+prinsip kerjanya!
+b. Sebutkan nama operasi yang terjadi saat pengguna mengeklik Baju Batik dan saat pengguna menekan tombol Back!
+Studi Kasus 2: Manajemen Pemesanan Dapur Restoran Cepat Saji
+Sebuah restoran burger menerima pesanan dari layar monitor pemesanan mandiri. Pesanan dari meja 01 masuk pukul 12.00,
+pesanan meja 02 masuk pukul 12.02, dan pesanan meja 03 masuk pukul 12.05. Koki dapur harus menyiapkan makanan secara
+adil agar pelanggan tidak protes.
+Pertanyaan Pemantik:
+a. Struktur data apakah yang wajib diterapkan pada layar monitor koki dapur? Apa konsekuensinya jika koki justru menerapkan
+struktur data Stack?
+b. Jelaskan posisi meja 01 dan meja 03 dalam terminologi struktur data tersebut (Front / Rear)!
+18
+
+=== PAGE 21 ===
+E V A LU A SI  F O R M AT I F U J I  K O M P E T E N S I  M A N D I R I
+A S E S M E N  K I N E R J A
+Tantangan Logika Komputasional
+Menguji pemahaman mendalam konsep List, Stack, dan Queue.
+Tantangan 3: Validasi Ekspresi Rumus Matematika (Kurung Seimbang)
+Diberikan sebuah ekspresi matematika: { [ ( 5 + 3 ) * 2 ] - 4 }. Komputer ingin memastikan bahwa tidak ada tanda
+kurung yang tertinggal atau salah pasangan.
+Jelaskan langkah logis bagaimana sebuah Stack dapat menyelesaikan pengecekan ini saat membaca karakter satu per satu dari
+kiri ke kanan!
+Tantangan 4: Fleksibilitas List vs Ketertiban Stack & Queue
+Seorang siswa bertanya: “Pak Guru, jika List bisa melakukan segalanya karena memiliki nomor indeks bebas, mengapa kita
+masih repot-repot menciptakan Stack dan Queue yang aturannya serba kaku?”
+Tulislah argumen pembelaan ilmiah kalian untuk menjawab pertanyaan kritis teman kalian tersebut!
+Kriteria Ketuntasan Belajar Minimal (KKTP):
+Siswa dinyatakan tuntas apabila mampu menganalisis minimal 3 dari 4 studi kasus di atas dengan tepat, mengidentifikasi
+perbedaan prinsip FIFO/LIFO, serta menjustifikasi struktur data yang dipilih.
+19
+
+=== PAGE 22 ===
+G LO SA R I U M  I ST I LA H K A M U S  I N F O R M A T I K A
+I N D E K S  K O S A K A T A
+Glosarium Struktur Data
+Daftar istilah teknis dan definisi ringkas dalam ilmu komputer.
+Computational Thinking
+Metode berpikir memecahkan masalah kompleks dengan
+pendekatan dekomposisi, pola, abstraksi, dan algoritma.
+Deque (Double-Ended Queue)
+Struktur antrean fleksibel yang memungkinkan penyisipan dan
+penghapusan data di kedua ujungnya.
+Dequeue
+Operasi mengeluarkan elemen data dari posisi paling depan
+(Front) antrean.
+Enqueue
+Operasi memasukkan elemen data baru ke posisi paling belakang
+(Rear) antrean.
+FIFO (First In, First Out)
+Prinsip kerja antrean di mana elemen yang masuk pertama kali akan
+dilayani pertama kali.
+Front / Head
+Penunjuk indeks atau posisi data paling awal pada struktur Queue.
+LIFO (Last In, First Out)
+Prinsip kerja tumpukan di mana elemen yang terakhir dimasukkan
+akan keluar pertama kali.
+List (Daftar Linier)
+Koleksi data terurut berindeks yang dapat diakses sembarang
+posisi secara bebas.
+Pop
+Operasi mengambil dan menghapus elemen dari puncak (Top)
+pada struktur Stack.
+Push
+Operasi menambahkan elemen baru ke puncak (Top) pada struktur
+Stack.
+Rear / Tail
+Penunjuk indeks atau posisi data paling akhir pada struktur Queue.
+Stack Overflow
+Kesalahan sistem akibat memaksakan data masuk ke stack yang
+alokasi memorinya telah penuh.
+Top of Stack
+Elemen teratas tumpukan yang menjadi satu-satunya gerbang
+operasi Push dan Pop.
+Zero-Based Indexing
+Sistem penomoran elemen data yang dimulai dari angka nol (0)
+berdasarkan jarak offset memori.
+20
+
+=== PAGE 23 ===
+R U J U K A N A K A D E M I K  &  PR O F I L B I B L I O G R A F I  I L M I A H
+S U M B E R  R U J U K A N  T E P E R C AY A  ( 2 0 2 0 – 2 0 2 5 )
+Daftar Pustaka Jurnal Ilmiah
+Buku teks Kurikulum Merdeka dan jurnal ilmiah terakreditasi nasional & internasional.
+Kementerian Pendidikan, Kebudayaan, Riset, dan Teknologi. (2021). Informatika untuk SMA Kelas X (Elemen Berpikir Komputasional:
+Struktur Data List, Tumpukan/Stack, dan Antrean/Queue). Jakarta: Pusat Kurikulum dan Perbukuan.
+Badan Standar, Kurikulum, dan Asesmen Pendidikan (BSKAP). (2024). Keputusan BSKAP Kemendikbudristek No. 032/H/KR/2024 tentang
+Capaian Pembelajaran pada Pendidikan Anak Usia Dini, Jenjang Pendidikan Dasar, dan Jenjang Pendidikan Menengah (Fase E Informatika).
+Jakarta: BSKAP.
+Pratama, M. A., & Sari, R. P. (2022). “Analisis Perbandingan Kompleksitas Waktu dan Penggunaan Memori pada Implementasi List Dinamis,
+Stack, dan Queue”. Jurnal RESTI (Rekayasa Sistem dan Teknologi Informasi), 6(4), 589–596.
+Santoso, B., & Wibawa, S. C. (2023). “Pengembangan Media Interaktif Visualisasi Struktur Data Linier (Stack & Queue) Berbasis Web untuk
+Meningkatkan Pemahaman Algoritmik Siswa SMA”. Jurnal Nasional Pendidikan Teknik Informatika (JANAPATI), 12(2), 145–156.
+Hidayat, T., & Nugroho, A. (2021). “Penerapan Konsep First-In First-Out (FIFO) pada Simulasi Sistem Antrian Pelayanan Publik Berbasis
+Algoritma Komputasi”. JEPIN (Jurnal Edukasi dan Penelitian Informatika), 7(3), 320–327.
+Wing, J. M. (2021). “Computational Thinking and Thinking About Computing in Modern Curricula”. Philosophical Transactions of the Royal
+Society A, 379(2197), 20200007.
+Ilyas Fandhi Anggara, S.Kom
+Guru Informatika • SMA Negeri 4 Yogyakarta • Mahasiswa PPG Prajabatan UNY
+Pengembang media pembelajaran komputasi yang percaya bahwa penguasaan struktur data (List, Stack, Queue)
+melatih siswa berpikir tertib, terukur, dan berdaya saing di era transformasi digital.
+Portal Media Pembelajaran Digital
+Akses lembar kerja siswa, animasi simulasi interaktif struktur data, dan panduan belajar digital.
+e-portofolio-fandhi.vercel.app
+21
+

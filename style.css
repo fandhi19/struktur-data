@@ -1,0 +1,262 @@
+/* Modern Educational UI Theme - Aligned with Reference Design */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-blue: #0f3ba8;
+  --primary-blue-dark: #0a2569;
+  --primary-blue-light: #2563eb;
+  --accent-orange: #ff7700;
+  --accent-orange-hover: #ea580c;
+  --accent-orange-light: #ffedd5;
+  --bg-page: #f8fafc;
+  --card-radius: 26px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-page);
+  color: #1e293b;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Background Soft Waves & Mesh */
+.bg-mesh {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 10% 15%, rgba(224, 231, 255, 0.7) 0px, transparent 50%),
+    radial-gradient(at 90% 10%, rgba(254, 215, 170, 0.5) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(219, 234, 254, 0.6) 0px, transparent 50%),
+    radial-gradient(at 15% 90%, rgba(255, 237, 213, 0.5) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Custom Soft Shadows */
+.soft-card-shadow {
+  box-shadow: 0 10px 30px -6px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+}
+
+.soft-card-shadow-hover {
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.soft-card-shadow-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.05);
+}
+
+/* Rounded Cards */
+.rounded-theme {
+  border-radius: var(--card-radius);
+}
+
+/* Hero Section Styles */
+.hero-blue-card {
+  background: linear-gradient(145deg, #0f3ba8 0%, #0a2569 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-blue-card::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  right: -25%;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.35) 0%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+}
+
+.hero-orange-card {
+  background: linear-gradient(145deg, #ff7a00 0%, #ea580c 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-orange-card::after {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -20%;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(0,0,0,0) 70%);
+  pointer-events: none;
+}
+
+/* Floating animation */
+@keyframes floatGentle {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.animate-pulse-subtle {
+  animation: pulseSubtle 3s ease-in-out infinite;
+}
+
+/* Simulation Stack Cylinder */
+.stack-cylinder {
+  width: 200px;
+  min-height: 290px;
+  border-left: 5px solid #334155;
+  border-right: 5px solid #334155;
+  border-bottom: 8px solid #0f172a;
+  border-radius: 0 0 18px 18px;
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.15) 0%, rgba(226, 232, 240, 0.7) 100%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  padding: 8px;
+  gap: 6px;
+  position: relative;
+}
+
+.stack-item {
+  width: 95%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.12);
+  transition: all 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  animation: pushIn 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+@keyframes pushIn {
+  from {
+    opacity: 0;
+    transform: translateY(-70px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Queue Horizontal Pipe */
+.queue-pipe {
+  min-height: 110px;
+  border-top: 4px dashed #64748b;
+  border-bottom: 4px dashed #64748b;
+  background: rgba(248, 250, 252, 0.85);
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  gap: 12px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.queue-item {
+  min-width: 100px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  text-align: center;
+  box-shadow: 0 4px 10px -2px rgba(0,0,0,0.08);
+  animation: enqueueIn 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  flex-shrink: 0;
+}
+
+@keyframes enqueueIn {
+  from {
+    opacity: 0;
+    transform: translateX(60px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* List / Array Contiguous Strip */
+.array-strip {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 8px 4px 16px 4px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.array-cell {
+  flex: 0 0 100px;
+  min-width: 95px;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+@media (min-width: 768px) {
+  .array-cell {
+    flex: 1 1 0;
+    min-width: 105px;
+  }
+}
+
+/* Step Number Large Watermark */
+.step-number-watermark {
+  font-size: 5rem;
+  font-weight: 900;
+  color: #e2e8f0;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Mobile & Tablet Specifics */
+@media (max-width: 1024px) {
+  :root {
+    --card-radius: 20px;
+  }
+  .step-number-watermark {
+    font-size: 3.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --card-radius: 18px;
+  }
+  .step-number-watermark {
+    font-size: 3rem;
+  }
+}
+
+/* Touch Friendly Utilities */
+.touch-target {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

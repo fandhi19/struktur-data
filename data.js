@@ -638,65 +638,6 @@ const LEARNING_DATA = {
     }
   ],
 
-  videos: [
-    {
-      id: "vid1",
-      title: "Konsep Dasar Struktur Data & Berpikir Komputasional (Fase E)",
-      duration: "10:24",
-      embedUrl: "https://www.youtube.com/embed/5_5oE5lgrhw",
-      speaker: "Tim Guru Informatika Indonesia",
-      description: "Pengenalan komprehensif mengenai mengapa komputer memerlukan pengorganisasian data, bagaimana data disimpan dalam memori RAM, dan relasinya dengan 4 pilar computational thinking.",
-      keyPoints: [
-        "01:15 - Analogi Lemari dan Gudang Memori",
-        "03:40 - Mengapa Struktur Data Menentukan Kecepatan Komputer",
-        "06:20 - Pengenalan Tipe Linier vs Non-Linier",
-        "08:50 - Rangkuman Berpikir Komputasional"
-      ]
-    },
-    {
-      id: "vid2",
-      title: "Memahami List, Array, dan Misteri Zero-Based Indexing",
-      duration: "12:15",
-      embedUrl: "https://www.youtube.com/embed/RBSGKlAvoiM",
-      speaker: "Kuliah Terbuka Pemrograman Dasar",
-      description: "Penjelasan mendalam mengapa indeks selalu diawali dari nol (0), pembuktian rumus offset memori heksadesimal, serta demonstrasi operasi penyisipan dan penghapusan elemen.",
-      keyPoints: [
-        "00:45 - Anatomi Elemen dan Indeks",
-        "04:10 - Rumus Perhitungan Alamat Memori (Base + Offset)",
-        "07:35 - Kelebihan Akses Acak O(1)",
-        "09:50 - Dampak Biaya Pergeseran Elemen saat Insert di Tengah"
-      ]
-    },
-    {
-      id: "vid3",
-      title: "Stack (Tumpukan) & Prinsip LIFO: Dari Piring hingga Undo",
-      duration: "11:42",
-      embedUrl: "https://www.youtube.com/embed/F1F2imiOJfk",
-      speaker: "Visualisasi Algoritma & Struktur Data",
-      description: "Visualisasi animasi operasi Push dan Pop, pemahaman pointer Top, bahaya mematikan Stack Overflow pada rekursi tak berujung, serta simulasi fitur Ctrl+Z pada text editor.",
-      keyPoints: [
-        "01:00 - Disiplin Satu Pintu dan Prinsip LIFO",
-        "03:30 - Animasi Operasi Push, Pop, dan Peek",
-        "06:15 - Kasus Nyata: Browser History Back Button",
-        "09:20 - Menangani Stack Overflow & Underflow"
-      ]
-    },
-    {
-      id: "vid4",
-      title: "Queue (Antrean) & Prinsip FIFO: Keadilan Pelayanan Sistem",
-      duration: "13:08",
-      embedUrl: "https://www.youtube.com/embed/wjI1WNc4g08",
-      speaker: "Edukasi TIK Kurikulum Merdeka",
-      description: "Prinsip First In, First Out (FIFO), peran pointer Front dan Rear, perbedaan Linear Queue vs Circular Queue, serta penerapannya pada Print Spooler dan buffer YouTube.",
-      keyPoints: [
-        "01:20 - Mengapa FIFO Menjaga Keadilan Layanan",
-        "04:00 - Operasi Enqueue (Rear) dan Dequeue (Front)",
-        "07:15 - Solusi Ruang Terbuang: Circular Queue",
-        "10:45 - Studi Kasus Nyata: Antrean Print Spooler Lab Sekolah"
-      ]
-    }
-  ],
-
   glossary: [
     {
       term: "Computational Thinking",

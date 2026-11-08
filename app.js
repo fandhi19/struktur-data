@@ -97,10 +97,7 @@ const AppState = {
 
   // Queue Simulator State
   queueData: ["Pelanggan 1", "Pelanggan 2", "Pelanggan 3"],
-  maxQueueSize: 6,
-
-  // Active Video
-  activeVideoId: "vid1"
+  maxQueueSize: 6
 };
 
 // --- Main Initializer ---
@@ -109,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initStudentProfile();
   initMateriViewer();
   initSimulators();
-  initVideoHub();
   initGlossary();
   initPreTest();
   initPostTest();
@@ -215,7 +211,7 @@ function switchTab(tabId) {
   });
 
   // Hide all sections and show target
-  const sections = ['beranda', 'pretest', 'materi', 'simulasi', 'video', 'posttest', 'glosarium'];
+  const sections = ['beranda', 'pretest', 'materi', 'simulasi', 'posttest', 'glosarium'];
   sections.forEach(s => {
     const el = document.getElementById(`section-${s}`);
     if (el) {
@@ -846,56 +842,6 @@ function renderQueueVisual() {
     `;
   }).join('');
 }
-
-// --- Video Hub ---
-function initVideoHub() {
-  renderVideoList();
-  selectVideo(AppState.activeVideoId);
-}
-
-function renderVideoList() {
-  const container = document.getElementById('videoPlaylistContainer');
-  if (!container) return;
-
-  container.innerHTML = LEARNING_DATA.videos.map(vid => `
-    <button onclick="selectVideo('${vid.id}')" 
-      class="w-full text-left p-3.5 rounded-2xl border transition flex items-start gap-3 ${AppState.activeVideoId === vid.id ? 'bg-blue-50 border-blue-500 ring-2 ring-blue-300' : 'bg-white border-gray-200 hover:bg-gray-50'}">
-      <div class="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center font-bold text-sm shrink-0">
-        ▶
-      </div>
-      <div class="flex-1 min-w-0">
-        <h4 class="font-bold text-xs text-gray-900 truncate">${vid.title}</h4>
-        <p class="text-[11px] text-gray-500 mt-0.5">⏱️ ${vid.duration} • ${vid.speaker}</p>
-      </div>
-    </button>
-  `).join('');
-}
-
-window.selectVideo = function(videoId) {
-  SoundFX.play('click');
-  AppState.activeVideoId = videoId;
-  renderVideoList();
-
-  const vid = LEARNING_DATA.videos.find(v => v.id === videoId);
-  if (!vid) return;
-
-  const playerIframe = document.getElementById('mainVideoIframe');
-  const titleEl = document.getElementById('mainVideoTitle');
-  const descEl = document.getElementById('mainVideoDesc');
-  const pointsEl = document.getElementById('mainVideoKeypoints');
-
-  if (playerIframe) playerIframe.src = vid.embedUrl;
-  if (titleEl) titleEl.textContent = vid.title;
-  if (descEl) descEl.textContent = vid.description;
-  if (pointsEl) {
-    pointsEl.innerHTML = vid.keyPoints.map(kp => `
-      <li class="flex items-center gap-2 text-xs text-gray-700 bg-white p-2 rounded-lg border border-gray-100">
-        <span class="w-2 h-2 rounded-full bg-blue-600"></span>
-        <span>${kp}</span>
-      </li>
-    `).join('');
-  }
-};
 
 // --- Glossary Search ---
 function initGlossary() {

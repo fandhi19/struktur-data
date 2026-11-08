@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPreTest();
   initPostTest();
   initSoundToggle();
+  initSpreadsheetManager();
 });
 
 // --- Sound Toggle ---
@@ -978,8 +979,9 @@ window.selectPreTestAnswer = function(qId, optIdx) {
 };
 
 function calculatePreTestScore() {
-  let score = 0;
+  let correctCount = 0;
   let answeredCount = 0;
+  const total = LEARNING_DATA.preTestQuestions.length;
 
   LEARNING_DATA.preTestQuestions.forEach(q => {
     const userAns = preTestUserAnswers[q.id];
@@ -987,7 +989,7 @@ function calculatePreTestScore() {
     if (userAns !== undefined) {
       answeredCount++;
       if (userAns === q.correctIndex) {
-        score += 10;
+        correctCount++;
         if (feedbackEl) {
           feedbackEl.className = 'mt-3 p-3 rounded-xl text-xs bg-emerald-50 border border-emerald-200 text-emerald-900';
           feedbackEl.innerHTML = `<strong>✅ Benar!</strong> ${q.explanation}`;
@@ -996,18 +998,20 @@ function calculatePreTestScore() {
       } else {
         if (feedbackEl) {
           feedbackEl.className = 'mt-3 p-3 rounded-xl text-xs bg-rose-50 border border-rose-200 text-rose-900';
-          feedbackEl.innerHTML = `<strong>❌ Kurang Tepat.</strong> Jawaban yang benar adalah pilihan ke-${q.correctIndex + 1}. ${q.explanation}`;
+          const optLetter = String.fromCharCode(65 + q.correctIndex);
+          feedbackEl.innerHTML = `<strong>❌ Kurang Tepat.</strong> Jawaban yang benar adalah pilihan <strong>(${optLetter})</strong>. ${q.explanation}`;
           feedbackEl.classList.remove('hidden');
         }
       }
     }
   });
 
-  if (answeredCount < LEARNING_DATA.preTestQuestions.length) {
-    alert(`Mohon jawab seluruh 10 soal pre-test (kamu baru menjawab ${answeredCount}/10 soal)!`);
+  if (answeredCount < total) {
+    alert(`Mohon jawab seluruh ${total} soal pre-test (kamu baru menjawab ${answeredCount}/${total} soal)!`);
     return;
   }
 
+  const score = Math.round((correctCount / total) * 100);
   AppState.preTestScore = score;
   localStorage.setItem('pretest_score', score);
   SoundFX.play('success');
@@ -1018,6 +1022,9 @@ function calculatePreTestScore() {
     resultContainer.scrollIntoView({ behavior: 'smooth' });
     document.getElementById('preTestScoreDisplay').textContent = `${score} / 100`;
   }
+
+  // Kirim otomatis ke Google Spreadsheet
+  sendResultToGoogleSheets('Pre-Test', score, correctCount, preTestUserAnswers);
 }
 
 // --- Post-Test Logic ---
@@ -1060,8 +1067,9 @@ window.selectPostTestAnswer = function(qId, optIdx) {
 };
 
 function calculatePostTestScore() {
-  let score = 0;
+  let correctCount = 0;
   let answeredCount = 0;
+  const total = LEARNING_DATA.postTestQuestions.length;
 
   LEARNING_DATA.postTestQuestions.forEach(q => {
     const userAns = postTestUserAnswers[q.id];
@@ -1069,7 +1077,7 @@ function calculatePostTestScore() {
     if (userAns !== undefined) {
       answeredCount++;
       if (userAns === q.correctIndex) {
-        score += 10;
+        correctCount++;
         if (feedbackEl) {
           feedbackEl.className = 'mt-3 p-3 rounded-xl text-xs bg-emerald-50 border border-emerald-200 text-emerald-900';
           feedbackEl.innerHTML = `<strong>✅ Benar!</strong> ${q.explanation}`;
@@ -1078,18 +1086,20 @@ function calculatePostTestScore() {
       } else {
         if (feedbackEl) {
           feedbackEl.className = 'mt-3 p-3 rounded-xl text-xs bg-rose-50 border border-rose-200 text-rose-900';
-          feedbackEl.innerHTML = `<strong>❌ Kurang Tepat.</strong> Jawaban yang benar adalah pilihan ke-${q.correctIndex + 1}. ${q.explanation}`;
+          const optLetter = String.fromCharCode(65 + q.correctIndex);
+          feedbackEl.innerHTML = `<strong>❌ Kurang Tepat.</strong> Jawaban yang benar adalah pilihan <strong>(${optLetter})</strong>. ${q.explanation}`;
           feedbackEl.classList.remove('hidden');
         }
       }
     }
   });
 
-  if (answeredCount < LEARNING_DATA.postTestQuestions.length) {
-    alert(`Mohon jawab seluruh 10 soal evaluasi post-test (kamu baru menjawab ${answeredCount}/10 soal)!`);
+  if (answeredCount < total) {
+    alert(`Mohon jawab seluruh ${total} soal evaluasi post-test (kamu baru menjawab ${answeredCount}/${total} soal)!`);
     return;
   }
 
+  const score = Math.round((correctCount / total) * 100);
   AppState.postTestScore = score;
   localStorage.setItem('posttest_score', score);
   SoundFX.play('success');
@@ -1118,101 +1128,143 @@ function calculatePostTestScore() {
         diffEl.innerHTML = `Kamu belum mengerjakan Pre-Test untuk perbandingan nilai kenaikan.`;
       }
     }
-
-    // Render Canvas Certificate
-    generateCertificate(score);
   }
-}
 
-// --- Certificate Generator on Canvas ---
-function generateCertificate(score) {
-  const canvas = document.getElementById('certificateCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width;
-  const h = canvas.height;
-
-  // Background Gradient
-  const grad = ctx.createLinearGradient(0, 0, w, h);
-  grad.addColorStop(0, '#ffffff');
-  grad.addColorStop(1, '#f1f5f9');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, w, h);
-
-  // Border Frame
-  ctx.strokeStyle = '#0f3ba8';
-  ctx.lineWidth = 14;
-  ctx.strokeRect(20, 20, w - 40, h - 40);
-
-  ctx.strokeStyle = '#ff7700';
-  ctx.lineWidth = 4;
-  ctx.strokeRect(32, 32, w - 64, h - 64);
-
-  // Decorative Top Emblem
-  ctx.fillStyle = '#0f3ba8';
-  ctx.font = 'bold 22px Plus Jakarta Sans, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.fillText("KURIKULUM MERDEKA • FASE E INFORMATIKA", w / 2, 85);
-
-  ctx.fillStyle = '#ff7700';
-  ctx.font = 'bold 36px Plus Jakarta Sans, sans-serif';
-  ctx.fillText("SERTIFIKAT KELULUSAN KOMPETENSI", w / 2, 135);
-
-  ctx.fillStyle = '#64748b';
-  ctx.font = '15px Plus Jakarta Sans, sans-serif';
-  ctx.fillText("Diberikan sebagai bukti penguasaan materi dan kelulusan asesmen berpikir komputasional kepada:", w / 2, 175);
-
-  // Student Name
-  ctx.fillStyle = '#0f2963';
-  ctx.font = 'bold 34px Plus Jakarta Sans, sans-serif';
-  ctx.fillText(AppState.studentName.toUpperCase(), w / 2, 230);
-
-  // Student Class
-  ctx.fillStyle = '#475569';
-  ctx.font = 'italic 16px Plus Jakarta Sans, sans-serif';
-  ctx.fillText(`Kelas: ${AppState.studentClass} • Nilai Evaluasi HOTS: ${score} / 100 (${score >= 75 ? 'TUNTAS' : 'REMIDI'})`, w / 2, 265);
-
-  // Body Paragraph
-  ctx.fillStyle = '#334155';
-  ctx.font = '14px Plus Jakarta Sans, sans-serif';
-  ctx.fillText("Telah berhasil menuntaskan seluruh modul pembelajaran struktur data meliputi:", w / 2, 310);
-  ctx.font = 'bold 15px Plus Jakarta Sans, sans-serif';
-  ctx.fillText("List (Zero-Based Indexing) • Stack (Prinsip LIFO) • Queue (Prinsip FIFO)", w / 2, 335);
-
-  // Signatures
-  // Left: Date
-  const today = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
-  ctx.textAlign = 'left';
-  ctx.font = '13px Plus Jakarta Sans, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.fillText(`Diterbitkan pada: ${today}`, 70, 420);
-  ctx.fillText("Verifikasi: Kinerja UKIN PPG UNY", 70, 440);
-
-  // Right: Teacher
-  ctx.textAlign = 'right';
-  ctx.font = 'bold 15px Plus Jakarta Sans, sans-serif';
-  ctx.fillStyle = '#0f2963';
-  ctx.fillText("Ilyas Fandhi Anggara, S.Kom", w - 70, 420);
-  ctx.font = '12px Plus Jakarta Sans, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.fillText("Guru Informatika • SMA Negeri 4 Yogyakarta", w - 70, 440);
-  ctx.fillText("Mahasiswa PPG Prajabatan UNY", w - 70, 458);
-
-  // Download Button trigger
-  const dlBtn = document.getElementById('btnDownloadCertificate');
-  if (dlBtn) {
-    dlBtn.onclick = () => {
-      SoundFX.play('success');
-      const link = document.createElement('a');
-      link.download = `Sertifikat-StrukturData-${AppState.studentName.replace(/\s+/g, '_')}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    };
-  }
+  // Kirim otomatis ke Google Spreadsheet
+  sendResultToGoogleSheets('Post-Test', score, correctCount, postTestUserAnswers);
 }
 
 // Utility Alert Modal
 function showSimAlert(title, message) {
   alert(`${title}\n\n${message}`);
+}
+
+// ================= GOOGLE SPREADSHEET INTEGRATION =================
+function sendResultToGoogleSheets(testType, score, correctCount, userAnswers) {
+  let url = localStorage.getItem('google_sheet_url');
+  if (!url || !url.trim().startsWith('http')) {
+    url = LEARNING_DATA.googleSheetWebAppUrl || '';
+  }
+  
+  // Format jawaban Soal 1 s.d. 6
+  const qAnswers = {};
+  for (let i = 1; i <= 6; i++) {
+    const ansIdx = userAnswers[i];
+    qAnswers[`q${i}`] = ansIdx !== undefined ? String.fromCharCode(65 + ansIdx) : "-";
+  }
+
+  const payload = {
+    timestamp: new Date().toLocaleString('id-ID', { timeZone: 'Asia/Jakarta' }),
+    testType: testType,
+    studentName: AppState.studentName || "Siswa Kelas X",
+    studentClass: AppState.studentClass || "Fase E",
+    score: score,
+    correctCount: correctCount,
+    totalQuestions: 6,
+    ...qAnswers
+  };
+
+  // Simpan ke cadangan riwayat lokal browser
+  try {
+    const history = JSON.parse(localStorage.getItem('quiz_submissions_history') || '[]');
+    history.push(payload);
+    localStorage.setItem('quiz_submissions_history', JSON.stringify(history));
+    updateHistoryBadge();
+  } catch (e) {
+    console.warn("Gagal simpan ke localStorage:", e);
+  }
+
+  const statusEl = document.getElementById(testType === 'Pre-Test' ? 'preSheetStatus' : 'postSheetStatus');
+
+  if (url && url.trim().startsWith('http')) {
+    if (statusEl) {
+      statusEl.className = 'mt-3 p-3 rounded-xl text-xs bg-blue-50 border border-blue-200 text-blue-900 flex items-center gap-2';
+      statusEl.innerHTML = `<span>⏳</span> <span>Sedang mengirim jawaban ke Google Spreadsheet Guru...</span>`;
+      statusEl.classList.remove('hidden');
+    }
+
+    fetch(url, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      if (statusEl) {
+        statusEl.className = 'mt-3 p-3 rounded-xl text-xs bg-emerald-50 border border-emerald-300 text-emerald-900 flex items-center gap-2';
+        statusEl.innerHTML = `<span>✅</span> <span><strong>Tersimpan!</strong> Jawaban dan skor ${testType} Anda telah otomatis masuk ke Google Spreadsheet Guru.</span>`;
+      }
+    })
+    .catch((err) => {
+      console.warn("Gagal kirim ke spreadsheet:", err);
+      if (statusEl) {
+        statusEl.className = 'mt-3 p-3 rounded-xl text-xs bg-amber-50 border border-amber-200 text-amber-900 flex items-center gap-2';
+        statusEl.innerHTML = `<span>⚠️</span> <span>Jawaban tersimpan di memori perangkat lokal (Gagal koneksi webhook spreadsheet).</span>`;
+      }
+    });
+  } else {
+    if (statusEl) {
+      statusEl.className = 'mt-3 p-3 rounded-xl text-xs bg-slate-100 border border-slate-200 text-slate-700 flex items-center gap-2';
+      statusEl.innerHTML = `
+        <span class="flex items-center gap-1.5">💾 Jawaban berhasil tersimpan di sistem.</span>
+      `;
+      statusEl.classList.remove('hidden');
+    }
+  }
+}
+
+function updateHistoryBadge() {
+  const badge = document.getElementById('historyCountBadge');
+  if (!badge) return;
+  try {
+    const history = JSON.parse(localStorage.getItem('quiz_submissions_history') || '[]');
+    badge.textContent = `${history.length} Data Tersimpan`;
+  } catch (e) {}
+}
+
+function initSpreadsheetManager() {
+  // Integrasi Google Spreadsheet berjalan otomatis di latar belakang saat siswa menyelesaikan Pre-Test atau Post-Test.
+  // URL Webhook tersimpan di data.js: LEARNING_DATA.googleSheetWebAppUrl
+}
+
+function exportSubmissionsToCSV() {
+  SoundFX.play('click');
+  const history = JSON.parse(localStorage.getItem('quiz_submissions_history') || '[]');
+  if (history.length === 0) {
+    alert("Belum ada data pengerjaan kuis siswa yang tersimpan di perangkat ini.");
+    return;
+  }
+
+  let csvContent = "data:text/csv;charset=utf-8,";
+  csvContent += "Waktu Submit,Tipe Ujian,Nama Siswa,Kelas,Skor,Jumlah Benar,Total Soal,Soal 1,Soal 2,Soal 3,Soal 4,Soal 5,Soal 6\n";
+
+  history.forEach(row => {
+    const line = [
+      `"${row.timestamp || ''}"`,
+      `"${row.testType || ''}"`,
+      `"${row.studentName || ''}"`,
+      `"${row.studentClass || ''}"`,
+      row.score !== undefined ? row.score : '',
+      row.correctCount !== undefined ? row.correctCount : '',
+      row.totalQuestions || 6,
+      `"${row.q1 || '-'}"`,
+      `"${row.q2 || '-'}"`,
+      `"${row.q3 || '-'}"`,
+      `"${row.q4 || '-'}"`,
+      `"${row.q5 || '-'}"`,
+      `"${row.q6 || '-'}"`
+    ].join(',');
+    csvContent += line + "\n";
+  });
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", `Rekap_Nilai_Siswa_StrukturData_${new Date().toISOString().slice(0, 10)}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 

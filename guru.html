@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Guru • Rekap Evaluasi Struktur Data (Fase E)</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandBlue: '#0f3ba8',
+            brandDark: '#0f2963',
+            brandOrange: '#ff7700',
+            brandOrangeHover: '#e06600',
+            brandBg: '#f8fafc',
+            brandLightOrange: '#fff4eb',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #f8fafc;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col bg-slate-50">
+
+  <!-- ================= TOPBAR DASHBOARD GURU ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- Brand & Guru Info -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-700 to-indigo-900 text-white flex items-center justify-center font-black text-xl shadow-md shadow-blue-500/20">
+          👨‍🏫
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-extrabold text-slate-900 leading-tight">Portal Evaluasi Guru</h1>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-black tracking-wider bg-orange-100 text-brandOrange border border-orange-200 uppercase">
+              Fase E • Informatika
+            </span>
+          </div>
+          <p class="text-xs text-slate-500">
+            Ilyas Fandhi Anggara, S.Kom • SMA Negeri 4 Yogyakarta (PPG UNY)
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2 sm:gap-3 ml-auto">
+        <a 
+          href="index.html" 
+          class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-blue-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition flex items-center gap-1.5"
+          title="Buka tampilan website siswa"
+        >
+          <span>🌐</span> <span class="hidden sm:inline">Web Siswa</span>
+        </a>
+
+        <button 
+          id="btnSyncSheets" 
+          class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition flex items-center gap-1.5"
+        >
+          <span id="syncIcon">🔄</span> <span>Sinkron Data</span>
+        </button>
+
+        <button 
+          id="btnExportCsv" 
+          class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-800 bg-white hover:bg-slate-100 border border-slate-300 shadow-xs transition flex items-center gap-1.5"
+        >
+          <span>📥</span> <span class="hidden sm:inline">Unduh Rekap</span> CSV
+        </button>
+
+        <button 
+          id="btnOpenSettings" 
+          class="p-2 rounded-xl text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition"
+          title="Pengaturan Integrasi & Apps Script"
+        >
+          ⚙️
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= STATUS NOTIFIKASI KONEKSI ================= -->
+  <div id="connStatusBar" class="bg-blue-50 border-b border-blue-100 py-2 px-4 text-xs text-blue-900 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto w-full flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span id="connStatusText">Tersambung ke Google Spreadsheet: <strong>Pre-Test & Post-Test Terpisah</strong></span>
+      </div>
+      <div class="flex items-center gap-3 text-[11px] text-slate-500">
+        <span id="lastUpdatedText">Terakhir diperbarui: Baru saja</span>
+        <button id="btnLoadDemoData" class="text-blue-700 font-bold hover:underline flex items-center gap-1">
+          <span>🧪</span> Muat Contoh Data (Demo UKIN)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN CONTENT CONTAINER ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 grow w-full">
+
+    <!-- 1. SUMMARY STATISTIC CARDS -->
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
+      <!-- Total Submisi -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500">Total Submisi</span>
+          <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-sm font-bold">📋</span>
+        </div>
+        <div class="mt-3">
+          <span id="statTotalSubmissions" class="text-2xl sm:text-3xl font-extrabold text-slate-900">0</span>
+          <p class="text-[11px] text-slate-400 mt-0.5">Pre-Test & Post-Test</p>
+        </div>
+      </div>
+
+      <!-- Rata-rata Pre-Test -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500">Rerata Pre-Test</span>
+          <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold">📝</span>
+        </div>
+        <div class="mt-3">
+          <span id="statAvgPreTest" class="text-2xl sm:text-3xl font-extrabold text-sky-700">0</span>
+          <span class="text-xs text-slate-400">/ 100</span>
+          <p class="text-[11px] text-slate-400 mt-0.5">Asesmen Awal</p>
+        </div>
+      </div>
+
+      <!-- Rata-rata Post-Test -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500">Rerata Post-Test</span>
+          <span class="w-8 h-8 rounded-xl bg-orange-50 text-brandOrange flex items-center justify-center text-sm font-bold">🏆</span>
+        </div>
+        <div class="mt-3">
+          <span id="statAvgPostTest" class="text-2xl sm:text-3xl font-extrabold text-brandOrange">0</span>
+          <span class="text-xs text-slate-400">/ 100</span>
+          <p class="text-[11px] text-slate-400 mt-0.5">Asesmen Akhir</p>
+        </div>
+      </div>
+
+      <!-- Rata-rata Kenaikan (Gain) -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500">Peningkatan (Gain)</span>
+          <span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm font-bold">🚀</span>
+        </div>
+        <div class="mt-3">
+          <span id="statAvgGain" class="text-2xl sm:text-3xl font-extrabold text-emerald-600">+0</span>
+          <span class="text-xs text-slate-400">Poin</span>
+          <p class="text-[11px] text-slate-400 mt-0.5">Pertumbuhan Nilai</p>
+        </div>
+      </div>
+
+      <!-- Persentase Ketuntasan -->
+      <div class="col-span-2 lg:col-span-1 bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500">Ketuntasan (≥75)</span>
+          <span class="w-8 h-8 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-sm font-bold">🎯</span>
+        </div>
+        <div class="mt-3">
+          <span id="statPassRate" class="text-2xl sm:text-3xl font-extrabold text-purple-700">0%</span>
+          <p class="text-[11px] text-slate-400 mt-0.5">Target KKM Tercapai</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. ANALISIS DAYA SERAP SOAL (Q1 - Q6 HOTS) -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-5 sm:p-6 shadow-xs space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
+        <div>
+          <h2 class="text-sm sm:text-base font-extrabold text-slate-900 flex items-center gap-2">
+            <span>📊</span> Analisis Daya Serap & Penguasaan Soal HOTS (Kelas X)
+          </h2>
+          <p class="text-xs text-slate-500 mt-0.5">Persentase siswa yang menjawab benar berdasarkan kunci jawaban (Kunci: 1.B, 2.B, 3.A, 4.C, 5.B, 6.B).</p>
+        </div>
+        <span class="text-xs font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">
+          6 Indikator Soal
+        </span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3 pt-1">
+        <!-- Q1 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-slate-700">Soal 1</span>
+            <span class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Kunci: B</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium line-clamp-2" title="Tumpukan Buku vs Antrian Kantin">Stack vs Queue (Buku & Kantin)</p>
+          <div class="space-y-1">
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="barQ1" class="bg-blue-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>Benar</span>
+              <span id="rateQ1">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-slate-700">Soal 2</span>
+            <span class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Kunci: B</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium line-clamp-2" title="Mekanisme Undo Ctrl+Z">Prinsip LIFO (Undo Tombol)</p>
+          <div class="space-y-1">
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="barQ2" class="bg-indigo-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>Benar</span>
+              <span id="rateQ2">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-slate-700">Soal 3</span>
+            <span class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Kunci: A</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium line-clamp-2" title="Playlist Musik Random Access">Akses Indeks List (Lagu Musik)</p>
+          <div class="space-y-1">
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="barQ3" class="bg-cyan-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>Benar</span>
+              <span id="rateQ3">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-slate-700">Soal 4</span>
+            <span class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Kunci: C</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium line-clamp-2" title="Operasi Kardus Stack Push/Pop">Operasi Push-Pop (Kardus Gudang)</p>
+          <div class="space-y-1">
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="barQ4" class="bg-amber-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>Benar</span>
+              <span id="rateQ4">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-slate-700">Soal 5</span>
+            <span class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Kunci: B</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium line-clamp-2" title="Antrian Pasien Klinik Enqueue/Dequeue">Enqueue & Dequeue (Klinik)</p>
+          <div class="space-y-1">
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="barQ5" class="bg-emerald-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>Benar</span>
+              <span id="rateQ5">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-black text-slate-700">Soal 6</span>
+            <span class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded">Kunci: B</span>
+          </div>
+          <p class="text-[11px] text-slate-600 font-medium line-clamp-2" title="Hapus Kontak & Pergeseran Indeks">Pergeseran Indeks (Kontak HP)</p>
+          <div class="space-y-1">
+            <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+              <div id="barQ6" class="bg-rose-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+            <div class="flex justify-between text-[11px] text-slate-500 font-bold">
+              <span>Benar</span>
+              <span id="rateQ6">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. TABEL DATA HASIL BELAJAR SISWA -->
+    <div class="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden">
+      
+      <!-- Toolbar Filter & Search -->
+      <div class="p-4 sm:p-6 border-b border-slate-100 bg-slate-50/50 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        
+        <!-- Toggle Tampilan Mode: Log Semua Submisi VS Komparasi Siswa -->
+        <div class="flex items-center p-1 bg-slate-200/80 rounded-2xl w-fit">
+          <button 
+            id="tabModeAll" 
+            onclick="switchViewMode('all')" 
+            class="px-4 py-2 rounded-xl text-xs font-bold transition shadow-xs bg-white text-slate-900"
+          >
+            📋 Seluruh Riwayat Tes
+          </button>
+          <button 
+            id="tabModeCompare" 
+            onclick="switchViewMode('compare')" 
+            class="px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900"
+          >
+            ⚡ Perbandingan Pre vs Post (Per Siswa)
+          </button>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="flex flex-wrap items-center gap-2.5">
+          <!-- Search Input -->
+          <div class="relative grow sm:grow-0">
+            <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+            <input 
+              type="text" 
+              id="searchStudentInput" 
+              placeholder="Cari nama siswa..." 
+              class="pl-8 pr-3 py-2 text-xs rounded-xl border border-slate-200 bg-white focus:outline-hidden focus:ring-2 focus:ring-blue-500 w-full sm:w-48 text-slate-800"
+            />
+          </div>
+
+          <!-- Filter Jenis Ujian (Hanya aktif di mode 'all') -->
+          <select 
+            id="filterTestType" 
+            class="px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="ALL">Semua Tipe Ujian</option>
+            <option value="Pre-Test">Hanya Pre-Test</option>
+            <option value="Post-Test">Hanya Post-Test</option>
+          </select>
+
+          <!-- Filter Kelas -->
+          <select 
+            id="filterClass" 
+            class="px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="ALL">Semua Kelas</option>
+            <option value="Kelas X-1">Kelas X-1</option>
+            <option value="Kelas X-2">Kelas X-2</option>
+            <option value="Kelas X-3">Kelas X-3</option>
+            <option value="Kelas X-4">Kelas X-4</option>
+            <option value="Kelas X-5">Kelas X-5</option>
+          </select>
+
+          <!-- Filter Ketuntasan -->
+          <select 
+            id="filterStatus" 
+            class="px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white font-medium text-slate-700 focus:outline-hidden focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="ALL">Semua Status</option>
+            <option value="TUNTAS">Tuntas (≥75)</option>
+            <option value="REMIDI">Perlu Bimbingan (&lt;75)</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- Tampilan Mode 1: Log Seluruh Riwayat Tes -->
+      <div id="viewContainerAll" class="overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-100 text-slate-600 font-extrabold uppercase tracking-wider text-[11px] border-b border-slate-200">
+            <tr>
+              <th class="py-3 px-4 w-12 text-center">No</th>
+              <th class="py-3 px-4">Waktu Submit</th>
+              <th class="py-3 px-4">Tipe Tes</th>
+              <th class="py-3 px-4">Nama Siswa</th>
+              <th class="py-3 px-4">Kelas</th>
+              <th class="py-3 px-4 text-center">Skor</th>
+              <th class="py-3 px-4 text-center">Benar/Total</th>
+              <th class="py-3 px-4 text-center">Rincian Jawaban (Q1-Q6)</th>
+              <th class="py-3 px-4 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody id="tableBodyAll" class="divide-y divide-slate-100">
+            <!-- Diisi otomatis oleh JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Tampilan Mode 2: Perbandingan Kemajuan Pre vs Post Per Siswa -->
+      <div id="viewContainerCompare" class="hidden overflow-x-auto custom-scrollbar">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-indigo-50/70 text-indigo-900 font-extrabold uppercase tracking-wider text-[11px] border-b border-indigo-100">
+            <tr>
+              <th class="py-3 px-4 w-12 text-center">No</th>
+              <th class="py-3 px-4">Nama Siswa</th>
+              <th class="py-3 px-4">Kelas</th>
+              <th class="py-3 px-4 text-center">Skor Pre-Test</th>
+              <th class="py-3 px-4 text-center">Skor Post-Test</th>
+              <th class="py-3 px-4 text-center">Kenaikan (Gain)</th>
+              <th class="py-3 px-4 text-center">Hasil Akhir</th>
+              <th class="py-3 px-4">Rekomendasi Tindak Lanjut Asesmen</th>
+            </tr>
+          </thead>
+          <tbody id="tableBodyCompare" class="divide-y divide-slate-100">
+            <!-- Diisi otomatis oleh JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden py-16 px-4 text-center space-y-3">
+        <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-400 mx-auto flex items-center justify-center text-3xl">
+          📑
+        </div>
+        <h3 class="text-sm font-bold text-slate-700">Belum Ada Data Hasil Tes yang Cocok</h3>
+        <p class="text-xs text-slate-400 max-w-md mx-auto">
+          Silakan sesuaikan kata kunci pencarian/filter di atas, atau klik tombol <strong>"Muat Contoh Data (Demo UKIN)"</strong> untuk melihat simulasi hasil belajar.
+        </p>
+      </div>
+
+      <!-- Footer Table Info -->
+      <div class="p-4 border-t border-slate-100 bg-slate-50 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+        <span id="tableCountText">Menampilkan 0 baris data</span>
+        <div class="flex items-center gap-3">
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Kunci Jawaban: B, B, A, C, B, B</span>
+          <span class="inline-flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> KKM Fase E: 75</span>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ================= MODAL PENGATURAN APPS SCRIPT & GOOGLE SHEETS ================= -->
+  <div id="settingsModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto animate-fadeIn">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl border border-slate-100 max-h-[92vh] overflow-y-auto space-y-5">
+      
+      <div class="flex items-start justify-between pb-3 border-b border-slate-200">
+        <div>
+          <h3 class="text-lg font-black text-slate-900 flex items-center gap-2">
+            <span>⚙️</span> Pengaturan Sinkronisasi Google Sheets
+          </h3>
+          <p class="text-xs text-slate-500 mt-0.5">Konfigurasi Webhook URL dan Kode Apps Script pendukung doGet & doPost.</p>
+        </div>
+        <button id="btnCloseSettings" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center transition">✕</button>
+      </div>
+
+      <!-- Input URL -->
+      <div class="p-4 rounded-2xl bg-blue-50/70 border border-blue-200 space-y-3">
+        <label for="inputTeacherWebhookUrl" class="block font-bold text-xs text-blue-950">
+          🔗 Google Apps Script Web App URL:
+        </label>
+        <input 
+          type="text" 
+          id="inputTeacherWebhookUrl" 
+          placeholder="https://script.google.com/macros/s/.../exec"
+          class="w-full px-3.5 py-2.5 rounded-xl border border-blue-300 text-xs font-mono bg-white text-slate-800 focus:ring-2 focus:ring-blue-600 focus:outline-hidden"
+        />
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btnSaveTeacherUrl" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-xs transition">
+            💾 Simpan URL
+          </button>
+          <a id="linkOpenSheet" href="https://docs.google.com/spreadsheets" target="_blank" class="px-4 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-800 font-bold text-xs transition">
+            📊 Buka Google Spreadsheet Langsung ➔
+          </a>
+          <span id="saveUrlStatus" class="text-xs ml-auto"></span>
+        </div>
+      </div>
+
+      <!-- Kode Apps Script Lengkap -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <h4 class="font-extrabold text-xs text-slate-700 uppercase tracking-wider">📋 Kode Apps Script Lengkap (doPost & doGet):</h4>
+          <button id="btnCopyFullScript" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-3 py-1 rounded-lg border border-blue-200">
+            📋 Salin Seluruh Kode
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-500 leading-relaxed">
+          Kode ini memastikan hasil <strong>Pre-Test</strong> masuk ke Sheet Tab <em>"Pre-Test"</em> dan hasil <strong>Post-Test</strong> masuk ke Sheet Tab <em>"Post-Test"</em>, sekaligus mengizinkan dashboard ini mengambil data secara otomatis melalui <code>doGet</code>.
+        </p>
+        <pre id="codeBlockAppsScript" class="p-4 rounded-xl bg-slate-900 text-emerald-400 font-mono text-[11px] overflow-x-auto max-h-56 leading-relaxed">function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var data = JSON.parse(e.postData.contents);
+    var sheetName = (data.testType && data.testType.indexOf("Pre") !== -1) ? "Pre-Test" : "Post-Test";
+    var sheet = ss.getSheetByName(sheetName);
+
+    if (!sheet) {
+      sheet = ss.insertSheet(sheetName);
+    }
+
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "Waktu Submit", "Tipe Ujian", "Nama Siswa", "Kelas", 
+        "Skor (0-100)", "Jumlah Benar", "Total Soal", 
+        "Soal 1 (Buku/Kantin)", "Soal 2 (Undo/Stack)", "Soal 3 (List Musik)", 
+        "Soal 4 (Kardus Stack)", "Soal 5 (Klinik Queue)", "Soal 6 (Kontak List)"
+      ]);
+      var headerColor = (sheetName === "Pre-Test") ? "#0f3ba8" : "#ea580c";
+      sheet.getRange(1, 1, 1, 13).setBackground(headerColor).setFontColor("#ffffff").setFontWeight("bold");
+    }
+
+    sheet.appendRow([
+      data.timestamp || new Date().toLocaleString(),
+      data.testType || "-",
+      data.studentName || "-",
+      data.studentClass || "-",
+      data.score !== undefined ? data.score : "-",
+      data.correctCount !== undefined ? data.correctCount : "-",
+      data.totalQuestions || 6,
+      data.q1 || "-", data.q2 || "-", data.q3 || "-",
+      data.q4 || "-", data.q5 || "-", data.q6 || "-"
+    ]);
+
+    return ContentService.createTextOutput(JSON.stringify({ "status": "success", "sheet": sheetName }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({ "status": "error", "message": error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doGet(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var preSheet = ss.getSheetByName("Pre-Test");
+    var postSheet = ss.getSheetByName("Post-Test");
+
+    function readSheet(s, type) {
+      if (!s || s.getLastRow() <= 1) return [];
+      var vals = s.getDataRange().getValues();
+      var arr = [];
+      for (var i = 1; i < vals.length; i++) {
+        var r = vals[i];
+        arr.push({
+          timestamp: r[0],
+          testType: r[1] || type,
+          studentName: r[2],
+          studentClass: r[3],
+          score: Number(r[4]) || 0,
+          correctCount: Number(r[5]) || 0,
+          totalQuestions: Number(r[6]) || 6,
+          q1: r[7], q2: r[8], q3: r[9], q4: r[10], q5: r[11], q6: r[12]
+        });
+      }
+      return arr;
+    }
+
+    var preRows = readSheet(preSheet, "Pre-Test");
+    var postRows = readSheet(postSheet, "Post-Test");
+    var combined = preRows.concat(postRows);
+
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "success",
+      total: combined.length,
+      preTest: preRows,
+      postTest: postRows,
+      data: combined
+    })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "error",
+      message: err.toString()
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}</pre>
+      </div>
+
+      <div class="p-3 bg-amber-50 rounded-xl border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
+        <span>💡</span>
+        <span>Setelah menempelkan kode di atas pada Apps Script, pastikan klik <strong>Terapkan (Deploy) ➔ Kelola penerapan ➔ Edit ➔ Versi Baru (New version) ➔ Terapkan</strong> agar fungsi <code>doGet</code> mulai aktif.</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script>
+    // State Aplikasi Dashboard Guru
+    const TeacherApp = {
+      allData: [],
+      filteredData: [],
+      viewMode: 'all', // 'all' | 'compare'
+      webhookUrl: '',
+      answerKeys: {
+        q1: 'B',
+        q2: 'B',
+        q3: 'A',
+        q4: 'C',
+        q5: 'B',
+        q6: 'B'
+      }
+    };
+
+    // 15 Sampel Data Realistis untuk Keperluan Presentasi UKIN PPG UNY
+    const DEMO_STUDENTS = [
+      { timestamp: "08/11/2026, 08.15.20", testType: "Pre-Test", studentName: "Ahmad Fauzi", studentClass: "Kelas X-1", score: 50, correctCount: 3, totalQuestions: 6, q1: "B", q2: "A", q3: "A", q4: "B", q5: "B", q6: "A" },
+      { timestamp: "08/11/2026, 09.30.15", testType: "Post-Test", studentName: "Ahmad Fauzi", studentClass: "Kelas X-1", score: 100, correctCount: 6, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "B" },
+
+      { timestamp: "08/11/2026, 08.16.02", testType: "Pre-Test", studentName: "Bela Anindya", studentClass: "Kelas X-1", score: 33, correctCount: 2, totalQuestions: 6, q1: "A", q2: "B", q3: "C", q4: "A", q5: "B", q6: "E" },
+      { timestamp: "08/11/2026, 09.31.40", testType: "Post-Test", studentName: "Bela Anindya", studentClass: "Kelas X-1", score: 83, correctCount: 5, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "A" },
+
+      { timestamp: "08/11/2026, 08.17.11", testType: "Pre-Test", studentName: "Cahyo Nugroho", studentClass: "Kelas X-1", score: 67, correctCount: 4, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "A", q5: "B", q6: "D" },
+      { timestamp: "08/11/2026, 09.32.22", testType: "Post-Test", studentName: "Cahyo Nugroho", studentClass: "Kelas X-1", score: 100, correctCount: 6, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "B" },
+
+      { timestamp: "08/11/2026, 08.18.30", testType: "Pre-Test", studentName: "Dina Kartika", studentClass: "Kelas X-2", score: 50, correctCount: 3, totalQuestions: 6, q1: "B", q2: "C", q3: "A", q4: "C", q5: "A", q6: "E" },
+      { timestamp: "08/11/2026, 09.33.05", testType: "Post-Test", studentName: "Dina Kartika", studentClass: "Kelas X-2", score: 83, correctCount: 5, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "C" },
+
+      { timestamp: "08/11/2026, 08.19.12", testType: "Pre-Test", studentName: "Eko Prasetyo", studentClass: "Kelas X-2", score: 33, correctCount: 2, totalQuestions: 6, q1: "E", q2: "B", q3: "D", q4: "B", q5: "B", q6: "A" },
+      { timestamp: "08/11/2026, 09.34.18", testType: "Post-Test", studentName: "Eko Prasetyo", studentClass: "Kelas X-2", score: 83, correctCount: 5, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "D" },
+
+      { timestamp: "08/11/2026, 08.20.00", testType: "Pre-Test", studentName: "Fajar Pratama", studentClass: "Kelas X-3", score: 50, correctCount: 3, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "D", q5: "C", q6: "B" },
+      { timestamp: "08/11/2026, 09.35.45", testType: "Post-Test", studentName: "Fajar Pratama", studentClass: "Kelas X-3", score: 100, correctCount: 6, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "B" },
+
+      { timestamp: "08/11/2026, 08.21.15", testType: "Pre-Test", studentName: "Gita Permata", studentClass: "Kelas X-3", score: 67, correctCount: 4, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "A", q6: "C" },
+      { timestamp: "08/11/2026, 09.36.12", testType: "Post-Test", studentName: "Gita Permata", studentClass: "Kelas X-3", score: 100, correctCount: 6, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "B", q6: "B" },
+
+      { timestamp: "08/11/2026, 08.22.40", testType: "Pre-Test", studentName: "Hendra Saputra", studentClass: "Kelas X-1", score: 33, correctCount: 2, totalQuestions: 6, q1: "C", q2: "A", q3: "A", q4: "C", q5: "E", q6: "A" },
+      { timestamp: "08/11/2026, 09.37.50", testType: "Post-Test", studentName: "Hendra Saputra", studentClass: "Kelas X-1", score: 67, correctCount: 4, totalQuestions: 6, q1: "B", q2: "B", q3: "A", q4: "C", q5: "A", q6: "E" },
+    ];
+
+    // Inisialisasi Saat Dokumen Siap
+    document.addEventListener('DOMContentLoaded', () => {
+      initSettings();
+      loadDataFromSources();
+      setupEventListeners();
+    });
+
+    function initSettings() {
+      let storedUrl = localStorage.getItem('google_sheet_url');
+      if (!storedUrl || !storedUrl.trim().startsWith('http')) {
+        storedUrl = (typeof LEARNING_DATA !== 'undefined' && LEARNING_DATA.googleSheetWebAppUrl) ? LEARNING_DATA.googleSheetWebAppUrl : '';
+      }
+      TeacherApp.webhookUrl = storedUrl;
+      const urlInput = document.getElementById('inputTeacherWebhookUrl');
+      if (urlInput) urlInput.value = storedUrl;
+    }
+
+    // Menggabungkan data dari LocalStorage & mencoba Fetch dari Google Apps Script
+    async function loadDataFromSources(forceFetch = false) {
+      let records = [];
+      
+      // Ambil riwayat lokal terlebih dahulu
+      try {
+        const local = JSON.parse(localStorage.getItem('quiz_submissions_history') || '[]');
+        if (Array.isArray(local)) {
+          records = records.concat(local);
+        }
+      } catch (e) {
+        console.warn("Gagal membaca localStorage:", e);
+      }
+
+      // Jika belum ada data lokal dan bukan force fetch, muat demo data otomatis agar guru langsung dapat gambaran
+      if (records.length === 0) {
+        records = [...DEMO_STUDENTS];
+        localStorage.setItem('quiz_submissions_history', JSON.stringify(records));
+      }
+
+      // Coba fetch dari Google Apps Script Web App jika ada URL
+      if (TeacherApp.webhookUrl && TeacherApp.webhookUrl.startsWith('http')) {
+        const syncIcon = document.getElementById('syncIcon');
+        if (syncIcon) syncIcon.classList.add('animate-spin');
+
+        try {
+          const res = await fetch(TeacherApp.webhookUrl);
+          const json = await res.json();
+          if (json && json.status === 'success' && Array.isArray(json.data) && json.data.length > 0) {
+            // Jika Google Sheets mengembalikan array baris via doGet
+            records = json.data;
+            document.getElementById('connStatusText').innerHTML = `Tersambung ke Google Sheets (Live): <strong>${records.length} Baris Data Ditemukan</strong>`;
+          }
+        } catch (err) {
+          // Normal jika doGet belum dideploy sebagai JSON API publik di Sheets, gunakan data lokal / cache
+          console.log("Menggunakan data lokal & webhook submit:", err);
+        } finally {
+          if (syncIcon) syncIcon.classList.remove('animate-spin');
+        }
+      }
+
+      TeacherApp.allData = deduplicateRecords(records);
+      document.getElementById('lastUpdatedText').textContent = `Terakhir diperbarui: ${new Date().toLocaleTimeString('id-ID')}`;
+      applyFiltersAndRender();
+    }
+
+    // Hilangkan duplikasi jika ada timestamp + nama + testType sama
+    function deduplicateRecords(arr) {
+      const map = new Map();
+      arr.forEach(item => {
+        const key = `${item.studentName}_${item.testType}_${item.score}_${item.timestamp}`;
+        map.set(key, item);
+      });
+      return Array.from(map.values());
+    }
+
+    function setupEventListeners() {
+      // Tombol Sinkronisasi
+      document.getElementById('btnSyncSheets')?.addEventListener('click', () => {
+        loadDataFromSources(true);
+      });
+
+      // Tombol Demo Data
+      document.getElementById('btnLoadDemoData')?.addEventListener('click', () => {
+        TeacherApp.allData = [...DEMO_STUDENTS];
+        localStorage.setItem('quiz_submissions_history', JSON.stringify(TeacherApp.allData));
+        applyFiltersAndRender();
+        alert("15 data simulasi kelas berhasil dimuat untuk portofolio UKIN!");
+      });
+
+      // Filter & Search
+      document.getElementById('searchStudentInput')?.addEventListener('input', applyFiltersAndRender);
+      document.getElementById('filterTestType')?.addEventListener('change', applyFiltersAndRender);
+      document.getElementById('filterClass')?.addEventListener('change', applyFiltersAndRender);
+      document.getElementById('filterStatus')?.addEventListener('change', applyFiltersAndRender);
+
+      // Ekspor CSV
+      document.getElementById('btnExportCsv')?.addEventListener('click', exportToCSV);
+
+      // Modal Pengaturan
+      const modal = document.getElementById('settingsModal');
+      document.getElementById('btnOpenSettings')?.addEventListener('click', () => {
+        if (modal) modal.classList.remove('hidden');
+      });
+      document.getElementById('btnCloseSettings')?.addEventListener('click', () => {
+        if (modal) modal.classList.add('hidden');
+      });
+
+      // Simpan URL
+      document.getElementById('btnSaveTeacherUrl')?.addEventListener('click', () => {
+        const val = document.getElementById('inputTeacherWebhookUrl').value.trim();
+        localStorage.setItem('google_sheet_url', val);
+        TeacherApp.webhookUrl = val;
+        if (typeof LEARNING_DATA !== 'undefined') {
+          LEARNING_DATA.googleSheetWebAppUrl = val;
+        }
+        const st = document.getElementById('saveUrlStatus');
+        if (st) {
+          st.innerHTML = `<span class="text-emerald-600 font-bold">✅ URL Berhasil Disimpan!</span>`;
+          setTimeout(() => st.innerHTML = '', 3000);
+        }
+        loadDataFromSources(true);
+      });
+
+      // Salin Kode Apps Script
+      document.getElementById('btnCopyFullScript')?.addEventListener('click', () => {
+        const code = document.getElementById('codeBlockAppsScript')?.textContent || '';
+        navigator.clipboard.writeText(code).then(() => {
+          const btn = document.getElementById('btnCopyFullScript');
+          btn.textContent = "✅ Berhasil Disalin!";
+          setTimeout(() => btn.textContent = "📋 Salin Seluruh Kode", 2500);
+        });
+      });
+    }
+
+    function switchViewMode(mode) {
+      TeacherApp.viewMode = mode;
+      const tabAll = document.getElementById('tabModeAll');
+      const tabCompare = document.getElementById('tabModeCompare');
+      const containerAll = document.getElementById('viewContainerAll');
+      const containerCompare = document.getElementById('viewContainerCompare');
+      const filterTestType = document.getElementById('filterTestType');
+
+      if (mode === 'all') {
+        tabAll.className = "px-4 py-2 rounded-xl text-xs font-bold transition shadow-xs bg-white text-slate-900";
+        tabCompare.className = "px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
+        containerAll.classList.remove('hidden');
+        containerCompare.classList.add('hidden');
+        if (filterTestType) filterTestType.disabled = false;
+      } else {
+        tabCompare.className = "px-4 py-2 rounded-xl text-xs font-bold transition shadow-xs bg-white text-slate-900";
+        tabAll.className = "px-4 py-2 rounded-xl text-xs font-bold transition text-slate-600 hover:text-slate-900";
+        containerCompare.classList.remove('hidden');
+        containerAll.classList.add('hidden');
+        if (filterTestType) filterTestType.disabled = true;
+      }
+
+      applyFiltersAndRender();
+    }
+
+    function applyFiltersAndRender() {
+      const search = (document.getElementById('searchStudentInput')?.value || '').toLowerCase().trim();
+      const testFilter = document.getElementById('filterTestType')?.value || 'ALL';
+      const classFilter = document.getElementById('filterClass')?.value || 'ALL';
+      const statusFilter = document.getElementById('filterStatus')?.value || 'ALL';
+
+      TeacherApp.filteredData = TeacherApp.allData.filter(item => {
+        // Search Nama
+        const matchName = !search || (item.studentName && item.studentName.toLowerCase().includes(search));
+        // Test Type (hanya filter di mode 'all')
+        const matchTest = (TeacherApp.viewMode === 'compare' || testFilter === 'ALL') || (item.testType === testFilter);
+        // Kelas
+        const matchClass = (classFilter === 'ALL') || (item.studentClass === classFilter);
+        // Status
+        const isPassed = (Number(item.score) >= 75);
+        const matchStatus = (statusFilter === 'ALL') || (statusFilter === 'TUNTAS' ? isPassed : !isPassed);
+
+        return matchName && matchTest && matchClass && matchStatus;
+      });
+
+      updateSummaryStatistics();
+      updateQuestionItemAnalysis();
+
+      if (TeacherApp.viewMode === 'all') {
+        renderTableAll();
+      } else {
+        renderTableCompare();
+      }
+    }
+
+    function updateSummaryStatistics() {
+      const all = TeacherApp.allData;
+      const total = all.length;
+      document.getElementById('statTotalSubmissions').textContent = total;
+
+      const preList = all.filter(d => d.testType === 'Pre-Test' || (d.testType && d.testType.includes('Pre')));
+      const postList = all.filter(d => d.testType === 'Post-Test' || (d.testType && d.testType.includes('Post')));
+
+      const avgPre = preList.length > 0 
+        ? Math.round(preList.reduce((acc, c) => acc + Number(c.score || 0), 0) / preList.length) 
+        : 0;
+
+      const avgPost = postList.length > 0 
+        ? Math.round(postList.reduce((acc, c) => acc + Number(c.score || 0), 0) / postList.length) 
+        : 0;
+
+      const gain = avgPost - avgPre;
+      const gainSign = gain >= 0 ? `+${gain}` : `${gain}`;
+
+      const postPassed = postList.filter(d => Number(d.score || 0) >= 75).length;
+      const passRate = postList.length > 0 ? Math.round((postPassed / postList.length) * 100) : 0;
+
+      document.getElementById('statAvgPreTest').textContent = avgPre;
+      document.getElementById('statAvgPostTest').textContent = avgPost;
+      
+      const gainEl = document.getElementById('statAvgGain');
+      gainEl.textContent = gainSign;
+      gainEl.className = `text-2xl sm:text-3xl font-extrabold ${gain >= 0 ? 'text-emerald-600' : 'text-rose-600'}`;
+
+      document.getElementById('statPassRate').textContent = `${passRate}%`;
+    }
+
+    function updateQuestionItemAnalysis() {
+      const postList = TeacherApp.allData.filter(d => d.testType === 'Post-Test' || (d.testType && d.testType.includes('Post')));
+      const targetList = postList.length > 0 ? postList : TeacherApp.allData;
+      const n = targetList.length;
+
+      if (n === 0) {
+        for (let i = 1; i <= 6; i++) {
+          const bar = document.getElementById(`barQ${i}`);
+          const rate = document.getElementById(`rateQ${i}`);
+          if (bar) bar.style.width = '0%';
+          if (rate) rate.textContent = '0%';
+        }
+        return;
+      }
+
+      for (let i = 1; i <= 6; i++) {
+        const qKey = `q${i}`;
+        const correctKey = TeacherApp.answerKeys[qKey];
+        const correctCount = targetList.filter(row => (row[qKey] || '').toUpperCase() === correctKey).length;
+        const pct = Math.round((correctCount / n) * 100);
+
+        const bar = document.getElementById(`barQ${i}`);
+        const rate = document.getElementById(`rateQ${i}`);
+        if (bar) bar.style.width = `${pct}%`;
+        if (rate) rate.textContent = `${pct}% (${correctCount}/${n})`;
+      }
+    }
+
+    function renderTableAll() {
+      const tbody = document.getElementById('tableBodyAll');
+      const emptyState = document.getElementById('emptyState');
+      const countText = document.getElementById('tableCountText');
+
+      tbody.innerHTML = '';
+      const list = TeacherApp.filteredData;
+      countText.textContent = `Menampilkan ${list.length} baris data dari total ${TeacherApp.allData.length} entri`;
+
+      if (list.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      list.forEach((item, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+
+        const isPre = (item.testType === 'Pre-Test' || (item.testType && item.testType.includes('Pre')));
+        const typeBadge = isPre 
+          ? `<span class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-blue-100 text-blue-800 border border-blue-200">Pre-Test</span>`
+          : `<span class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold bg-orange-100 text-brandOrange border border-orange-200">Post-Test</span>`;
+
+        const score = Number(item.score) || 0;
+        const isPassed = score >= 75;
+        const scoreBadge = isPassed
+          ? `<div class="font-extrabold text-sm text-emerald-700">${score}</div>`
+          : `<div class="font-extrabold text-sm text-rose-600">${score}</div>`;
+
+        const statusBadge = isPassed
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">TUNTAS</span>`
+          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800">REMIDI</span>`;
+
+        // Jawaban Q1-Q6 Pills
+        let qPills = '<div class="flex items-center justify-center gap-1">';
+        for (let q = 1; q <= 6; q++) {
+          const userAns = (item[`q${q}`] || '-').toUpperCase();
+          const isCorrect = userAns === TeacherApp.answerKeys[`q${q}`];
+          if (isCorrect) {
+            qPills += `<span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-800 font-bold text-[10px] flex items-center justify-center border border-emerald-300" title="Soal ${q}: Jawaban ${userAns} (BENAR)">${userAns}</span>`;
+          } else {
+            qPills += `<span class="w-5 h-5 rounded-md bg-rose-100 text-rose-700 font-bold text-[10px] flex items-center justify-center border border-rose-300" title="Soal ${q}: Jawaban ${userAns} (Kunci: ${TeacherApp.answerKeys[`q${q}`]})">${userAns}</span>`;
+          }
+        }
+        qPills += '</div>';
+
+        tr.innerHTML = `
+          <td class="py-3 px-4 text-center font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-4 text-slate-600 whitespace-nowrap text-[11px]">${item.timestamp || '-'}</td>
+          <td class="py-3 px-4 whitespace-nowrap">${typeBadge}</td>
+          <td class="py-3 px-4 font-bold text-slate-900 whitespace-nowrap">${item.studentName || '-'}</td>
+          <td class="py-3 px-4 text-slate-600 whitespace-nowrap">${item.studentClass || '-'}</td>
+          <td class="py-3 px-4 text-center">${scoreBadge}</td>
+          <td class="py-3 px-4 text-center font-bold text-slate-700 whitespace-nowrap">${item.correctCount !== undefined ? item.correctCount : '-'}/${item.totalQuestions || 6}</td>
+          <td class="py-3 px-4 text-center">${qPills}</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">${statusBadge}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderTableCompare() {
+      const tbody = document.getElementById('tableBodyCompare');
+      const emptyState = document.getElementById('emptyState');
+      const countText = document.getElementById('tableCountText');
+
+      tbody.innerHTML = '';
+      
+      // Kelompokkan data berdasarkan Nama Siswa
+      const studentMap = new Map();
+      TeacherApp.allData.forEach(row => {
+        const name = (row.studentName || '').trim();
+        if (!name) return;
+        if (!studentMap.has(name)) {
+          studentMap.set(name, {
+            name: name,
+            studentClass: row.studentClass || 'Kelas X',
+            pre: null,
+            post: null
+          });
+        }
+        const entry = studentMap.get(name);
+        if (row.testType === 'Pre-Test' || (row.testType && row.testType.includes('Pre'))) {
+          entry.pre = row;
+        } else if (row.testType === 'Post-Test' || (row.testType && row.testType.includes('Post'))) {
+          entry.post = row;
+        }
+      });
+
+      // Filter siswa
+      const search = (document.getElementById('searchStudentInput')?.value || '').toLowerCase().trim();
+      const classFilter = document.getElementById('filterClass')?.value || 'ALL';
+      const statusFilter = document.getElementById('filterStatus')?.value || 'ALL';
+
+      let pairedList = Array.from(studentMap.values()).filter(st => {
+        const matchName = !search || st.name.toLowerCase().includes(search);
+        const matchClass = (classFilter === 'ALL') || (st.studentClass === classFilter);
+        const postScore = st.post ? Number(st.post.score) : 0;
+        const isPassed = postScore >= 75;
+        const matchStatus = (statusFilter === 'ALL') || (statusFilter === 'TUNTAS' ? isPassed : !isPassed);
+
+        return matchName && matchClass && matchStatus;
+      });
+
+      countText.textContent = `Menampilkan ${pairedList.length} siswa dalam perbandingan kompetensi`;
+
+      if (pairedList.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      pairedList.forEach((st, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+
+        const preScore = st.pre ? Number(st.pre.score) : null;
+        const postScore = st.post ? Number(st.post.score) : null;
+
+        let gainBadge = '<span class="text-slate-400 font-medium">-</span>';
+        if (preScore !== null && postScore !== null) {
+          const diff = postScore - preScore;
+          if (diff > 0) {
+            gainBadge = `<span class="px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-100 text-emerald-800">+${diff} Poin 🚀</span>`;
+          } else if (diff === 0) {
+            gainBadge = `<span class="px-2.5 py-1 rounded-lg text-xs font-black bg-slate-100 text-slate-700">Tetap (0)</span>`;
+          } else {
+            gainBadge = `<span class="px-2.5 py-1 rounded-lg text-xs font-black bg-rose-100 text-rose-800">${diff} Poin 🔻</span>`;
+          }
+        }
+
+        const preDisplay = preScore !== null ? `<span class="font-extrabold text-slate-700">${preScore}</span>` : `<span class="text-slate-400 italic">Belum Ujian</span>`;
+        const postDisplay = postScore !== null 
+          ? `<span class="font-extrabold ${postScore >= 75 ? 'text-emerald-700' : 'text-rose-600'}">${postScore}</span>` 
+          : `<span class="text-slate-400 italic">Belum Ujian</span>`;
+
+        let resultBadge = `<span class="text-slate-400">-</span>`;
+        let recommendation = "Menunggu penyelesaian kedua tes.";
+
+        if (postScore !== null) {
+          if (postScore >= 75) {
+            resultBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-800">TUNTAS</span>`;
+            recommendation = "✅ Kompetensi tercapai, siap melanjutkan ke materi Pemrograman Algoritma lanjutan.";
+          } else {
+            resultBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] font-black bg-rose-100 text-rose-800">REMIDI</span>`;
+            recommendation = "⚠️ Perlu bimbingan mandiri pada simulasi interaktif Stack (LIFO) & Queue (FIFO).";
+          }
+        }
+
+        tr.innerHTML = `
+          <td class="py-3 px-4 text-center font-bold text-slate-400">${idx + 1}</td>
+          <td class="py-3 px-4 font-bold text-slate-900 whitespace-nowrap">${st.name}</td>
+          <td class="py-3 px-4 text-slate-600 whitespace-nowrap">${st.studentClass}</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">${preDisplay}</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">${postDisplay}</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">${gainBadge}</td>
+          <td class="py-3 px-4 text-center whitespace-nowrap">${resultBadge}</td>
+          <td class="py-3 px-4 text-slate-600 text-[11px]">${recommendation}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function exportToCSV() {
+      const dataToExport = TeacherApp.filteredData.length > 0 ? TeacherApp.filteredData : TeacherApp.allData;
+      if (dataToExport.length === 0) {
+        alert("Tidak ada data untuk diekspor!");
+        return;
+      }
+
+      let csv = "data:text/csv;charset=utf-8,";
+      csv += "Waktu Submit,Tipe Ujian,Nama Siswa,Kelas,Skor,Jumlah Benar,Total Soal,Soal 1,Soal 2,Soal 3,Soal 4,Soal 5,Soal 6,Status\n";
+
+      dataToExport.forEach(row => {
+        const score = Number(row.score) || 0;
+        const status = score >= 75 ? "TUNTAS" : "REMIDI";
+        const line = [
+          `"${row.timestamp || ''}"`,
+          `"${row.testType || ''}"`,
+          `"${row.studentName || ''}"`,
+          `"${row.studentClass || ''}"`,
+          score,
+          row.correctCount !== undefined ? row.correctCount : '',
+          row.totalQuestions || 6,
+          `"${row.q1 || '-'}"`,
+          `"${row.q2 || '-'}"`,
+          `"${row.q3 || '-'}"`,
+          `"${row.q4 || '-'}"`,
+          `"${row.q5 || '-'}"`,
+          `"${row.q6 || '-'}"`,
+          `"${status}"`
+        ].join(',');
+        csv += line + "\n";
+      });
+
+      const encoded = encodeURI(csv);
+      const a = document.createElement("a");
+      a.setAttribute("href", encoded);
+      a.setAttribute("download", `Rekap_Evaluasi_Guru_StrukturData_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>

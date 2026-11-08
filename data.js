@@ -10,6 +10,9 @@ const LEARNING_DATA = {
     version: "2.0 (UKIN Ed.)"
   },
 
+  // Konfigurasi Webhook Google Spreadsheet (Terhubung Aktif)
+  googleSheetWebAppUrl: "https://script.google.com/macros/s/AKfycbwB1-SajvauNQ28Y-33YJUp7Tv0buKVrCwSHOBQRP0uB7kIJ8PoAHVYmfZ3ZlmINIzw/exec",
+
   chapters: [
     {
       id: "bab1",
@@ -476,246 +479,162 @@ const LEARNING_DATA = {
   preTestQuestions: [
     {
       id: 1,
-      question: "Apa fungsi utama dari Struktur Data di dalam sistem komputer?",
+      question: "Di meja guru terdapat tumpukan buku tugas (ditaruh dari bawah ke atas), sedangkan di kantin terdapat barisan siswa yang mengantri makanan. Apa perbedaan mekanisme pengambilan/pelayanan dari kedua kejadian tersebut?",
       options: [
-        "A. Mempercepat koneksi internet pengguna",
-        "B. Mengatur dan menyimpan data dalam memori (RAM) agar efisien diproses",
-        "C. Membersihkan virus dan malware secara otomatis",
-        "D. Meningkatkan resolusi grafis monitor komputer"
+        "A. Tumpukan buku diambil dari yang paling bawah, sedangkan antrian kantin dilayani dari paling belakang.",
+        "B. Tumpukan buku diambil dari yang terakhir ditaruh (paling atas), sedangkan antrian kantin dilayani dari yang pertama datang (paling depan).",
+        "C. Tumpukan buku dan antrian kantin sama-sama memproses urutan dari posisi tengah.",
+        "D. Tumpukan buku diambil secara acak, sedangkan antrian kantin dilayani dari yang terakhir datang.",
+        "E. Keduanya memiliki mekanisme urutan keluar-masuk yang sama persis."
       ],
       correctIndex: 1,
-      explanation: "Struktur data adalah cara mengorganisasikan, menyimpan, dan mengatur data di dalam memori kerja (RAM) agar mudah dan efisien diakses oleh prosesor."
+      explanation: "Tumpukan buku menerapkan prinsip Stack (LIFO: Last In, First Out) di mana buku yang terakhir ditaruh berada di paling atas dan diambil terlebih dahulu. Sedangkan antrean kantin menerapkan prinsip Queue (FIFO: First In, First Out) di mana siswa yang pertama datang berada di paling depan dan dilayani terlebih dahulu."
     },
     {
       id: 2,
-      question: "Mengapa indeks elemen pertama pada List (Array) di banyak bahasa pemrograman dimulai dari angka 0 (Zero-Based Indexing)?",
+      question: "Andi mengetik tiga kata secara berurutan di laptop: \"Saya\", lalu \"Suka\", lalu \"Informatika\". Saat Andi menekan tombol Undo (Ctrl+Z) satu kali, kata \"Informatika\" langsung terhapus dari layar. Mengapa sistem komputer menghapus kata \"Informatika\" lebih dulu, bukan kata \"Saya\" ?",
       options: [
-        "A. Karena angka 0 adalah angka favorit penemu komputer",
-        "B. Karena indeks merupakan jarak perpindahan (offset) dari alamat memori awal",
-        "C. Karena komputer kuno tidak mengenal angka 1",
-        "D. Supaya siswa kesulitan menghafal urutan data"
+        "A. Karena kata \"Informatika\" memiliki jumlah huruf yang paling banyak.",
+        "B. Karena tombol Undo bekerja dengan mekanisme Tumpukan (Stack), yaitu membatalkan data yang paling terakhir masuk (berada di posisi paling atas).",
+        "C. Karena tombol Undo bekerja dengan mekanisme Antrian (Queue), yaitu menghapus data dari urutan paling depan.",
+        "D. Karena komputer menghapus kata secara acak tanpa melihat urutan ketikan.",
+        "E. Karena kata \"Saya\" sudah terkunci permanen di dalam memori komputer."
       ],
       correctIndex: 1,
-      explanation: "Alamat elemen = Alamat Awal + (Indeks × Ukuran). Jika indeks = 0, offset = 0, sehingga komputer langsung mengakses memori awal tanpa perkalian tambahan."
+      explanation: "Fitur Undo (Ctrl+Z) bekerja menggunakan struktur data Stack dengan prinsip LIFO (Last In, First Out). Aksi atau kata yang paling terakhir dimasukkan (\"Informatika\") berada pada puncak tumpukan (Top) sehingga akan dibatalkan/dihapus terlebih dahulu."
     },
     {
       id: 3,
-      question: "Prinsip kerja di mana data yang paling terakhir dimasukkan akan menjadi data yang pertama kali dikeluarkan dikenal dengan sebutan...",
+      question: "Di aplikasi musik, kamu memiliki daftar 10 lagu yang tersusun dari nomor urut (indeks) 0 sampai 9. Kamu bisa langsung memutar lagu pada indeks ke-5 tanpa harus memutar lagu indeks ke-0 sampai ke-4 terlebih dahulu. Mengapa struktur data Daftar (List) memungkinkan mekanisme tersebut?",
       options: [
-        "A. FIFO (First In, First Out)",
-        "B. LIFO (Last In, First Out)",
-        "C. Random Access",
-        "D. Zero-Based"
+        "A. Karena setiap data memiliki nomor indeks posisi, sehingga sistem bisa langsung mengakses atau menghapus data di posisi mana saja secara bebas.",
+        "B. Karena lagu indeks ke-0 sampai ke-4 otomatis terhapus saat kita memilih lagu indeks ke-5.",
+        "C. Karena aplikasi musik mengunci akses agar hanya bisa memutar lagu dari urutan paling bawah.",
+        "D. Karena struktur List hanya mengizinkan data keluar dari pintu belakang.",
+        "E. Karena lagu pada indeks ke-5 adalah data yang paling terakhir dimasukkan ke aplikasi."
       ],
-      correctIndex: 1,
-      explanation: "LIFO (Last In, First Out) adalah prinsip kerja Stack (Tumpukan), seperti tumpukan piring bersih di mana piring teratas diambil duluan."
+      correctIndex: 0,
+      explanation: "Struktur data List (Daftar/Array) memiliki keunggulan Random Access (akses acak langsung), di mana setiap elemen diberi penanda nomor indeks posisi. Hal ini memungkinkan pemanggilan atau pemrosesan elemen di posisi mana pun secara instan dan bebas."
     },
     {
       id: 4,
-      question: "Manakah fitur aplikasi berikut yang paling tepat dimodelkan menggunakan struktur data Stack?",
+      question: "Pegawai gudang ingin menyimpan Kardus_1, Kardus_2, dan Kardus_3 secara berurutan dari bawah ke atas di lorong sempit satu pintu, lalu mengeluarkan 1 kardus untuk pembeli tanpa membuat tumpukan roboh.\nManakah rumusan langkah operasi Tumpukan (Stack) yang paling runtut dan logis?",
       options: [
-        "A. Antrean cetak dokumen printer bersama",
-        "B. Tombol Undo (Ctrl+Z) dan riwayat tombol Back browser",
-        "C. Pemanggilan nomor antrean nasabah di bank",
-        "D. Pemutaran lagu acak pada Spotify"
+        "A. Masukkan Kardus_1, Kardus_2, Kardus_3 (Push) → Keluarkan Kardus_1 dari paling bawah (Pop).",
+        "B. Masukkan Kardus_1, Kardus_2, Kardus_3 (Push) → Keluarkan Kardus_2 dari bagian tengah (Pop).",
+        "C. Masukkan Kardus_1, Kardus_2, Kardus_3 (Push) → Keluarkan Kardus_3 yang berada di paling atas (Pop), sehingga tersisa Kardus_1 dan Kardus_2.",
+        "D. Keluarkan Kardus_3 terlebih dahulu (Pop) → Baru masukkan Kardus_1 dan Kardus_2 (Push).",
+        "E. Masukkan ketiga kardus sekaligus → Robohkan semua kardus agar mudah diambil."
       ],
-      correctIndex: 1,
-      explanation: "Fitur Undo dan tombol Back browser bekerja dengan prinsip membatalkan aksi paling terakhir (LIFO), yang merupakan karakteristik utama Stack."
+      correctIndex: 2,
+      explanation: "Pada operasi Stack, proses memasukkan elemen disebut Push dan pengambilan elemen disebut Pop melalui satu pintu (Top). Karena Kardus_3 dimasukkan terakhir, posisinya berada di paling atas (Top). Mengambil Kardus_3 (Pop) adalah satu-satunya tindakan yang aman tanpa merobohkan tumpukan, menyisakan Kardus_1 dan Kardus_2."
     },
     {
       id: 5,
-      question: "Operasi untuk menambahkan elemen baru ke bagian paling atas (Top) pada struktur data Stack dinamakan...",
+      question: "Di sebuah klinik, tiga pasien datang secara berurutan: Budi (07.00), Siti (07.15), dan Andi (07.30). Agar pemanggilan pasien pertama berjalan adil sesuai waktu kedatangan, manakah rumusan langkah operasi Antrian (Queue) yang tepat pada sistem klinik?",
       options: [
-        "A. Enqueue",
-        "B. Push",
-        "C. Dequeue",
-        "D. Pop"
+        "A. Masukkan Budi, Siti, Andi ke antrian (Enqueue) → Panggil pasien paling belakang (Dequeue) yaitu Andi.",
+        "B. Masukkan Budi, Siti, Andi ke antrian (Enqueue) → Panggil pasien paling depan (Dequeue) yaitu Budi, sehingga di ruang tunggu tersisa Siti dan Andi.",
+        "C. Masukkan Budi, Siti, Andi ke antrian (Enqueue) → Panggil pasien posisi tengah (Dequeue) yaitu Siti.",
+        "D. Masukkan Andi terlebih dahulu pada pukul 07.00 → Panggil ketiga pasien masuk bersama-sama.",
+        "E. Tolak pendaftaran Siti dan Andi sebelum Budi selesai diperiksa dokter."
       ],
       correctIndex: 1,
-      explanation: "Operasi Push berfungsi menumpukkan atau memasukkan elemen baru ke bagian Top pada Stack."
+      explanation: "Pada Queue berlaku prinsip FIFO (First In, First Out). Pasien didaftarkan masuk antrean dari posisi belakang (Enqueue). Saat pemanggilan dokter, pasien yang dikeluarkan/dilayani adalah yang berada di posisi paling depan (Dequeue), yaitu Budi yang datang paling awal pada pukul 07.00."
     },
     {
       id: 6,
-      question: "Kondisi di mana sistem mencoba mengambil data dari Stack yang sudah kosong melompong disebut...",
+      question: "Dalam aplikasi Kontak HP terdapat daftar nama yang tersimpan menggunakan nomor indeks berikut:\nIndeks [0]: Adi | Indeks [1]: Bela | Indeks [2]: Cici | Indeks [3]: Dodi\nJika kamu ingin menghapus kontak Bela menggunakan mekanisme Daftar (List), bagaimana rumusan langkah operasi dan kondisi indeks akhirnya?",
       options: [
-        "A. Stack Overflow",
-        "B. Stack Underflow",
-        "C. Memory Leak",
-        "D. Null Pointer"
+        "A. Hapus Indeks [0] dulu baru Indeks [1] → Tersisa Cici dan Dodi.",
+        "B. Hapus langsung pada Indeks [1] → Kontak Bela hilang, lalu posisi Cici bergeser naik menjadi Indeks [1] dan Dodi menjadi Indeks [2].",
+        "C. Hapus dari posisi paling akhir yaitu Indeks [3] → Kontak Dodi yang terhapus.",
+        "D. Hapus langsung pada Indeks [2] → Kontak Bela hilang dari daftar.",
+        "E. Hapus seluruh daftar kontak dari Indeks [0] sampai Indeks [3] lalu ketik ulang dari awal."
       ],
       correctIndex: 1,
-      explanation: "Stack Underflow terjadi saat memanggil operasi Pop pada tumpukan yang kosong (tidak ada elemen yang bisa diambil)."
-    },
-    {
-      id: 7,
-      question: "Prinsip kerja yang mengutamakan keadilan pelayanan, di mana elemen yang datang lebih dahulu akan dilayani lebih dahulu adalah...",
-      options: [
-        "A. FIFO (First In, First Out)",
-        "B. LIFO (Last In, First Out)",
-        "C. FILO (First In, Last Out)",
-        "D. LOFI (Low Fidelity)"
-      ],
-      correctIndex: 0,
-      explanation: "FIFO (First In, First Out) adalah prinsip keadilan antrean (Queue), persis seperti antrean loket tiket atau kasir."
-    },
-    {
-      id: 8,
-      question: "Pada struktur data Queue, di bagian manakah data baru dimasukkan saat operasi Enqueue?",
-      options: [
-        "A. Di ujung Front (depan)",
-        "B. Di ujung Rear / Tail (belakang)",
-        "C. Di sembarang posisi tengah",
-        "D. Di luar memori RAM"
-      ],
-      correctIndex: 1,
-      explanation: "Operasi Enqueue memasukkan elemen baru ke bagian belakang antrean yang ditunjuk oleh pointer Rear / Tail."
-    },
-    {
-      id: 9,
-      question: "Antrean dokumen pada mesin printer (Print Spooler) di laboratorium sekolah menerapkan struktur data...",
-      options: [
-        "A. Stack",
-        "B. Queue",
-        "C. Tree",
-        "D. Graph"
-      ],
-      correctIndex: 1,
-      explanation: "Printer menggunakan Queue (FIFO) agar dokumen yang dikirim paling awal dicetak tuntas terlebih dahulu sebelum dokumen berikutnya."
-    },
-    {
-      id: 10,
-      question: "Jika kamu membutuhkan struktur data yang mengizinkan membaca lagu ke-7 secara langsung tanpa harus memutar lagu 1 sampai 6, kamu harus memilih...",
-      options: [
-        "A. Stack murni",
-        "B. Queue murni",
-        "C. List (Daftar berindeks)",
-        "D. Call Stack"
-      ],
-      correctIndex: 2,
-      explanation: "List mendukung Random Access (akses acak bebas) melalui nomor indeks (contoh: playlist[6]), tanpa harus melalui urutan LIFO atau FIFO."
+      explanation: "Pada List, data dapat dihapus langsung pada posisi indeksnya (Indeks [1]). Setelah data dihapus, elemen-elemen setelahnya akan bergeser maju ke kiri/atas untuk mengisi kekosongan, sehingga Cici yang tadinya indeks [2] menjadi indeks [1], dan Dodi yang tadinya indeks [3] menjadi indeks [2]."
     }
   ],
 
   postTestQuestions: [
     {
       id: 1,
-      question: "Formula alamat memori untuk mengakses elemen pada List adalah: Alamat = Alamat_Awal + (Indeks × Ukuran_Data). Jika alamat awal adalah 0x100 dan setiap data berukuran 4 byte, di manakah posisi memori untuk elemen berindeks 3?",
+      question: "Di meja guru terdapat tumpukan buku tugas (ditaruh dari bawah ke atas), sedangkan di kantin terdapat barisan siswa yang mengantri makanan. Apa perbedaan mekanisme pengambilan/pelayanan dari kedua kejadian tersebut?",
       options: [
-        "A. 0x103",
-        "B. 0x10C (karena 0x100 + 12 byte = 0x10C)",
-        "C. 0x112",
-        "D. 0x104"
+        "A. Tumpukan buku diambil dari yang paling bawah, sedangkan antrian kantin dilayani dari paling belakang.",
+        "B. Tumpukan buku diambil dari yang terakhir ditaruh (paling atas), sedangkan antrian kantin dilayani dari yang pertama datang (paling depan).",
+        "C. Tumpukan buku dan antrian kantin sama-sama memproses urutan dari posisi tengah.",
+        "D. Tumpukan buku diambil secara acak, sedangkan antrian kantin dilayani dari yang terakhir datang.",
+        "E. Keduanya memiliki mekanisme urutan keluar-masuk yang sama persis."
       ],
       correctIndex: 1,
-      explanation: "Perhitungan: 0x100 + (3 × 4 byte) = 0x100 + 12 byte. Dalam heksadesimal, angka 12 dilambangkan dengan huruf C, sehingga alamatnya adalah 0x10C."
+      explanation: "Tumpukan buku menerapkan prinsip Stack (LIFO: Last In, First Out) di mana buku yang terakhir ditaruh berada di paling atas dan diambil terlebih dahulu. Sedangkan antrean kantin menerapkan prinsip Queue (FIFO: First In, First Out) di mana siswa yang pertama datang berada di paling depan dan dilayani terlebih dahulu."
     },
     {
       id: 2,
-      question: "Sebuah aplikasi compiler sedang memvalidasi ekspresi rumus matematika: { [ ( A + B ) ] }. Struktur data apakah yang paling efektif digunakan untuk mencocokkan pasangan tanda kurung tersebut?",
+      question: "Andi mengetik tiga kata secara berurutan di laptop: \"Saya\", lalu \"Suka\", lalu \"Informatika\". Saat Andi menekan tombol Undo (Ctrl+Z) satu kali, kata \"Informatika\" langsung terhapus dari layar. Mengapa sistem komputer menghapus kata \"Informatika\" lebih dulu, bukan kata \"Saya\" ?",
       options: [
-        "A. Queue (FIFO)",
-        "B. Stack (LIFO)",
-        "C. Circular List",
-        "D. Priority Queue"
+        "A. Karena kata \"Informatika\" memiliki jumlah huruf yang paling banyak.",
+        "B. Karena tombol Undo bekerja dengan mekanisme Tumpukan (Stack), yaitu membatalkan data yang paling terakhir masuk (berada di posisi paling atas).",
+        "C. Karena tombol Undo bekerja dengan mekanisme Antrian (Queue), yaitu menghapus data dari urutan paling depan.",
+        "D. Karena komputer menghapus kata secara acak tanpa melihat urutan ketikan.",
+        "E. Karena kata \"Saya\" sudah terkunci permanen di dalam memori komputer."
       ],
       correctIndex: 1,
-      explanation: "Stack digunakan karena tanda kurung buka yang terakhir kali dibuka harus menjadi tanda kurung yang pertama kali dicocokkan dengan kurung tutup terdekat (prinsip LIFO)."
+      explanation: "Fitur Undo (Ctrl+Z) bekerja menggunakan struktur data Stack dengan prinsip LIFO (Last In, First Out). Aksi atau kata yang paling terakhir dimasukkan (\"Informatika\") berada pada puncak tumpukan (Top) sehingga akan dibatalkan/dihapus terlebih dahulu."
     },
     {
       id: 3,
-      question: "Apa akibat yang terjadi jika sistem terus memanggil operasi Push pada Stack yang memorinya sudah dialokasikan penuh dan tidak memiliki ruang tersisa?",
+      question: "Di aplikasi musik, kamu memiliki daftar 10 lagu yang tersusun dari nomor urut (indeks) 0 sampai 9. Kamu bisa langsung memutar lagu pada indeks ke-5 tanpa harus memutar lagu indeks ke-0 sampai ke-4 terlebih dahulu. Mengapa struktur data Daftar (List) memungkinkan mekanisme tersebut?",
       options: [
-        "A. Stack Underflow",
-        "B. Stack Overflow dan program mengalami crash",
-        "C. Data otomatis berpindah ke struktur Queue",
-        "D. Sistem komputer restart ke bios"
+        "A. Karena setiap data memiliki nomor indeks posisi, sehingga sistem bisa langsung mengakses atau menghapus data di posisi mana saja secara bebas.",
+        "B. Karena lagu indeks ke-0 sampai ke-4 otomatis terhapus saat kita memilih lagu indeks ke-5.",
+        "C. Karena aplikasi musik mengunci akses agar hanya bisa memutar lagu dari urutan paling bawah.",
+        "D. Karena struktur List hanya mengizinkan data keluar dari pintu belakang.",
+        "E. Karena lagu pada indeks ke-5 adalah data yang paling terakhir dimasukkan ke aplikasi."
       ],
-      correctIndex: 1,
-      explanation: "Kondisi ini disebut Stack Overflow, di mana penambahan data melampaui batas kapasitas memori yang tersedia sehingga program mengalami crash seketika."
+      correctIndex: 0,
+      explanation: "Struktur data List (Daftar/Array) memiliki keunggulan Random Access (akses acak langsung), di mana setiap elemen diberi penanda nomor indeks posisi. Hal ini memungkinkan pemanggilan atau pemrosesan elemen di posisi mana pun secara instan dan bebas."
     },
     {
       id: 4,
-      question: "Manakah perbedaan mendasar antara operasi Dequeue pada Queue dan operasi Pop pada Stack?",
+      question: "Pegawai gudang ingin menyimpan Kardus_1, Kardus_2, dan Kardus_3 secara berurutan dari bawah ke atas di lorong sempit satu pintu, lalu mengeluarkan 1 kardus untuk pembeli tanpa membuat tumpukan roboh.\nManakah rumusan langkah operasi Tumpukan (Stack) yang paling runtut dan logis?",
       options: [
-        "A. Dequeue mengeluarkan data dari Front (depan), sedangkan Pop mengeluarkan data dari Top (atas)",
-        "B. Dequeue menambahkan data, sedangkan Pop menghapus data",
-        "C. Dequeue hanya untuk angka, sedangkan Pop untuk teks",
-        "D. Dequeue bersifat LIFO, sedangkan Pop bersifat FIFO"
+        "A. Masukkan Kardus_1, Kardus_2, Kardus_3 (Push) → Keluarkan Kardus_1 dari paling bawah (Pop).",
+        "B. Masukkan Kardus_1, Kardus_2, Kardus_3 (Push) → Keluarkan Kardus_2 dari bagian tengah (Pop).",
+        "C. Masukkan Kardus_1, Kardus_2, Kardus_3 (Push) → Keluarkan Kardus_3 yang berada di paling atas (Pop), sehingga tersisa Kardus_1 dan Kardus_2.",
+        "D. Keluarkan Kardus_3 terlebih dahulu (Pop) → Baru masukkan Kardus_1 dan Kardus_2 (Push).",
+        "E. Masukkan ketiga kardus sekaligus → Robohkan semua kardus agar mudah diambil."
       ],
-      correctIndex: 0,
-      explanation: "Dequeue mengeluarkan data yang pertama kali masuk dari ujung Front (FIFO), sedangkan Pop mengeluarkan data yang terakhir kali masuk dari ujung Top (LIFO)."
+      correctIndex: 2,
+      explanation: "Pada operasi Stack, proses memasukkan elemen disebut Push dan pengambilan elemen disebut Pop melalui satu pintu (Top). Karena Kardus_3 dimasukkan terakhir, posisinya berada di paling atas (Top). Mengambil Kardus_3 (Pop) adalah satu-satunya tindakan yang aman tanpa merobohkan tumpukan, menyisakan Kardus_1 dan Kardus_2."
     },
     {
       id: 5,
-      question: "Raka merancang aplikasi e-commerce. Pengguna membuka Beranda ➔ Produk ➔ Batik ➔ Keranjang. Ketika tombol 'Back' ditekan, sistem harus kembali ke Batik. Operasi apa yang tepat terjadi saat tombol Back ditekan?",
+      question: "Di sebuah klinik, tiga pasien datang secara berurutan: Budi (07.00), Siti (07.15), dan Andi (07.30). Agar pemanggilan pasien pertama berjalan adil sesuai waktu kedatangan, manakah rumusan langkah operasi Antrian (Queue) yang tepat pada sistem klinik?",
       options: [
-        "A. Enqueue pada antrean navigasi",
-        "B. Dequeue dari riwayat antrean",
-        "C. Pop dari stack riwayat halaman",
-        "D. Reset seluruh indeks list"
+        "A. Masukkan Budi, Siti, Andi ke antrian (Enqueue) → Panggil pasien paling belakang (Dequeue) yaitu Andi.",
+        "B. Masukkan Budi, Siti, Andi ke antrian (Enqueue) → Panggil pasien paling depan (Dequeue) yaitu Budi, sehingga di ruang tunggu tersisa Siti dan Andi.",
+        "C. Masukkan Budi, Siti, Andi ke antrian (Enqueue) → Panggil pasien posisi tengah (Dequeue) yaitu Siti.",
+        "D. Masukkan Andi terlebih dahulu pada pukul 07.00 → Panggil ketiga pasien masuk bersama-sama.",
+        "E. Tolak pendaftaran Siti dan Andi sebelum Budi selesai diperiksa dokter."
       ],
-      correctIndex: 2,
-      explanation: "Menekan tombol Back mengeksekusi operasi Pop pada stack riwayat, menghapus halaman 'Keranjang' dan menampilkan halaman puncak sebelumnya ('Batik')."
+      correctIndex: 1,
+      explanation: "Pada Queue berlaku prinsip FIFO (First In, First Out). Pasien didaftarkan masuk antrean dari posisi belakang (Enqueue). Saat pemanggilan dokter, pasien yang dikeluarkan/dilayani adalah yang berada di posisi paling depan (Dequeue), yaitu Budi yang datang paling awal pada pukul 07.00."
     },
     {
       id: 6,
-      question: "Mengapa Queue Linier biasa sering digantikan oleh Circular Queue (Antrean Melingkar) dalam sistem operasi?",
+      question: "Dalam aplikasi Kontak HP terdapat daftar nama yang tersimpan menggunakan nomor indeks berikut:\nIndeks [0]: Adi | Indeks [1]: Bela | Indeks [2]: Cici | Indeks [3]: Dodi\nJika kamu ingin menghapus kontak Bela menggunakan mekanisme Daftar (List), bagaimana rumusan langkah operasi dan kondisi indeks akhirnya?",
       options: [
-        "A. Karena Queue Linier tidak mendukung angka ganjil",
-        "B. Untuk memanfaatkan kembali ruang kosong di depan antrean yang ditinggalkan setelah operasi Dequeue",
-        "C. Karena Circular Queue tidak membutuhkan memori RAM",
-        "D. Supaya antrean bisa dipotong dari tengah"
+        "A. Hapus Indeks [0] dulu baru Indeks [1] → Tersisa Cici dan Dodi.",
+        "B. Hapus langsung pada Indeks [1] → Kontak Bela hilang, lalu posisi Cici bergeser naik menjadi Indeks [1] dan Dodi menjadi Indeks [2].",
+        "C. Hapus dari posisi paling akhir yaitu Indeks [3] → Kontak Dodi yang terhapus.",
+        "D. Hapus langsung pada Indeks [2] → Kontak Bela hilang dari daftar.",
+        "E. Hapus seluruh daftar kontak dari Indeks [0] sampai Indeks [3] lalu ketik ulang dari awal."
       ],
       correctIndex: 1,
-      explanation: "Pada Linear Queue biasa, ruang bekas Dequeue di depan terbuang sia-sia jika tidak digeser. Circular Queue menghubungkan ujung belakang ke depan (modulo) sehingga memori terpakai optimal."
-    },
-    {
-      id: 7,
-      question: "Di Unit Gawat Darurat (IGD) Rumah Sakit, pasien dengan kondisi kritis didahulukan penanganannya daripada pasien demam biasa. Varian Queue apakah yang memodelkan skenario ini?",
-      options: [
-        "A. Double-Ended Queue (Deque)",
-        "B. Priority Queue (Antrean Berprioritas)",
-        "C. Circular Queue",
-        "D. Stack LIFO"
-      ],
-      correctIndex: 1,
-      explanation: "Priority Queue melayani elemen berdasarkan derajat prioritas/urgensinya, bukan semata-mata waktu kedatangan."
-    },
-    {
-      id: 8,
-      question: "Meskipun List sangat fleksibel karena memiliki nomor indeks bebas, apa alasan utama seorang software engineer tetap memilih Stack atau Queue untuk skenario tertentu?",
-      options: [
-        "A. List tidak dapat menyimpan data berupa string atau kata",
-        "B. Aturan kaku Stack & Queue menjamin integritas data (mencegah modifikasi data sembarangan) dan memiliki performa O(1) konstan di ujungnya",
-        "C. Stack dan Queue berukuran lebih besar daripada memori RAM",
-        "D. List dilarang digunakan dalam kurikulum internasional"
-      ],
-      correctIndex: 1,
-      explanation: "Stack dan Queue membatasi manipulasi data sembarangan sehingga alur data terjamin disiplin (integritas) dan operasi ujungnya bekerja sangat cepat tanpa pergeseran jutaan elemen."
-    },
-    {
-      id: 9,
-      question: "Dalam 4 Pilar Berpikir Komputasional, proses menyembunyikan alamat fisik heksadesimal RAM (seperti 0x7FFF5FBFFD04) dan hanya berfokus pada urutan logis data dinamakan...",
-      options: [
-        "A. Dekomposisi",
-        "B. Pengenalan Pola",
-        "C. Abstraksi",
-        "D. Perancangan Algoritma"
-      ],
-      correctIndex: 2,
-      explanation: "Abstraksi adalah kemampuan mengeliminasi detail rumit perangkat keras fisik (seperti alamat heksadesimal RAM) dan fokus pada konsep penting tingkat tinggi."
-    },
-    {
-      id: 10,
-      question: "Jika loket kasir restoran burger menerapkan struktur data Stack (LIFO) dan bukan Queue (FIFO), apakah dampak sosial yang dirasakan pelanggan?",
-      options: [
-        "A. Pelanggan merasa senang karena sistem bekerja sangat cepat",
-        "B. Terjadi ketidakadilan berat di mana pelanggan yang datang paling awal akan dilayani paling akhir (bahkan berisiko tidak dilayani)",
-        "C. Seluruh pesanan burger akan otomatis digratiskan",
-        "D. Makanan yang disajikan menjadi lebih lezat"
-      ],
-      correctIndex: 1,
-      explanation: "Prinsip LIFO pada kasir membuat orang yang baru datang langsung dilayani, sementara orang yang antre berjam-jam dari awal tertumpuk di dasar dan tidak pernah dilayani."
+      explanation: "Pada List, data dapat dihapus langsung pada posisi indeksnya (Indeks [1]). Setelah data dihapus, elemen-elemen setelahnya akan bergeser maju ke kiri/atas untuk mengisi kekosongan, sehingga Cici yang tadinya indeks [2] menjadi indeks [1], dan Dodi yang tadinya indeks [3] menjadi indeks [2]."
     }
   ],
 

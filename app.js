@@ -120,8 +120,8 @@ function initSoundToggle() {
   btn.addEventListener('click', () => {
     SoundFX.enabled = !SoundFX.enabled;
     btn.innerHTML = SoundFX.enabled 
-      ? '<span class="text-emerald-600">🔊 Suara: ON</span>' 
-      : '<span class="text-slate-400">🔇 Suara: OFF</span>';
+      ? '<span class="text-emerald-600">🔊 <span class="hidden sm:inline">Suara: </span>ON</span>' 
+      : '<span class="text-slate-400">🔇 <span class="hidden sm:inline">Suara: </span>OFF</span>';
     if (SoundFX.enabled) SoundFX.play('click');
   });
 }
@@ -210,6 +210,16 @@ function switchTab(tabId) {
     }
   });
 
+  // Update mobile dock links styling
+  document.querySelectorAll('[data-dock-target]').forEach(btn => {
+    const isTarget = btn.getAttribute('data-dock-target') === tabId;
+    if (isTarget) {
+      btn.className = 'dock-item flex flex-col items-center text-[10px] font-extrabold text-blue-600 py-1 transition-all scale-105';
+    } else {
+      btn.className = 'dock-item flex flex-col items-center text-[10px] font-semibold text-slate-500 hover:text-slate-800 py-1 transition-all';
+    }
+  });
+
   // Hide all sections and show target
   const sections = ['beranda', 'pretest', 'materi', 'simulasi', 'posttest', 'glosarium'];
   sections.forEach(s => {
@@ -260,20 +270,20 @@ function renderChapterSidebar() {
 
   container.innerHTML = LEARNING_DATA.chapters.map(ch => `
     <button onclick="changeChapter('${ch.id}')" 
-      class="w-full text-left p-3.5 rounded-2xl transition-all flex items-start gap-3 border ${AppState.activeChapterId === ch.id ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-white hover:bg-blue-50 text-gray-700 border-gray-200'}">
-      <span class="px-2 py-0.5 rounded-lg text-xs font-bold ${AppState.activeChapterId === ch.id ? 'bg-white/20 text-white' : 'bg-blue-100 text-blue-700'}">${ch.number}</span>
+      class="min-w-[170px] sm:min-w-[210px] lg:min-w-0 shrink-0 lg:shrink w-auto lg:w-full text-left p-3 sm:p-3.5 rounded-2xl transition-all flex items-start gap-2.5 sm:gap-3 border ${AppState.activeChapterId === ch.id ? 'bg-blue-600 text-white border-blue-600 shadow-md' : 'bg-white hover:bg-blue-50 text-gray-700 border-gray-200'}">
+      <span class="px-2 py-0.5 rounded-lg text-xs font-bold shrink-0 ${AppState.activeChapterId === ch.id ? 'bg-white/20 text-white' : 'bg-blue-100 text-blue-700'}">${ch.number}</span>
       <div class="flex-1 min-w-0">
         <h4 class="font-bold text-xs truncate">${ch.title}</h4>
-        <p class="text-[11px] opacity-80 mt-0.5 line-clamp-1">${ch.readingTime} • ${ch.badge}</p>
+        <p class="text-[10px] sm:text-[11px] opacity-80 mt-0.5 truncate">${ch.readingTime} • ${ch.badge}</p>
       </div>
     </button>
   `).join('') + `
     <button onclick="changeChapter('hots')" 
-      class="w-full text-left p-3.5 rounded-2xl transition-all flex items-start gap-3 border ${AppState.activeChapterId === 'hots' ? 'bg-amber-600 text-white border-amber-600 shadow-md' : 'bg-white hover:bg-amber-50 text-gray-700 border-gray-200'}">
-      <span class="px-2 py-0.5 rounded-lg text-xs font-bold ${AppState.activeChapterId === 'hots' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-800'}">HOTS</span>
+      class="min-w-[170px] sm:min-w-[210px] lg:min-w-0 shrink-0 lg:shrink w-auto lg:w-full text-left p-3 sm:p-3.5 rounded-2xl transition-all flex items-start gap-2.5 sm:gap-3 border ${AppState.activeChapterId === 'hots' ? 'bg-amber-600 text-white border-amber-600 shadow-md' : 'bg-white hover:bg-amber-50 text-gray-700 border-gray-200'}">
+      <span class="px-2 py-0.5 rounded-lg text-xs font-bold shrink-0 ${AppState.activeChapterId === 'hots' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-800'}">HOTS</span>
       <div class="flex-1 min-w-0">
-        <h4 class="font-bold text-xs truncate">Studi Kasus HOTS Mandiri</h4>
-        <p class="text-[11px] opacity-80 mt-0.5">4 Studi Kasus & Solusi Ilmiah</p>
+        <h4 class="font-bold text-xs truncate">Studi Kasus HOTS</h4>
+        <p class="text-[10px] sm:text-[11px] opacity-80 mt-0.5 truncate">4 Kasus & Solusi</p>
       </div>
     </button>
   `;
@@ -284,6 +294,14 @@ window.changeChapter = function(chapterId) {
   AppState.activeChapterId = chapterId;
   renderChapterSidebar();
   renderChapterContent(chapterId);
+
+  // Smooth scroll on mobile to content
+  if (window.innerWidth < 1024) {
+    const content = document.getElementById('chapterDisplayArea');
+    if (content) {
+      content.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 };
 
 function renderChapterContent(chapterId) {
@@ -369,11 +387,28 @@ function renderChapterContent(chapterId) {
         `).join('')}
       </div>
 
-      <div class="mt-8 pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
-        <button onclick="switchTab('simulasi')" class="px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition">
-          <span>🚀 Coba Simulasi Interaktif Materi Ini</span>
-        </button>
-        <span class="text-xs text-gray-400">Buku Saku Struktur Data • Ilyas Fandhi Anggara, S.Kom</span>
+      <div class="mt-8 pt-6 border-t border-gray-100 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2.5">
+          <div class="flex items-center gap-2 w-full sm:w-auto">
+            ${(() => {
+              const curIdx = LEARNING_DATA.chapters.findIndex(c => c.id === ch.id);
+              const prev = curIdx > 0 ? LEARNING_DATA.chapters[curIdx - 1] : null;
+              const next = curIdx < LEARNING_DATA.chapters.length - 1 ? LEARNING_DATA.chapters[curIdx + 1] : { id: 'hots', number: 'HOTS', title: 'Studi Kasus' };
+              let btns = '';
+              if (prev) {
+                btns += `<button onclick="changeChapter('${prev.id}')" class="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 font-bold text-xs transition flex items-center justify-center gap-1.5"><span>⬅️</span> <span>${prev.number}</span></button>`;
+              }
+              if (next) {
+                btns += `<button onclick="changeChapter('${next.id}')" class="flex-1 sm:flex-initial px-3.5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-xs"><span>${next.number}</span> <span>➔</span></button>`;
+              }
+              return btns;
+            })()}
+          </div>
+          <button onclick="switchTab('simulasi')" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-brandOrange hover:bg-brandOrange-hover active:scale-95 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-xs transition">
+            <span>🚀 Coba Simulator Interaktif</span>
+          </button>
+        </div>
+        <p class="text-[11px] text-gray-400 text-center sm:text-left">Buku Saku Pembelajaran Struktur Data • Ilyas Fandhi Anggara, S.Kom</p>
       </div>
     </div>
   `;
@@ -899,11 +934,11 @@ function initPreTest() {
         <span class="text-xs text-gray-400 font-mono">Soal Diagnostik Awal</span>
       </div>
       <p class="font-bold text-sm text-gray-900 mb-4">${q.question}</p>
-      <div class="space-y-2">
+      <div class="space-y-2.5">
         ${q.options.map((opt, optIdx) => `
-          <label class="flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:bg-blue-50 cursor-pointer transition text-xs text-gray-700">
-            <input type="radio" name="pretest-q-${q.id}" value="${optIdx}" onchange="selectPreTestAnswer(${q.id}, ${optIdx})" class="accent-blue-600 w-4 h-4">
-            <span>${opt}</span>
+          <label class="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl border border-gray-200 hover:bg-blue-50/70 active:scale-[0.99] cursor-pointer transition text-xs sm:text-sm text-gray-700 select-none has-[:checked]:bg-blue-50 has-[:checked]:border-blue-500 has-[:checked]:ring-1 has-[:checked]:ring-blue-400">
+            <input type="radio" name="pretest-q-${q.id}" value="${optIdx}" onchange="selectPreTestAnswer(${q.id}, ${optIdx})" class="accent-blue-600 w-4 h-4 mt-0.5 shrink-0">
+            <span class="leading-relaxed flex-1">${opt}</span>
           </label>
         `).join('')}
       </div>
@@ -987,11 +1022,11 @@ function initPostTest() {
         <span class="text-xs text-amber-700 font-bold bg-amber-50 px-2 py-0.5 rounded">Asesmen HOTS</span>
       </div>
       <p class="font-bold text-sm text-gray-900 mb-4">${q.question}</p>
-      <div class="space-y-2">
+      <div class="space-y-2.5">
         ${q.options.map((opt, optIdx) => `
-          <label class="flex items-center gap-3 p-3 rounded-xl border border-gray-200 hover:bg-orange-50 cursor-pointer transition text-xs text-gray-700">
-            <input type="radio" name="posttest-q-${q.id}" value="${optIdx}" onchange="selectPostTestAnswer(${q.id}, ${optIdx})" class="accent-orange-600 w-4 h-4">
-            <span>${opt}</span>
+          <label class="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl border border-gray-200 hover:bg-orange-50/70 active:scale-[0.99] cursor-pointer transition text-xs sm:text-sm text-gray-700 select-none has-[:checked]:bg-orange-50 has-[:checked]:border-orange-500 has-[:checked]:ring-1 has-[:checked]:ring-orange-400">
+            <input type="radio" name="posttest-q-${q.id}" value="${optIdx}" onchange="selectPostTestAnswer(${q.id}, ${optIdx})" class="accent-orange-600 w-4 h-4 mt-0.5 shrink-0">
+            <span class="leading-relaxed flex-1">${opt}</span>
           </label>
         `).join('')}
       </div>

@@ -29,14 +29,14 @@
       };
     </script>
   </head>
-  <body class="bg-mesh min-h-screen text-slate-800 antialiased selection:bg-orange-500 selection:text-white pb-16 sm:pb-0">
+  <body class="bg-mesh min-h-screen text-slate-800 antialiased selection:bg-orange-500 selection:text-white pb-24 sm:pb-0">
     <!-- ================= TOPBAR NAVIGATION ================= -->
     <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-all shadow-xs">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
         <!-- Logo Branding (NovTeach / Struktur Data Style) -->
-        <div class="flex items-center gap-3 cursor-pointer shrink-0" onclick="switchTab('beranda')">
-          <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brandBlue-dark via-brandBlue to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-900/20">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer shrink-0" onclick="switchTab('beranda')">
+          <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-brandBlue-dark via-brandBlue to-blue-500 flex items-center justify-center text-white shadow-md shadow-blue-900/20">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -45,9 +45,9 @@
             </svg>
           </div>
           <div>
-            <div class="flex items-center gap-2">
-              <span class="font-black text-xl tracking-tight text-slate-900">STRUKTUR<span class="text-brandOrange">DATA</span></span>
-              <span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">Fase E</span>
+            <div class="flex items-center gap-1.5 sm:gap-2">
+              <span class="font-black text-base sm:text-xl tracking-tight text-slate-900">STRUKTUR<span class="text-brandOrange">DATA</span></span>
+              <span class="bg-blue-100 text-blue-800 text-[9px] sm:text-[10px] font-extrabold px-1.5 sm:px-2 py-0.5 rounded-full uppercase tracking-wider">Fase E</span>
             </div>
             <p class="text-[11px] text-slate-500 font-medium hidden sm:block">Informatika SMA • Kurikulum Merdeka</p>
           </div>
@@ -64,10 +64,10 @@
         </nav>
 
         <!-- Right Action Items -->
-        <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <!-- Sound Toggle -->
-          <button id="soundToggleBtn" class="flex items-center gap-1.5 text-xs font-bold px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 shadow-xs whitespace-nowrap">
-            <span class="text-emerald-600">🔊 Suara: ON</span>
+          <button id="soundToggleBtn" class="flex items-center gap-1 text-xs font-bold px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 shadow-xs whitespace-nowrap touch-target">
+            <span class="text-emerald-600">🔊 <span class="hidden sm:inline">Suara: </span>ON</span>
           </button>
 
           <!-- User Profile Pill (Tablet & Desktop) -->
@@ -86,7 +86,7 @@
 
           <!-- Mobile & Tablet Hamburger Button -->
           <button id="mobileMenuBtn" class="xl:hidden p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 touch-target" aria-label="Toggle Menu">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
@@ -96,16 +96,16 @@
       <!-- Mobile & Tablet Dropdown Drawer Menu -->
       <div id="mobileDrawer" class="hidden xl:hidden bg-white border-b border-slate-200 px-4 py-4 space-y-3 shadow-lg transition-all animate-fadeIn">
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs font-bold">
-          <button data-tab-target="beranda" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-blue-600 text-white">🏠 Beranda</button>
-          <button data-tab-target="pretest" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">📝 Pre-Test</button>
-          <button data-tab-target="materi" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">📖 Materi Baca</button>
-          <button data-tab-target="simulasi" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">🎮 Simulasi</button>
-          <button data-tab-target="posttest" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">🏆 Post-Test</button>
-          <button data-tab-target="glosarium" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50">📚 Glosarium</button>
+          <button data-tab-target="beranda" class="w-full text-left px-3.5 py-3 rounded-xl bg-blue-600 text-white active:scale-95 transition">🏠 Beranda</button>
+          <button data-tab-target="pretest" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50 active:scale-95 transition">📝 Pre-Test</button>
+          <button data-tab-target="materi" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50 active:scale-95 transition">📖 Materi Baca</button>
+          <button data-tab-target="simulasi" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50 active:scale-95 transition">🎮 Simulasi</button>
+          <button data-tab-target="posttest" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50 active:scale-95 transition">🏆 Post-Test</button>
+          <button data-tab-target="glosarium" class="w-full text-left px-3.5 py-3 rounded-xl bg-slate-100 text-slate-800 hover:bg-blue-50 active:scale-95 transition">📚 Glosarium</button>
         </div>
         <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
           <span class="text-slate-500 font-medium">Kurikulum Merdeka • Kelas X</span>
-          <button onclick="switchTab('simulasi')" class="px-3.5 py-1.5 rounded-lg bg-brandOrange text-white font-bold">Coba Simulasi ➔</button>
+          <button onclick="switchTab('simulasi')" class="px-3.5 py-2 rounded-xl bg-brandOrange hover:bg-brandOrange-hover text-white font-bold active:scale-95 transition">Coba Simulasi ➔</button>
         </div>
       </div>
     </header>
@@ -116,24 +116,24 @@
         <!-- HERO BANNER (TWO CARDS SIDE-BY-SIDE MATCHING REFERENCE IMAGE) -->
         <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           <!-- Left Hero Container (Royal Blue Card) -->
-          <div class="lg:col-span-7 hero-blue-card rounded-theme text-white p-6 sm:p-8 lg:p-10 flex flex-col justify-between soft-card-shadow">
+          <div class="lg:col-span-7 hero-blue-card rounded-theme text-white p-5 sm:p-8 lg:p-10 flex flex-col justify-between soft-card-shadow">
             <div>
               <!-- Badge -->
-              <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold text-blue-200 border border-white/20 mb-5"><span>🚀</span> Portal Belajar Informatika Mandiri Fase E</div>
+              <div class="inline-flex items-center gap-1.5 sm:gap-2 bg-white/15 backdrop-blur-md px-3 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-bold text-blue-200 border border-white/20 mb-4 sm:mb-5"><span>🚀</span> Portal Belajar Informatika Mandiri Fase E</div>
 
               <!-- Headline -->
-              <h1 class="text-2xl sm:text-3xl lg:text-[40px] font-black leading-[1.2] tracking-tight mb-4">
+              <h1 class="text-xl sm:text-3xl lg:text-[40px] font-black leading-snug sm:leading-[1.2] tracking-tight mb-3 sm:mb-4">
                 Di Portal Belajar Struktur Data, kamu akan <span class="text-amber-400">kuasai logika pemrograman</span> dan taklukkan algoritma dengan mudah.
               </h1>
 
               <!-- Paragraph -->
-              <p class="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-xl mb-6 sm:mb-8">
+              <p class="text-blue-100/90 text-xs sm:text-sm leading-relaxed max-w-xl mb-5 sm:mb-8">
                 Panduan interaktif terlengkap Kurikulum Merdeka. Pahami anatomi memori RAM, List, Stack (LIFO), dan Queue (FIFO) lewat simulasi visual real-time dan studi kasus nyata.
               </p>
             </div>
 
             <!-- White Embedded Form Card (Like NovTeach Reference Image) -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 text-slate-900 shadow-xl border border-white/40 max-w-md w-full">
+            <div class="bg-white rounded-2xl p-4 sm:p-6 text-slate-900 shadow-xl border border-white/40 max-w-md w-full">
               <div class="flex items-center justify-between mb-3">
                 <h3 class="font-extrabold text-sm sm:text-base text-slate-900">Mulai Petualangan Belajar</h3>
                 <span class="bg-blue-100 text-blue-800 text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase">Gratis & Lengkap</span>
@@ -153,7 +153,7 @@
                     <option value="Fase E - X-5">Kelas X-5 (Fase E SMA)</option>
                   </select>
                 </div>
-                <button id="btnStartLearning" class="w-full py-3 rounded-xl bg-brandOrange hover:bg-brandOrange-hover text-white font-extrabold text-xs uppercase tracking-wider transition shadow-lg shadow-orange-500/30 touch-target">
+                <button id="btnStartLearning" class="w-full py-3 rounded-xl bg-brandOrange hover:bg-brandOrange-hover active:scale-95 text-white font-extrabold text-xs uppercase tracking-wider transition shadow-lg shadow-orange-500/30 touch-target">
                   MULAI PRE-TEST SEKARANG ➔
                 </button>
                 <p class="text-[10px] text-center text-slate-400 italic">*Data digunakan untuk penilaian dan pencatatan hasil belajar.</p>
@@ -162,7 +162,7 @@
           </div>
 
           <!-- Right Hero Container (Vibrant Orange Card Matching Reference Image) -->
-          <div class="lg:col-span-5 hero-orange-card rounded-theme text-white p-6 sm:p-8 lg:p-10 flex flex-col justify-between soft-card-shadow">
+          <div class="lg:col-span-5 hero-orange-card rounded-theme text-white p-5 sm:p-8 lg:p-10 flex flex-col justify-between soft-card-shadow">
             <!-- Top 3 High-Contrast Checklist Cards -->
             <div class="space-y-3 mb-6">
               <!-- Item 1 -->
@@ -185,13 +185,13 @@
             </div>
 
             <!-- Rich 3D Student Coder Illustration (Filling the bottom area like Reference Image) -->
-            <div class="relative w-full bg-white/10 backdrop-blur-md rounded-3xl p-5 border border-white/25 flex flex-col sm:flex-row items-center justify-between gap-4 mt-auto">
+            <div class="relative w-full bg-white/10 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-white/25 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 mt-auto">
               <!-- Vector Illustration of Student & Book -->
-              <div class="flex items-center gap-4">
+              <div class="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
                 <!-- Avatar Graphic -->
-                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-tr from-blue-900 via-blue-700 to-indigo-600 border-2 border-white/40 shadow-xl flex items-center justify-center relative shrink-0">
+                <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-tr from-blue-900 via-blue-700 to-indigo-600 border-2 border-white/40 shadow-xl flex items-center justify-center relative shrink-0">
                   <!-- 3D Student Icon Face -->
-                  <svg class="w-14 h-14 text-amber-200" viewBox="0 0 64 64" fill="none">
+                  <svg class="w-11 h-11 sm:w-14 sm:h-14 text-amber-200" viewBox="0 0 64 64" fill="none">
                     <!-- Hair -->
                     <path d="M18 22C18 14 24 10 32 10C40 10 46 14 46 22V24H18V22Z" fill="#1e293b" />
                     <!-- Head -->
@@ -210,24 +210,24 @@
                     <path d="M28 36L32 44L36 36" fill="#f97316" />
                   </svg>
                   <!-- Floating Mini Cap Badge -->
-                  <span class="absolute -top-2 -right-2 bg-yellow-400 text-slate-900 text-[10px] font-black px-1.5 py-0.5 rounded-full shadow-md">🎓 X</span>
+                  <span class="absolute -top-2 -right-2 bg-yellow-400 text-slate-900 text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded-full shadow-md">🎓 X</span>
                 </div>
 
                 <!-- Textbook & Learning Details -->
-                <div>
+                <div class="flex-1 min-w-0">
                   <div class="flex items-center gap-1.5 mb-1">
-                    <span class="bg-yellow-400 text-slate-900 font-extrabold text-[10px] px-2 py-0.5 rounded-md">Buku Saku</span>
-                    <span class="text-white/80 text-[11px] font-medium">Ilyas Fandhi Anggara, S.Kom</span>
+                    <span class="bg-yellow-400 text-slate-900 font-extrabold text-[9px] sm:text-[10px] px-2 py-0.5 rounded-md">Buku Saku</span>
+                    <span class="text-white/80 text-[10px] sm:text-[11px] font-medium truncate">Ilyas Fandhi Anggara, S.Kom</span>
                   </div>
-                  <h4 class="font-extrabold text-sm sm:text-base text-white">Modul Struktur Data</h4>
-                  <p class="text-[11px] text-blue-100/90 leading-tight">SMA Negeri 4 Yogyakarta • PPG UNY</p>
+                  <h4 class="font-extrabold text-sm sm:text-base text-white truncate">Modul Struktur Data</h4>
+                  <p class="text-[10px] sm:text-[11px] text-blue-100/90 leading-tight">SMA Negeri 4 Yogyakarta • PPG UNY</p>
                 </div>
               </div>
 
               <!-- Floating Code Badges -->
-              <div class="flex flex-row sm:flex-col gap-1.5 shrink-0">
-                <span class="bg-white/20 backdrop-blur-md text-white font-mono text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20"> Top: Push() </span>
-                <span class="bg-white/20 backdrop-blur-md text-white font-mono text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20"> FIFO: Enqueue() </span>
+              <div class="flex flex-row sm:flex-col gap-1.5 shrink-0 w-full sm:w-auto justify-end">
+                <span class="bg-white/20 backdrop-blur-md text-white font-mono text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20 text-center flex-1 sm:flex-initial"> Top: Push() </span>
+                <span class="bg-white/20 backdrop-blur-md text-white font-mono text-[9px] sm:text-[10px] font-bold px-2.5 py-1 rounded-lg border border-white/20 text-center flex-1 sm:flex-initial"> FIFO: Enqueue() </span>
               </div>
             </div>
           </div>
@@ -346,7 +346,7 @@
           <!-- Right Side: 01, 02, 03 Cards with Big Watermark Numbers -->
           <div class="lg:col-span-7 space-y-4">
             <!-- Step 01 -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
+            <div class="step-card bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
               <div class="flex-1">
                 <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Tahap 1</span>
                 <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">Eksplorasi Konsep & Memori RAM</h3>
@@ -356,7 +356,7 @@
             </div>
 
             <!-- Step 02 -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
+            <div class="step-card bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
               <div class="flex-1">
                 <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Tahap 2</span>
                 <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">Simulasi Visual Interaktif Real-Time</h3>
@@ -366,7 +366,7 @@
             </div>
 
             <!-- Step 03 -->
-            <div class="bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
+            <div class="step-card bg-white rounded-2xl p-5 sm:p-6 soft-card-shadow border border-slate-100 flex items-center justify-between gap-4">
               <div class="flex-1">
                 <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Tahap 3</span>
                 <h3 class="font-extrabold text-slate-900 text-sm sm:text-base mt-0.5">Evaluasi Asesmen HOTS Mandiri</h3>
@@ -426,13 +426,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         <!-- Sidebar Navigation for Chapters (With Horizontal Scroll on Mobile/Tablet) -->
         <aside class="lg:col-span-4 space-y-4">
-          <div class="bg-white rounded-3xl p-5 soft-card-shadow border border-slate-200">
+          <div class="bg-white rounded-3xl p-4 sm:p-5 soft-card-shadow border border-slate-200">
             <div class="flex items-center justify-between mb-3 pb-2 border-b">
               <h3 class="font-black text-sm text-slate-900">Daftar Bab Pembelajaran</h3>
-              <span class="text-[10px] bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded">Buku Saku</span>
+              <span class="text-[10px] bg-blue-50 text-blue-700 font-bold px-2 py-0.5 rounded">Buku Saku 5 Bab</span>
             </div>
-            <!-- Chapter Nav Pills / Buttons -->
-            <div id="materiSidebarNav" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
+            <!-- Chapter Nav Pills / Buttons (Horizontal swipe on mobile, vertical stack on desktop) -->
+            <div id="materiSidebarNav" class="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto pb-2 lg:pb-0 scrollbar-none max-h-[420px]">
               <!-- Rendered by JS -->
             </div>
           </div>
